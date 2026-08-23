@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Сайт с домашкой</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        :root{--c1:#ee7752;--c2:#e73c7e;--c3:#23a6d5;--c4:#23d5ab}
+        body{
+            font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
+            min-height:100vh;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            background:linear-gradient(-45deg,var(--c1),var(--c2),var(--c3),var(--c4));
+            background-size:400% 400%;
+            animation:grad 8s ease infinite;
+            transition:background .5s;
+            padding-bottom:90px;
+        }
+        body>input[type=radio]{display:none}
+        @keyframes grad{
+            0%,100%{background-position:0% 50%}
+            50%{background-position:100% 50%}
+        }
+        @keyframes fadeIn{
+            from{opacity:0;transform:translateY(-20px)}
+            to{opacity:1;transform:translateY(0)}
+        }
+        @keyframes flash{
+            0%,100%{opacity:1}
+            50%{opacity:.6}
+        }
+        @keyframes pulse{
+            0%,100%{box-shadow:0 5px 15px rgba(255,255,255,.2)}
+            50%{box-shadow:0 5px 30px rgba(255,255,255,.4)}
+        }
+        @keyframes plusPulse{
+            0%,100%{box-shadow:0 8px 25px rgba(238,119,82,.5)}
+            50%{box-shadow:0 8px 40px rgba(238,119,82,.8)}
+        }
+        @keyframes spin{
+            0%{transform:rotate(0deg)}
+            100%{transform:rotate(360deg)}
+        }
+        @keyframes fadeInUp{
+            from{opacity:0;transform:translateY(20px)}
+            to{opacity:1;transform:translateY(0)}
+        }
+        .site-wrapper{width:100%;max-width:1200px;margin:0 auto}
+        .container{text-align:center;padding:40px}
+        h1,.page-title{color:#fff;font-weight:800;text-shadow:2px 2px 10px rgba(0,0,0,.3)}
+        h1{font-size:4rem;margin-bottom:60px;letter-spacing:2px;animation:fadeIn 1.5s ease}
+        .page-title{font-size:3rem;margin-bottom:30px}
+        .buttons{display:flex;flex-direction:column;align-items:center;gap:25px}
+        .btn{
+            padding:18px 45px;font-size:1.4rem;font-weight:700;border:none;border-radius:50px;
+            cursor:pointer;transition:all .3s;text-decoration:none;color:#fff;
+            box-shadow:0 10px 30px rgba(0,0,0,.2);letter-spacing:1px;
+            background:rgba(255,255,255,.25);backdrop-filter:blur(8px);
+            border:2px solid rgba(255,255,255,.5);display:inline-block;text-align:center;
+            position:relative;overflow:hidden;width:380px;max-width:90vw;
+        }
+        .btn:hover{transform:translateY(-5px);box-shadow:0 15px 40px rgba(0,0,0,.3);background:rgba(255,255,255,.4);border-color:rgba(255,255,255,.8)}
+        .btn:active{transform:translateY(0);box-shadow:0 5px 15px rgba(0,0,0,.2)}
+        .btn-flash{animation:flash 2s infinite}
+        .page{display:none;text-align:center;width:100%}
+        body:has(#nav-main:checked) #main,
+        body:has(#nav-homework:checked) #homework,
+        body:has(#nav-diary:checked) #diary,
+        body:has(#nav-birthdays:checked) #birthdays,
+        body:has(#nav-helper:checked) #helper,
+        body:has(#nav-wiki:checked) #wiki,
+        body:has(#nav-settings:checked) #settings,
+        body:has(#nav-profile:checked) #profile{display:block}
+        
+        /* Домашка */
+        .homework-container{max-width:800px;margin:0 auto;padding:0 20px 30px}
+        .homework-card{
+            background:rgba(255,255,255,.15);backdrop-filter:blur(10px);
+            border:2px solid rgba(255,255,255,.3);border-radius:15px;
+            padding:20px;margin-bottom:15px;box-shadow:0 8px 25px rgba(0,0,0,.15);
+            transition:all .3s;text-align:left;color:#fff;
+        }
+        .homework-card:hover{transform:translateY(-5px);box-shadow:0 12px 35px rgba(0,0,0,.25);background:rgba(255,255,255,.25)}
+        .subject-title{font-size:18px;margin-bottom:10px;font-weight:bold}
+        .subject-title i{margin-right:10px}
+        .homework-content{font-size:16px;opacity:.95;margin-bottom:10px}
+        .teacher-info{font-size:14px;opacity:.8}
+        .label-m{background:#0cecff;color:#000;font-size:14px;padding:2px 8px;border-radius:3px}
+        .label-d{background:#ec24e5;color:#fff;font-size:14px;padding:2px 8px;border-radius:3px}
+        
+        /* Дневник */
+        .diary-form{
+            max-width:500px;margin:0 auto;padding:30px;
+            background:rgba(255,255,255,.15);backdrop-filter:blur(10px);
+            border:2px solid rgba(255,255,255,.3);border-radius:15px;
+            box-shadow:0 8px 25px rgba(0,0,0,.15);color:#fff;
+        }
+        .diary-form label{display:block;font-size:1.1rem;margin-bottom:8px;font-weight:600}
+        .diary-form input,.diary-form select{
+            width:100%;padding:12px 15px;margin-bottom:20px;
+            border:2px solid rgba(255,255,255,.3);border-radius:10px;
+            background:rgba(255,255,255,.1);color:#fff;font-size:1rem;transition:all .3s;
+        }
+        .diary-form input::placeholder{color:rgba(255,255,255,.5)}
+        .diary-form input:focus,.diary-form select:focus{outline:none;border-color:#23a6d5;background:rgba(255,255,255,.2)}
+        .diary-form select option{background:#2f98bd;color:#fff}
+        .diary-form .btn-submit{
+            width:100%;padding:14px;font-size:1.2rem;cursor:pointer;
+            background:rgba(35,166,213,.6);border:2px solid #23a6d5;border-radius:10px;
+            color:#fff;font-weight:700;transition:all .3s;
+        }
+        .diary-form .btn-submit:hover{background:rgba(35,166,213,.8);transform:translateY(-2px);box-shadow:0 8px 25px rgba(35,166,213,.3)}
+        .diary-list{margin-top:30px;color:#fff}
+        .diary-item{
+            background:rgba(255,255,255,.1);padding:12px 20px;border-radius:10px;
+            margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;
+            border:1px solid rgba(255,255,255,.2);
+        }
+        
+        /* Настройки */
+        .settings-container{max-width:600px;margin:0 auto}
+        .settings-section{
+            background:rgba(255,255,255,.15);backdrop-filter:blur(10px);
+            border:2px solid rgba(255,255,255,.3);border-radius:15px;
+            padding:25px;margin-bottom:20px;color:#fff;
+        }
+        .settings-section h3{margin-bottom:20px;font-size:1.3rem;text-align:center}
+        .theme-selector{display:flex;gap:15px;justify-content:center;flex-wrap:wrap}
+        .theme-btn{
+            display:flex;flex-direction:column;align-items:center;gap:8px;
+            background:rgba(255,255,255,.1);border:2px solid rgba(255,255,255,.3);
+            border-radius:12px;padding:15px 20px;cursor:pointer;transition:all .3s;
+            color:#fff;font-size:.9rem;min-width:110px;
+        }
+        .theme-btn:hover{background:rgba(255,255,255,.25);transform:translateY(-3px)}
+        body:has(#theme-default:checked) .theme-btn[for=theme-default],
+        body:has(#theme-light:checked) .theme-btn[for=theme-light],
+        body:has(#theme-dark:checked) .theme-btn[for=theme-dark],
+        body:has(#theme-custom:checked) .theme-btn[for=theme-custom]{
+            border-color:#23d5ab;background:rgba(35,213,171,.3);box-shadow:0 0 20px rgba(35,213,171,.4);
+        }
+        .theme-preview{width:60px;height:40px;border-radius:8px;border:2px solid rgba(255,255,255,.4)}
+        .default-preview{background:linear-gradient(-45deg,#ee7752,#e73c7e,#23a6d5,#23d5ab)}
+        .light-preview{background:linear-gradient(-45deg,#f5f7fa,#c3cfe2,#e8cbc0,#dcb5ff)}
+        .dark-preview{background:linear-gradient(-45deg,#1a1a2e,#16213e,#0f3460,#1a1a2e)}
+        .custom-preview{background:conic-gradient(red,yellow,lime,aqua,blue,magenta,red)}
+        .gradient-editor{display:flex;flex-direction:column;align-items:center;gap:20px}
+        .color-inputs{display:flex;flex-wrap:wrap;gap:15px;justify-content:center}
+        .color-group{display:flex;flex-direction:column;align-items:center;gap:5px}
+        .color-group label{font-size:.85rem;opacity:.9}
+        .color-group input[type=color]{width:50px;height:50px;border:3px solid rgba(255,255,255,.5);border-radius:10px;cursor:pointer;background:0 0;padding:0}
+        .color-group input[type=color]::-webkit-color-swatch-wrapper{padding:0}
+        .color-group input[type=color]::-webkit-color-swatch{border-radius:8px;border:none}
+        
+        /* Wiki */
+        .wiki-bot-container{max-width:800px;margin:0 auto}
+        .wiki-search-box{display:flex;gap:15px;margin-bottom:30px;align-items:center}
+        .wiki-input-wrapper{flex:1;position:relative}
+        .wiki-search-icon{position:absolute;left:20px;top:50%;transform:translateY(-50%);color:rgba(255,255,255,.6);font-size:1.2rem;z-index:1}
+        .wiki-input{
+            width:100%;padding:18px 20px 18px 50px;border:2px solid rgba(255,255,255,.3);
+            border-radius:50px;background:rgba(255,255,255,.15);backdrop-filter:blur(10px);
+            color:#fff;font-size:1.1rem;transition:all .3s;outline:none;
+        }
+        .wiki-input::placeholder{color:rgba(255,255,255,.5)}
+        .wiki-input:focus{border-color:#23d5ab;background:rgba(255,255,255,.25);box-shadow:0 0 20px rgba(35,213,171,.3)}
+        .wiki-submit-btn{width:auto!important;padding:18px 30px!important;white-space:nowrap;background:rgba(35,213,171,.4)!important;border-color:rgba(35,213,171,.6)!important}
+        .wiki-submit-btn:hover{background:rgba(35,213,171,.6)!important;border-color:#23d5ab!important;box-shadow:0 10px 30px rgba(35,213,171,.4)!important}
+        .wiki-loading{text-align:center;padding:40px;color:#fff}
+        .wiki-loading-spinner{width:50px;height:50px;border:4px solid rgba(255,255,255,.2);border-top:4px solid #23d5ab;border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 20px}
+        .wiki-answer{
+            background:rgba(255,255,255,.15);backdrop-filter:blur(15px);
+            border:2px solid rgba(255,255,255,.3);border-radius:20px;
+            padding:30px;color:#fff;text-align:left;animation:fadeInUp .5s;
+            margin-bottom:30px;display:none;
+        }
+        .wiki-answer.show{display:block}
+        .wiki-answer h2{font-size:2rem;margin-bottom:20px;color:#fff;border-bottom:2px solid rgba(255,255,255,.3);padding-bottom:15px}
+        .wiki-answer img{max-width:100%;height:auto;border-radius:15px;margin-bottom:20px;box-shadow:0 10px 30px rgba(0,0,0,.3)}
+        .wiki-answer p{font-size:1.1rem;line-height:1.8;opacity:.95;margin-bottom:15px}
+        .wiki-answer a{color:#23d5ab;text-decoration:none;border-bottom:1px dotted #23d5ab;transition:all .3s}
+        .wiki-answer a:hover{color:#fff;border-bottom-color:#fff}
+        .wiki-read-more{display:inline-block;margin-top:20px;padding:12px 25px;background:rgba(35,213,171,.3);border:2px solid rgba(35,213,171,.5);border-radius:50px;color:#fff;text-decoration:none;transition:all .3s;font-size:1rem}
+        .wiki-read-more:hover{background:rgba(35,213,171,.5);border-color:#23d5ab;transform:translateY(-2px);box-shadow:0 8px 25px rgba(35,213,171,.3)}
+        .wiki-error{text-align:center;padding:30px;color:#fff;background:rgba(255,100,100,.2);border:2px solid rgba(255,100,100,.4);border-radius:15px;animation:fadeInUp .5s}
+        .wiki-error i{font-size:3rem;margin-bottom:15px;display:block}
+        .wiki-suggestions{text-align:center}
+        .wiki-suggestions-title{color:rgba(255,255,255,.7);font-size:1rem;margin-bottom:15px}
+        .wiki-suggestions-list{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+        .wiki-suggestion-btn{padding:10px 20px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:50px;color:#fff;cursor:pointer;transition:all .3s;font-size:.9rem;backdrop-filter:blur(5px)}
+        .wiki-suggestion-btn:hover{background:rgba(255,255,255,.25);border-color:rgba(255,255,255,.5);transform:translateY(-2px);box-shadow:0 5px 15px rgba(0,0,0,.2)}
+        
+        /* Профиль */
+        .profile-roles{display:flex;flex-wrap:wrap;gap:25px;justify-content:center;max-width:1000px;margin:0 auto;padding:20px}
+        .role-card{
+            background:rgba(255,255,255,.15);backdrop-filter:blur(15px);
+            border:2px solid rgba(255,255,255,.3);border-radius:20px;
+            padding:35px 25px;flex:1;min-width:250px;max-width:300px;
+            text-align:center;color:#fff;transition:all .4s cubic-bezier(.175,.885,.32,1.275);
+            position:relative;overflow:hidden;
+        }
+        .role-card:hover{transform:translateY(-8px);box-shadow:0 20px 50px rgba(0,0,0,.3);border-color:rgba(255,255,255,.6);background:rgba(255,255,255,.2)}
+        .role-icon{
+            width:80px;height:80px;border-radius:50%;background:rgba(255,255,255,.2);
+            border:2px solid rgba(255,255,255,.4);display:flex;align-items:center;
+            justify-content:center;margin:0 auto 20px;font-size:2rem;transition:all .4s;
+            box-shadow:0 8px 25px rgba(0,0,0,.2);
+        }
+        .role-card:hover .role-icon{transform:rotate(360deg) scale(1.1);background:rgba(255,255,255,.3);border-color:rgba(255,255,255,.7);box-shadow:0 12px 35px rgba(255,255,255,.25)}
+        .role-admin .role-icon{background:linear-gradient(135deg,rgba(52,211,153,.3),rgba(16,185,129,.2));border-color:rgba(52,211,153,.5)}
+        .role-moderator .role-icon{background:linear-gradient(135deg,rgba(35,166,213,.3),rgba(35,213,171,.2));border-color:rgba(35,166,213,.5)}
+        .role-guest .role-icon{background:linear-gradient(135deg,rgba(255,255,255,.2),rgba(200,200,200,.1));border-color:rgba(255,255,255,.4)}
+        .role-card h2{font-size:1.5rem;margin-bottom:10px;text-shadow:2px 2px 10px rgba(0,0,0,.3)}
+        .role-card p{font-size:.95rem;opacity:.8;margin-bottom:25px;min-height:40px}
+        .role-btn{width:100%!important;padding:14px 20px!important;font-size:1rem!important;background:rgba(255,255,255,.2)!important;border:2px solid rgba(255,255,255,.4)!important;transition:all .3s!important;cursor:pointer}
+        .role-btn:hover{background:rgba(255,255,255,.35)!important;border-color:rgba(255,255,255,.7)!important;transform:translateY(-3px)!important;box-shadow:0 10px 30px rgba(0,0,0,.25)!important}
+        
+        /* Нижняя панель */
+        .bottom-nav{
+            position:fixed;bottom:0;left:0;right:0;height:75px;
+            background:rgba(255,255,255,.15);backdrop-filter:blur(20px);
+            -webkit-backdrop-filter:blur(20px);border-top:2px solid rgba(255,255,255,.3);
+            display:flex;justify-content:space-around;align-items:center;
+            z-index:1000;padding:0 30px;box-shadow:0 -10px 40px rgba(0,0,0,.2);
+            transition:all .5s;
+        }
+        .nav-icon-wrapper{
+            width:48px;height:48px;border-radius:50%;
+            background:rgba(255,255,255,.2);backdrop-filter:blur(5px);
+            border:2px solid rgba(255,255,255,.4);display:flex;align-items:center;
+            justify-content:center;transition:all .4s cubic-bezier(.175,.885,.32,1.275);
+            position:relative;overflow:hidden;box-shadow:0 5px 15px rgba(0,0,0,.15);
+            animation:pulse 2.5s infinite;
+        }
+        .nav-icon-wrapper::before{
+            content:'';position:absolute;inset:-2px;border-radius:50%;
+            background:linear-gradient(135deg,rgba(255,255,255,.4),rgba(255,255,255,0));
+            opacity:0;transition:opacity .4s;z-index:-1;
+        }
+        .nav-item{
+            display:flex;flex-direction:column;align-items:center;gap:6px;
+            cursor:pointer;color:rgba(255,255,255,.7);text-decoration:none;
+            transition:all .3s;padding:5px 10px;position:relative;
+        }
+        .nav-item i{
+            font-size:1.3rem;transition:all .4s cubic-bezier(.175,.885,.32,1.275);
+            position:relative;z-index:2;color:#fff;text-shadow:0 0 10px rgba(255,255,255,.3);
+        }
+        .nav-item span{
+            font-size:.7rem;font-weight:600;letter-spacing:.5px;
+            text-transform:uppercase;transition:all .3s;opacity:.8;
+        }
+        .nav-item:hover .nav-icon-wrapper{
+            transform:rotate(90deg) scale(1.15);background:rgba(255,255,255,.35);
+            border-color:rgba(255,255,255,.7);box-shadow:0 8px 30px rgba(255,255,255,.25);
+        }
+        .nav-item:hover .nav-icon-wrapper::before{opacity:1}
+        .nav-item:hover i{transform:rotate(-90deg)}
+        .nav-item:hover span{opacity:1;transform:translateY(-2px);color:#fff}
+        .nav-item:hover{color:#fff}
+        .nav-plus{position:relative;top:-18px}
+        .plus-wrapper{
+            width:55px!important;height:55px!important;
+            background:linear-gradient(135deg,#ee7752,#e73c7e)!important;
+            border:2px solid rgba(255,255,255,.5)!important;
+            box-shadow:0 8px 25px rgba(238,119,82,.5)!important;
+            animation:plusPulse 2s infinite!important;
+        }
+        .plus-wrapper i{font-size:1.5rem!important}
+        body:has(#nav-main:checked) .nav-item[for=nav-main] .nav-icon-wrapper{
+            background:rgba(255,255,255,.35);border-color:rgba(255,255,255,.7);
+            box-shadow:0 0 25px rgba(255,255,255,.3);
+        }
+        body:has(#nav-main:checked) .nav-item[for=nav-main] span{color:#fff;opacity:1}
+        body:has(#nav-homework:checked) .plus-wrapper{
+            background:linear-gradient(135deg,#23d5ab,#23a6d5)!important;
+            box-shadow:0 8px 30px rgba(35,213,171,.6)!important;
+        }
+        body:has(#nav-homework:checked) .nav-item[for=nav-homework] span{color:#fff;opacity:1}
+        body:has(#nav-profile:checked) .nav-item[for=nav-profile] .nav-icon-wrapper{
+            background:rgba(255,255,255,.35);border-color:rgba(255,255,255,.7);
+            box-shadow:0 0 25px rgba(255,255,255,.3);
+        }
+        body:has(#nav-profile:checked) .nav-item[for=nav-profile] span{color:#fff;opacity:1}
+        
+        /* Темы */
+        body:has(#theme-default:checked){background:linear-gradient(-45deg,#ee7752,#e73c7e,#23a6d5,#23d5ab);background-size:400% 400%}
+        body:has(#theme-light:checked){
+            background:linear-gradient(-45deg,#f5f7fa,#c3cfe2,#e8cbc0,#dcb5ff);background-size:400% 400%;
+        }
+        body:has(#theme-dark:checked){
+            background:linear-gradient(-45deg,#1a1a2e,#16213e,#0f3460,#1a1a2e);background-size:400% 400%;
+        }
+        body:has(#theme-custom:checked){background:linear-gradient(-45deg,var(--c1),var(--c2),var(--c3),var(--c4));background-size:400% 400%}
+        
+        /* Светлая тема */
+        body:has(#theme-light:checked) h1,
+        body:has(#theme-light:checked) .page-title,
+        body:has(#theme-light:checked) .homework-card,
+        body:has(#theme-light:checked) .diary-form,
+        body:has(#theme-light:checked) .settings-section,
+        body:has(#theme-light:checked) .diary-item,
+        body:has(#theme-light:checked) .diary-list,
+        body:has(#theme-light:checked) .role-card{color:#2c3e50}
+        body:has(#theme-light:checked) .btn{background:rgba(255,255,255,.6);border-color:rgba(0,0,0,.2);color:#2c3e50}
+        body:has(#theme-light:checked) .btn:hover{background:rgba(255,255,255,.9);border-color:rgba(0,0,0,.4)}
+        body:has(#theme-light:checked) .homework-card,
+        body:has(#theme-light:checked) .diary-form,
+        body:has(#theme-light:checked) .settings-section{background:rgba(255,255,255,.5);border-color:rgba(0,0,0,.2)}
+        body:has(#theme-light:checked) .diary-item{background:rgba(255,255,255,.4);border-color:rgba(0,0,0,.15)}
+        body:has(#theme-light:checked) .diary-form input,
+        body:has(#theme-light:checked) .diary-form select{background:rgba(255,255,255,.7);border-color:rgba(0,0,0,.2);color:#2c3e50}
+        body:has(#theme-light:checked) .diary-form input::placeholder{color:rgba(0,0,0,.4)}
+        body:has(#theme-light:checked) .diary-form select option{background:#fff;color:#2c3e50}
+        body:has(#theme-light:checked) .teacher-info{color:rgba(0,0,0,.7)}
+        body:has(#theme-light:checked) .theme-btn{background:rgba(255,255,255,.5);border-color:rgba(0,0,0,.2);color:#2c3e50}
+        body:has(#theme-light:checked) .theme-btn:hover{background:rgba(255,255,255,.8)}
+        body:has(#theme-light:checked) .wiki-input{background:rgba(255,255,255,.6);border-color:rgba(0,0,0,.2);color:#2c3e50}
+        body:has(#theme-light:checked) .wiki-input::placeholder{color:rgba(0,0,0,.4)}
+        body:has(#theme-light:checked) .wiki-input:focus{background:rgba(255,255,255,.8)}
+        body:has(#theme-light:checked) .wiki-search-icon{color:rgba(0,0,0,.4)}
+        body:has(#theme-light:checked) .wiki-answer{background:rgba(255,255,255,.5);border-color:rgba(0,0,0,.2);color:#2c3e50}
+        body:has(#theme-light:checked) .wiki-answer h2{color:#2c3e50;border-bottom-color:rgba(0,0,0,.2)}
+        body:has(#theme-light:checked) .wiki-answer p{color:#2c3e50}
+        body:has(#theme-light:checked) .wiki-answer a{color:#1abc9c}
+        body:has(#theme-light:checked) .wiki-suggestion-btn{background:rgba(255,255,255,.5);border-color:rgba(0,0,0,.2);color:#2c3e50}
+        body:has(#theme-light:checked) .wiki-suggestion-btn:hover{background:rgba(255,255,255,.8)}
+        body:has(#theme-light:checked) .wiki-suggestions-title{color:rgba(0,0,0,.6)}
+        body:has(#theme-light:checked) .wiki-loading{color:#2c3e50}
+        body:has(#theme-light:checked) .bottom-nav{background:rgba(255,255,255,.8);border-top-color:rgba(0,0,0,.15);box-shadow:0 -10px 40px rgba(0,0,0,.1)}
+        body:has(#theme-light:checked) .nav-icon-wrapper{background:rgba(0,0,0,.05);border-color:rgba(0,0,0,.2);animation-name:none;box-shadow:0 5px 15px rgba(0,0,0,.1)}
+        body:has(#theme-light:checked) .nav-item{color:rgba(0,0,0,.6)}
+        body:has(#theme-light:checked) .nav-item i{color:#2c3e50;text-shadow:none}
+        body:has(#theme-light:checked) .nav-item:hover .nav-icon-wrapper{background:rgba(0,0,0,.1);border-color:rgba(0,0,0,.4);box-shadow:0 8px 30px rgba(0,0,0,.15)}
+        body:has(#theme-light:checked) .nav-item:hover i{color:#2c3e50}
+        body:has(#theme-light:checked) .nav-item:hover span{color:#2c3e50}
+        body:has(#theme-light:checked) .role-btn{background:rgba(0,0,0,.05)!important;border-color:rgba(0,0,0,.2)!important;color:#2c3e50!important}
+        body:has(#theme-light:checked) .role-btn:hover{background:rgba(0,0,0,.1)!important;border-color:rgba(0,0,0,.4)!important}
+        body:has(#theme-light:checked) .plus-wrapper{animation:none!important;box-shadow:0 8px 25px rgba(0,0,0,.15)!important}
+        body:has(#theme-light:checked) body:has(#nav-main:checked) .nav-item[for=nav-main] .nav-icon-wrapper,
+        body:has(#theme-light:checked) body:has(#nav-profile:checked) .nav-item[for=nav-profile] .nav-icon-wrapper{background:rgba(0,0,0,.1);border-color:rgba(0,0,0,.4);box-shadow:0 0 25px rgba(0,0,0,.15)}
+        body:has(#theme-light:checked) body:has(#nav-main:checked) .nav-item[for=nav-main] span,
+        body:has(#theme-light:checked) body:has(#nav-profile:checked) .nav-item[for=nav-profile] span{color:#2c3e50}
+        
+        /* Тёмная тема */
+        body:has(#theme-dark:checked) .btn{background:rgba(0,0,0,.4);border-color:rgba(255,255,255,.2)}
+        body:has(#theme-dark:checked) .btn:hover{background:rgba(0,0,0,.6);border-color:rgba(255,255,255,.5)}
+        body:has(#theme-dark:checked) .homework-card,
+        body:has(#theme-dark:checked) .diary-form,
+        body:has(#theme-dark:checked) .settings-section{background:rgba(0,0,0,.4);border-color:rgba(255,255,255,.2)}
+        body:has(#theme-dark:checked) .homework-card:hover{background:rgba(0,0,0,.6)}
+        body:has(#theme-dark:checked) .diary-item{background:rgba(0,0,0,.3);border-color:rgba(255,255,255,.15)}
+        body:has(#theme-dark:checked) .diary-form input,
+        body:has(#theme-dark:checked) .diary-form select{background:rgba(0,0,0,.3);border-color:rgba(255,255,255,.2)}
+        body:has(#theme-dark:checked) .diary-form select option{background:#16213e;color:#fff}
+        body:has(#theme-dark:checked) .theme-btn{background:rgba(0,0,0,.4);border-color:rgba(255,255,255,.2)}
+        body:has(#theme-dark:checked) .theme-btn:hover{background:rgba(0,0,0,.6)}
+        body:has(#theme-dark:checked) .wiki-input{background:rgba(0,0,0,.4);border-color:rgba(255,255,255,.2)}
+        body:has(#theme-dark:checked) .wiki-input:focus{background:rgba(0,0,0,.6)}
+        body:has(#theme-dark:checked) .wiki-answer{background:rgba(0,0,0,.4);border-color:rgba(255,255,255,.2)}
+        body:has(#theme-dark:checked) .wiki-suggestion-btn{background:rgba(0,0,0,.4);border-color:rgba(255,255,255,.2)}
+        body:has(#theme-dark:checked) .wiki-suggestion-btn:hover{background:rgba(0,0,0,.6)}
+        body:has(#theme-dark:checked) .bottom-nav{background:rgba(0,0,0,.8);border-top-color:rgba(255,255,255,.1);box-shadow:0 -10px 40px rgba(0,0,0,.5)}
+        body:has(#theme-dark:checked) .role-card{background:rgba(0,0,0,.4);border-color:rgba(255,255,255,.2)}
+        body:has(#theme-dark:checked) .role-icon{background:rgba(255,255,255,.1)}
+        body:has(#theme-dark:checked) .role-btn{background:rgba(0,0,0,.3)!important;border-color:rgba(255,255,255,.2)!important}
+        body:has(#theme-dark:checked) .role-btn:hover{background:rgba(0,0,0,.5)!important;border-color:rgba(255,255,255,.4)!important}
+        
+        /* Адаптив */
+        @media(max-width:600px){
+            body{padding-bottom:80px}
+            h1{font-size:2.5rem;margin-bottom:40px}
+            .btn{padding:15px 30px;font-size:1.1rem;width:300px}
+            .container{padding:20px}
+            .page-title{font-size:2rem}
+            .homework-card{padding:15px}
+            .subject-title{font-size:16px}
+            .homework-content{font-size:14px}
+            .diary-form{padding:20px}
+            .theme-selector{gap:10px}
+            .theme-btn{padding:10px 15px;min-width:90px;font-size:.8rem}
+            .theme-preview{width:50px;height:30px}
+            .color-inputs{gap:10px}
+            .color-group input[type=color]{width:40px;height:40px}
+            .wiki-search-box{flex-direction:column;gap:10px}
+            .wiki-submit-btn{width:100%!important}
+            .wiki-answer{padding:20px}
+            .wiki-answer h2{font-size:1.5rem}
+            .wiki-answer p{font-size:1rem;line-height:1.6}
+            .wiki-suggestions-list{gap:8px}
+            .wiki-suggestion-btn{padding:8px 15px;font-size:.8rem}
+            .bottom-nav{height:60px;padding:0 15px}
+            .nav-icon-wrapper{width:40px;height:40px}
+            .nav-item i{font-size:1.1rem}
+            .nav-item span{font-size:.6rem}
+            .plus-wrapper{width:48px!important;height:48px!important}
+            .plus-wrapper i{font-size:1.3rem!important}
+            .nav-plus{top:-12px}
+            .profile-roles{gap:15px;padding:10px}
+            .role-card{min-width:200px;padding:25px 15px}
+            .role-icon{width:60px;height:60px;font-size:1.5rem}
+            .role-card h2{font-size:1.2rem}
+            .role-card p{font-size:.8rem}
+        }
+    </style>
+</head>
+<body>
+
+    <input type="radio" name="page" id="nav-main" checked>
+    <input type="radio" name="page" id="nav-homework">
+    <input type="radio" name="page" id="nav-diary">
+    <input type="radio" name="page" id="nav-birthdays">
+    <input type="radio" name="page" id="nav-helper">
+    <input type="radio" name="page" id="nav-settings">
+    <input type="radio" name="page" id="nav-wiki">
+    <input type="radio" name="page" id="nav-profile">
+    <input type="radio" name="theme" id="theme-default" checked>
+    <input type="radio" name="theme" id="theme-light">
+    <input type="radio" name="theme" id="theme-dark">
+    <input type="radio" name="theme" id="theme-custom">
+
+    <div class="site-wrapper">
+        <div id="main" class="page">
+            <div class="container">
+                <h1>Сайт с домашкой</h1>
+                <div class="buttons">
+                    <label for="nav-homework" class="btn"><span class="btn-text">Домашнее задание</span></label>
+                    <label for="nav-birthdays" class="btn"><span class="btn-text">Дни рождения</span></label>
+                    <label for="nav-helper" class="btn"><span class="btn-text">Помощник в учебе</span></label>
+                    <label for="nav-settings" class="btn"><span class="btn-text">Настройки</span></label>
+                </div>
+            </div>
+        </div>
+
+        <div id="homework" class="page">
+            <div class="container">
+                <h1 class="page-title">Домашнее задание</h1>
+                <div class="homework-container">
+                    <div class="homework-card"><div class="subject-title"><i class="fas fa-map-marker-alt"></i> География</div><div class="homework-content">Нет дз</div><div class="teacher-info">Преподаватель<br>Екатерина Сергеевна Джанджгава</div></div>
+                    <div class="homework-card"><div class="subject-title"><i class="fas fa-calculator"></i> Алгебра</div><div class="homework-content">№831 {в,е} , 832 , 833 {д , е} , 835 {в,г}</div><div class="teacher-info">Преподаватель<br>Анна Константиновна</div></div>
+                    <div class="homework-card"><div class="subject-title"><i class="fas fa-shapes"></i> Геометрия</div><div class="homework-content">№274 + §37 читать , учить</div><div class="teacher-info">Преподаватель<br>Анна Константиновна</div></div>
+                    <div class="homework-card"><div class="subject-title"><i class="fas fa-atom"></i> Физика</div><div class="homework-content">Нет дз . Сегодня был последний рабочий день Натальи Валерьевны }=</div><div class="teacher-info">Преподаватель<br>Наталья Валерьевна ♥</div></div>
+                    <div class="homework-card"><div class="subject-title"><i class="fas fa-language"></i> Русский язык</div><div class="homework-content">№386</div><div class="teacher-info">Преподаватель<br>Екатерина Сергеевна</div></div>
+                    <div class="homework-card"><div class="subject-title"><i class="fas fa-chart-bar"></i> Вероятность и статистика</div><div class="homework-content"></div><div class="teacher-info">Преподаватель<br>Анна Константиновна</div></div>
+                    <div class="homework-card"><div class="subject-title"><i class="fas fa-dna"></i> Биология</div><div class="homework-content">Нет дз</div><div class="teacher-info">Преподаватель<br>Степанова Светлана Александровна</div></div>
+                    <div class="homework-card"><div class="subject-title"><i class="fas fa-music"></i> Музыка</div><div class="homework-content">РЭШ урок №10</div><div class="teacher-info">Преподаватель</div></div>
+                    <div style="text-align:center;margin:20px 0"><a href="https://resh.edu.ru/subject/lesson/3355/start/" target="_blank" class="btn btn-flash" style="display:inline-block;width:auto;padding:15px 40px;font-size:1.2rem;text-decoration:none"><span class="btn-text">Перейти на РЭШ</span></a></div>
+                    <div class="homework-card"><div class="subject-title"><i class="fas fa-globe"></i> Английский Язык</div><div class="homework-content">Группа Владислава Юрьевича ♥ В чате в сферуме |<br>Группа Натальи Александровны В чате в сферуме</div></div>
+                    <div class="homework-card"><div class="subject-title"><i class="fas fa-book"></i> Литература</div><div class="homework-content">Учить отрывок из произведения Данко</div><div class="teacher-info">Преподаватель<br>Екатерина Сергеевна</div></div>
+                    <div class="homework-card"><div class="subject-title"><i class="fas fa-landmark"></i> История</div><div class="homework-content">учить даты - 27 мая 1703 г. (основание Петербурга), 1704 (строительство Кроншлота и Адмиралтейства). Схематически нарисовать в тетради Заячий остров и Петропавловскую крепость</div><div class="teacher-info">Преподаватель<br>Виктория Константиновна</div></div>
+                    <div class="homework-card"><div class="subject-title"><i class="fas fa-tools"></i> Труд <span class="label-m">М</span></div><div class="homework-content">Нет дз</div><div class="teacher-info">Преподаватель<br>Кирюхин Александр Александрович</div></div>
+                    <div class="homework-card"><div class="subject-title"><i class="fas fa-sewing-needle"></i> Труд <span class="label-d">Д</span></div><div class="homework-content">Нет дз</div></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="diary" class="page">
+            <div class="container">
+                <h1 class="page-title">Привязать электронный дневник</h1>
+                <div class="diary-form">
+                    <label for="diary-name">Название дневника</label>
+                    <input type="text" id="diary-name" placeholder="Например: МЭШ, Сферум, ЭлЖур">
+                    <label for="diary-link">Ссылка на дневник</label>
+                    <input type="url" id="diary-link" placeholder="https://example.com">
+                    <label for="diary-type">Тип дневника</label>
+                    <select id="diary-type"><option value="mэш">МЭШ</option><option value="сферум">Сферум</option><option value="элжур">ЭлЖур</option><option value="другой">Другой</option></select>
+                    <button class="btn-submit" onclick="alert('Функция добавления временно недоступна')"><span class="btn-text">Добавить дневник</span></button>
+                </div>
+                <div class="diary-list">
+                    <h3 style="color:#fff;margin-bottom:15px">Ваши дневники:</h3>
+                    <div class="diary-item"><span>МЭШ</span><span>https://mesh.mos.ru</span></div>
+                    <div class="diary-item"><span>Сферум</span><span>https://sferum.ru</span></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="birthdays" class="page">
+            <div class="container"><h1 class="page-title">Дни рождения</h1><div style="color:#fff;font-size:1.4rem"><p>имя — дата</p><p>имя — дата</p><p>имя - дата</p></div></div>
+        </div>
+
+        <div id="helper" class="page">
+            <div class="container">
+                <h1 class="page-title">Помощник в учебе</h1>
+                <div class="buttons">
+                    <label for="nav-diary" class="btn"><span class="btn-text"><i class="fas fa-book-open"></i> Привязать электронный дневник</span></label>
+                    <label for="nav-wiki" class="btn"><span class="btn-text"><i class="fas fa-robot"></i> Википедия-бот</span></label>
+                </div>
+            </div>
+        </div>
+
+        <div id="wiki" class="page">
+            <div class="container">
+                <h1 class="page-title">Нейросеть Wikipedia</h1>
+                <div class="wiki-bot-container">
+                    <div class="wiki-search-box">
+                        <div class="wiki-input-wrapper"><i class="fas fa-search wiki-search-icon"></i><input type="text" id="wiki-question" placeholder="Введите ваш вопрос..." class="wiki-input"></div>
+                        <button onclick="askWikiQuestion()" class="btn wiki-submit-btn"><span class="btn-text"><i class="fas fa-robot"></i> Спросить</span></button>
+                    </div>
+                    <div id="wiki-loading" class="wiki-loading" style="display:none"><div class="wiki-loading-spinner"></div><p>Ищу информацию...</p></div>
+                    <div id="wiki-answer" class="wiki-answer"></div>
+                    <div id="wiki-suggestions" class="wiki-suggestions">
+                        <p class="wiki-suggestions-title">Популярные запросы:</p>
+                        <div class="wiki-suggestions-list">
+                            <button onclick="quickWikiAsk('Искусственный интеллект')" class="wiki-suggestion-btn">Искусственный интеллект</button>
+                            <button onclick="quickWikiAsk('Солнечная система')" class="wiki-suggestion-btn">Солнечная система</button>
+                            <button onclick="quickWikiAsk('Древний Египет')" class="wiki-suggestion-btn">Древний Египет</button>
+                            <button onclick="quickWikiAsk('Эволюция человека')" class="wiki-suggestion-btn">Эволюция человека</button>
+                            <button onclick="quickWikiAsk('Черные дыры')" class="wiki-suggestion-btn">Черные дыры</button>
+                            <button onclick="quickWikiAsk('Великая Отечественная война')" class="wiki-suggestion-btn">Великая Отечественная война</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="settings" class="page">
+            <div class="container">
+                <h1 class="page-title">Настройки</h1>
+                <div class="settings-container">
+                    <div class="settings-section">
+                        <h3>Тема оформления</h3>
+                        <div class="theme-selector">
+                            <label for="theme-default" class="theme-btn"><span class="theme-preview default-preview"></span> По умолчанию</label>
+                            <label for="theme-light" class="theme-btn"><span class="theme-preview light-preview"></span> Светлая</label>
+                            <label for="theme-dark" class="theme-btn"><span class="theme-preview dark-preview"></span> Тёмная</label>
+                            <label for="theme-custom" class="theme-btn"><span class="theme-preview custom-preview"></span> Свой градиент</label>
+                        </div>
+                    </div>
+                    <div class="settings-section">
+                        <h3>Своя тема</h3>
+                        <div class="gradient-editor">
+                            <div class="color-inputs">
+                                <div class="color-group"><label>Цвет 1</label><input type="color" id="c1i" value="#ee7752" onchange="updateGradient()"></div>
+                                <div class="color-group"><label>Цвет 2</label><input type="color" id="c2i" value="#e73c7e" onchange="updateGradient()"></div>
+                                <div class="color-group"><label>Цвет 3</label><input type="color" id="c3i" value="#23a6d5" onchange="updateGradient()"></div>
+                                <div class="color-group"><label>Цвет 4</label><input type="color" id="c4i" value="#23d5ab" onchange="updateGradient()"></div>
+                            </div>
+                            <p style="font-size:.8rem;opacity:.7;margin-top:10px">Выберите цвета и включите тему «Свой градиент» выше</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="profile" class="page">
+            <div class="container">
+                <h1 class="page-title">Выберите роль</h1>
+                <div class="profile-roles">
+                    <div class="role-card role-admin">
+                        <div class="role-icon"><i class="fas fa-dove"></i></div>
+                        <h2>Администратор</h2>
+                        <p>Полный доступ ко всем настройкам</p>
+                        <button class="btn role-btn" onclick="alert('Функция администратора пока недоступна')"><span class="btn-text">Войти как Admin</span></button>
+                    </div>
+                    <div class="role-card role-moderator">
+                        <div class="role-icon"><i class="fas fa-m"></i></div>
+                        <h2>Модератор</h2>
+                        <p>Доступ к управлению контентом</p>
+                        <button class="btn role-btn" onclick="alert('Функция модератора пока недоступна')"><span class="btn-text">Войти как Moder</span></button>
+                    </div>
+                    <div class="role-card role-guest">
+                        <div class="role-icon"><i class="fas fa-user"></i></div>
+                        <h2>Гость</h2>
+                        <p>Базовый доступ к сайту</p>
+                        <label for="nav-main" class="btn role-btn"><span class="btn-text">Войти как Гость</span></label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <nav class="bottom-nav">
+        <label for="nav-main" class="nav-item"><div class="nav-icon-wrapper"><i class="fas fa-home"></i></div><span>Главная</span></label>
+        <label for="nav-homework" class="nav-item nav-plus"><div class="nav-icon-wrapper plus-wrapper"><i class="fas fa-plus"></i></div><span>ДЗ</span></label>
+        <label for="nav-profile" class="nav-item"><div class="nav-icon-wrapper"><i class="fas fa-user"></i></div><span>Профиль</span></label>
+    </nav>
+
+    <script>
+        function updateGradient(){document.documentElement.style.setProperty('--c1',document.getElementById('c1i').value);document.documentElement.style.setProperty('--c2',document.getElementById('c2i').value);document.documentElement.style.setProperty('--c3',document.getElementById('c3i').value);document.documentElement.style.setProperty('--c4',document.getElementById('c4i').value)}
+        updateGradient();
+        
+        async function askWikiQuestion(){
+            const q=document.getElementById('wiki-question').value.trim(),a=document.getElementById('wiki-answer'),l=document.getElementById('wiki-loading');
+            if(!q){showWikiError('Пожалуйста, введите вопрос.');return}
+            a.style.display='none';l.style.display='block';a.className='wiki-answer';
+            try{
+                const r=await fetch(`https://ru.wikipedia.org/w/api.php?action=query&format=json&origin=*&prop=extracts&exintro&explaintext&generator=search&gsrsearch=${encodeURIComponent(q)}&gsrlimit=1`);
+                const d=await r.json();l.style.display='none';
+                if(d.query&&d.query.pages){
+                    const p=Object.values(d.query.pages)[0],id=p.pageid,title=p.title;
+                    const [img,txt]=await Promise.all([getWikiImage(id),getFullWikiExtract(id)]);
+                    let h=`<h2>${title}</h2>`;
+                    if(img)h+=`<img src="${img}" alt="${title}" loading="lazy">`;
+                    const text=txt||p.extract,paras=text.split('\n').filter(p=>p.trim()).slice(0,3);
+                    h+=paras.map(p=>`<p>${p}</p>`).join('');
+                    h+=`<a href="https://ru.wikipedia.org/wiki/${encodeURIComponent(title)}" target="_blank" class="wiki-read-more"><i class="fas fa-external-link-alt"></i> Читать полностью на Wikipedia</a>`;
+                    a.innerHTML=h;a.style.display='block';a.classList.add('show');a.scrollIntoView({behavior:'smooth',block:'center'});
+                }else showWikiError('Ничего не найдено. Попробуйте переформулировать вопрос.');
+            }catch(e){l.style.display='none';showWikiError('Ошибка при получении данных.');console.error(e)}
+        }
+        function showWikiError(m){const a=document.getElementById('wiki-answer');a.innerHTML=`<div class="wiki-error"><i class="fas fa-exclamation-circle"></i><p>${m}</p></div>`;a.style.display='block';a.classList.add('show')}
+        async function getWikiImage(id){try{const r=await fetch(`https://ru.wikipedia.org/w/api.php?action=query&format=json&origin=*&prop=pageimages&piprop=original&pageids=${id}`);const d=await r.json();const p=d.query.pages[id];return p&&p.original?p.original.source:null}catch(e){return null}}
+        async function getFullWikiExtract(id){try{const r=await fetch(`https://ru.wikipedia.org/w/api.php?action=query&format=json&origin=*&prop=extracts&explaintext&exsectionformat=plain&pageids=${id}`);const d=await r.json();const t=d.query.pages[id]?.extract;return t?t.length>1500?t.substring(0,1500)+'...':t:null}catch(e){return null}}
+        function quickWikiAsk(q){document.getElementById('wiki-question').value=q;askWikiQuestion()}
+        document.addEventListener('DOMContentLoaded',()=>{const i=document.getElementById('wiki-question');if(i)i.addEventListener('keypress',e=>{if(e.key==='Enter')askWikiQuestion()})});
+    </script>
+</body>
+</html>
