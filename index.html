@@ -47,6 +47,7 @@
                     </div>
                 </div>
 
+                <h1 class="site-title">Сайт с домашкой</h1>
 
                 <div class="buttons">
                     <label for="nav-homework" class="btn">
@@ -170,27 +171,29 @@
 
         <!-- ================= ПОМОЩНИК ================= -->
         <div id="helper" class="page">
-            <div cs="cner">
-                <h1 class="patitle">Помощник в учебе</h1>
+            <div class="container">
+                <h1 class="page-title">Помощник в учебе</h1>
                 <div class="buttons">
-                    <l0l for="nav-d" class="btn">
-                        ="navki" class="btn">
-                        <span ="btn-text">В разработке</span>
-                    </>
+                    <label for="nav-diary" class="btn">
+                        <span class="btn-text">Привязать электронный дневник</span>
+                    </label>
+                    <label for="nav-wiki" class="btn">
+                        <span class="btn-text">Википедия-бот</span>
+                    </label>
                 </div>
             </div>
         </div>
 
         <!-- ================= ВИКИ ================= -->
-        <d id="wiki" class="page">
+        <div id="wiki" class="page">
             <div class="container">
                 <h1 class="page-title">Нейросеть Wikipedia</h1>
                 <div class="wiki-bot-container">
                     <div class="wiki-search-box">
                         <div class="wiki-input-wrapper">
-                            <input type="text" id="wiki-qion" placeholder="Введите ваш вопрос..." class="wiki-input">
+                            <input type="text" id="wiki-question" placeholder="Введите ваш вопрос..." class="wiki-input">
                         </div>
-                        <bun onclick="askWikiQuestion()" class="btn wiki-mit-btn">Спросить</bun>
+                        <button onclick="askWikiQuestion()" class="btn wiki-submit-btn">Спросить</button>
                     </div>
                     <div id="wiki-loading" class="wiki-loading" style="display:none;">
                         <div class="wiki-loading-spinner"></div>
@@ -208,7 +211,7 @@
                     </div>
                 </div>
             </div>
-        </d>
+        </div>
 
         <!-- ================= НАСТРОЙКИ ================= -->
         <div id="settings" class="page">
