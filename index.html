@@ -8,17 +8,863 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="styles.css">
     <style>
+        /* ============ БАЗОВЫЕ СБРОСЫ ============ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --c1: #ee7752;
+            --c2: #e73c7e;
+            --c3: #23a6d5;
+            --c4: #23d5ab;
+            --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --text-primary: #ffffff;
+            --glass-bg: rgba(255, 255, 255, 0.15);
+            --glass-border: rgba(255, 255, 255, 0.25);
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.12);
+            --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.18);
+        }
+
         body {
-            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            font-family: var(--font);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(-45deg, var(--c1), var(--c2), var(--c3), var(--c4));
             background-size: 400% 400%;
             animation: gradientBG 12s ease infinite;
+            padding-bottom: 100px;
         }
-        
+
         @keyframes gradientBG {
             0%, 100% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
+        }
+
+        body > input[type="radio"] {
+            display: none;
+        }
+
+        .site-wrapper {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .container {
+            text-align: center;
+            padding: 30px 0;
+        }
+
+        h1, .page-title {
+            color: var(--text-primary);
+            font-weight: 700;
+        }
+
+        .page-title {
+            font-size: 2rem;
+            margin-bottom: 30px;
+        }
+
+        .site-title {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 40px;
+            color: var(--text-primary);
+        }
+
+        /* ============ ЛОГОТИП ============ */
+        .logo-container {
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            user-select: none;
+            margin-bottom: 20px;
+        }
+
+        .esc-key {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(145deg, #2c2c2c, #1a1a1a);
+            border: 2px solid #444;
+            border-radius: 8px;
+            padding: 8px 12px;
+            box-shadow: 0 4px 0 #0a0a0a, 0 6px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .esc-text {
+            font-size: 18px;
+            font-weight: 900;
+            color: #fff;
+            letter-spacing: 1px;
+            line-height: 1;
+        }
+
+        .fiveup-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1;
+        }
+
+        .five {
+            font-size: 32px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .up {
+            font-size: 32px;
+            font-weight: 300;
+            color: #fff;
+            letter-spacing: 2px;
+        }
+
+        /* ============ КНОПКИ ============ */
+        .buttons {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 360px;
+            max-width: 100%;
+            padding: 16px 32px;
+            font-size: 1rem;
+            font-weight: 600;
+            font-family: var(--font);
+            border: none;
+            border-radius: 16px;
+            cursor: pointer;
+            color: var(--text-primary);
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-align: center;
+        }
+
+        .btn:hover {
+            background: rgba(255, 255, 255, 0.22);
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-4px) scale(1.02);
+        }
+
+        /* ============ КНОПКА С ЛЕНТОЙ ============ */
+        .btn-wrapper {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            max-width: 360px;
+            margin: 0 auto;
+        }
+
+        .btn-construction {
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .btn-construction .btn-text {
+            position: relative;
+            z-index: 2;
+        }
+
+        .construction-tape,
+        .construction-tape-second {
+            position: absolute;
+            left: -10%;
+            width: 120%;
+            height: 45px;
+            background: repeating-linear-gradient(
+                45deg,
+                #e74c3c 0px,
+                #e74c3c 25px,
+                #ffffff 25px,
+                #ffffff 50px
+            );
+            transform: rotate(-15deg);
+            z-index: 1;
+            pointer-events: none;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.35);
+            border-top: 2px solid rgba(255, 255, 255, 0.4);
+            border-bottom: 2px solid rgba(0, 0, 0, 0.2);
+            opacity: 0.9;
+        }
+
+        .construction-tape {
+            top: -15%;
+        }
+
+        .construction-tape-second {
+            top: 30%;
+            background: repeating-linear-gradient(
+                -45deg,
+                #e74c3c 0px,
+                #e74c3c 25px,
+                #ffffff 25px,
+                #ffffff 50px
+            );
+            opacity: 0.85;
+        }
+
+        /* ============ НАВИГАЦИЯ ============ */
+        .page {
+            display: none;
+            text-align: center;
+            width: 100%;
+        }
+
+        body:has(#nav-main:checked) #main,
+        body:has(#nav-homework:checked) #homework,
+        body:has(#nav-diary:checked) #diary,
+        body:has(#nav-birthdays:checked) #birthdays,
+        body:has(#nav-helper:checked) #helper,
+        body:has(#nav-wiki:checked) #wiki,
+        body:has(#nav-settings:checked) #settings,
+        body:has(#nav-profile:checked) #profile,
+        body:has(#nav-mod-login:checked) #mod-login,
+        body:has(#nav-mod-edit:checked) #mod-edit {
+            display: block;
+        }
+
+        /* ============ КАРТОЧКИ ДЗ ============ */
+        .homework-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding-bottom: 30px;
+        }
+
+        .homework-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 18px 22px;
+            margin-bottom: 12px;
+            box-shadow: var(--shadow-sm);
+            text-align: left;
+            color: var(--text-primary);
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .homework-card:hover {
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-4px);
+        }
+
+        .subject-title {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .subject-title i {
+            margin-right: 8px;
+        }
+
+        .homework-content {
+            font-size: 0.95rem;
+            opacity: 0.9;
+            margin-bottom: 4px;
+            line-height: 1.5;
+        }
+
+        .teacher-info {
+            font-size: 0.85rem;
+            opacity: 0.7;
+        }
+
+        .edit-pencil {
+            position: absolute;
+            top: 12px;
+            right: 14px;
+            cursor: pointer;
+            color: #fff;
+        }
+
+        /* ============ ДНИ РОЖДЕНИЯ ============ */
+        .birthdays-container {
+            max-width: 700px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 16px;
+            padding-bottom: 30px;
+        }
+
+        .birthday-month-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 18px;
+            color: var(--text-primary);
+            text-align: left;
+            transition: all 0.3s;
+        }
+
+        .birthday-month-card:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-4px);
+        }
+
+        .birthday-month-title {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            text-align: center;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .birthday-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+            font-size: 0.9rem;
+        }
+
+        .birthday-date {
+            opacity: 0.7;
+            font-size: 0.8rem;
+        }
+
+        /* ============ ФОРМЫ ============ */
+        .diary-form,
+        .mod-login-form {
+            max-width: 420px;
+            margin: 0 auto;
+            padding: 24px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            color: var(--text-primary);
+        }
+
+        .diary-form label,
+        .mod-login-form label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+            text-align: left;
+        }
+
+        .diary-form input,
+        .diary-form select,
+        .mod-login-form input {
+            width: 100%;
+            padding: 12px 16px;
+            margin-bottom: 16px;
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 0.95rem;
+            font-family: var(--font);
+            outline: none;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 14px;
+            font-size: 1rem;
+            font-weight: 600;
+            background: rgba(35, 166, 213, 0.5);
+            border: 1px solid rgba(35, 166, 213, 0.6);
+            border-radius: 12px;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-submit:hover {
+            background: rgba(35, 166, 213, 0.65);
+            transform: translateY(-3px);
+        }
+
+        .diary-list-title {
+            color: #fff;
+            margin: 20px 0 12px;
+            font-size: 1rem;
+            text-align: left;
+        }
+
+        .diary-item {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 12px 18px;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            color: #fff;
+            font-size: 0.9rem;
+        }
+
+        /* ============ НАСТРОЙКИ ============ */
+        .settings-container {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .settings-section {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 16px;
+            color: #fff;
+        }
+
+        .settings-section h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        .theme-selector {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .theme-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 12px 16px;
+            cursor: pointer;
+            color: #fff;
+            font-size: 0.8rem;
+            transition: all 0.3s;
+        }
+
+        .theme-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-3px);
+        }
+
+        .theme-preview {
+            width: 50px;
+            height: 30px;
+            border-radius: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .default-preview { background: linear-gradient(135deg, #ee7752, #23a6d5); }
+        .light-preview { background: linear-gradient(135deg, #f5f7fa, #c3cfe2); }
+        .dark-preview { background: linear-gradient(135deg, #1a1a2e, #0f3460); }
+        .custom-preview { background: conic-gradient(red, yellow, lime, aqua, blue, magenta, red); }
+
+        .gradient-editor {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .color-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.75rem;
+            color: #fff;
+        }
+
+        .color-group input[type="color"] {
+            width: 40px;
+            height: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            cursor: pointer;
+            background: transparent;
+        }
+
+        /* ============ СОГЛАШЕНИЕ ============ */
+        .agreement-content {
+            text-align: left;
+            line-height: 1.6;
+        }
+
+        .agreement-text {
+            font-size: 0.9rem;
+            opacity: 0.85;
+            margin-bottom: 12px;
+        }
+
+        .agreement-date {
+            text-align: center;
+            margin-top: 16px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        /* ============ ВИКИ ============ */
+        .wiki-bot-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .wiki-search-box {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .wiki-input-wrapper {
+            flex: 1;
+        }
+
+        .wiki-input {
+            width: 100%;
+            padding: 14px 18px;
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            background: var(--glass-bg);
+            color: #fff;
+            font-size: 0.95rem;
+            font-family: var(--font);
+            outline: none;
+        }
+
+        .wiki-submit-btn {
+            width: auto !important;
+            padding: 14px 24px !important;
+            background: rgba(35, 213, 171, 0.3) !important;
+            border-color: rgba(35, 213, 171, 0.4) !important;
+        }
+
+        .wiki-loading {
+            text-align: center;
+            padding: 30px;
+            color: #fff;
+        }
+
+        .wiki-loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(255, 255, 255, 0.2);
+            border-top: 3px solid #23d5ab;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 12px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .wiki-answer {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            color: #fff;
+            text-align: left;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .wiki-answer.show {
+            display: block;
+        }
+
+        .wiki-answer h2 {
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+        }
+
+        .wiki-answer p {
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: 12px;
+        }
+
+        .wiki-answer a {
+            color: #23d5ab;
+            text-decoration: none;
+        }
+
+        .wiki-suggestions {
+            text-align: center;
+        }
+
+        .wiki-suggestions-title {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+
+        .wiki-suggestions-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        .wiki-suggestion-btn {
+            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            color: #fff;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-family: var(--font);
+            transition: all 0.3s;
+        }
+
+        .wiki-suggestion-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-3px);
+        }
+
+        /* ============ ПРОФИЛЬ ============ */
+        .profile-roles {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            justify-content: center;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .role-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 24px 20px;
+            flex: 1;
+            min-width: 180px;
+            max-width: 220px;
+            color: #fff;
+            transition: all 0.4s;
+        }
+
+        .role-card:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-8px);
+        }
+
+        .role-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 14px;
+            font-size: 1.4rem;
+            transition: all 0.4s;
+        }
+
+        .role-card:hover .role-icon {
+            transform: rotate(360deg) scale(1.1);
+        }
+
+        .role-card h2 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .role-card p {
+            font-size: 0.85rem;
+            opacity: 0.75;
+            margin-bottom: 16px;
+        }
+
+        .role-btn {
+            width: 100% !important;
+            padding: 12px 16px !important;
+            font-size: 0.9rem !important;
+        }
+
+        /* ============ МОДАЛЬНОЕ ОКНО ============ */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        .modal-box {
+            background: rgba(30, 30, 30, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 24px;
+            max-width: 360px;
+            width: 90%;
+            color: #fff;
+            text-align: center;
+        }
+
+        .modal-box h3 {
+            font-size: 1.1rem;
+            margin-bottom: 16px;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .modal-btn {
+            padding: 10px 20px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.15);
+            color: #fff;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .modal-btn.confirm {
+            background: rgba(255, 80, 80, 0.3);
+            border-color: rgba(255, 80, 80, 0.5);
+        }
+
+        /* ============ НИЖНЯЯ НАВИГАЦИЯ ============ */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 70px;
+            background: rgba(10, 20, 30, 0.7);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            z-index: 100;
+            padding: 0 20px;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+            color: rgba(255, 255, 255, 0.7);
+            padding: 6px 12px;
+            border-radius: 10px;
+            transition: all 0.3s;
+        }
+
+        .nav-item:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-item svg {
+            width: 22px;
+            height: 22px;
+        }
+
+        .nav-item span {
+            font-size: 0.7rem;
+        }
+
+        /* ============ ТЕМЫ ============ */
+        body:has(#theme-default:checked) {
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+        }
+
+        body:has(#theme-light:checked) {
+            background: linear-gradient(-45deg, #f5f7fa, #c3cfe2, #e8cbc0, #dcb5ff);
+            background-size: 400% 400%;
+        }
+
+        body:has(#theme-dark:checked) {
+            background: linear-gradient(-45deg, #1a1a2e, #16213e, #0f3460, #1a1a2e);
+            background-size: 400% 400%;
+        }
+
+        body:has(#theme-custom:checked) {
+            background: linear-gradient(-45deg, var(--c1), var(--c2), var(--c3), var(--c4));
+            background-size: 400% 400%;
+        }
+
+        /* ============ АДАПТИВНОСТЬ ============ */
+        @media (max-width: 600px) {
+            .btn {
+                width: 100%;
+                padding: 14px 20px;
+                font-size: 0.95rem;
+            }
+            .birthdays-container {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 10px;
+            }
+            .bottom-nav {
+                height: 60px;
+                padding: 0 12px;
+            }
+            .wiki-search-box {
+                flex-direction: column;
+            }
+            .wiki-submit-btn {
+                width: 100% !important;
+            }
+            .role-card {
+                min-width: 150px;
+                padding: 18px 14px;
+            }
+            .construction-tape,
+            .construction-tape-second {
+                height: 35px;
+            }
         }
     </style>
 </head>
@@ -47,11 +893,9 @@
         <!-- ================= ГЛАВНАЯ ================= -->
         <div id="main" class="page">
             <div class="container">
-                <!-- Логотип Esc FiveUp (НЕ ТРОГАТЬ) -->
                 <div class="logo-container">
                     <div class="esc-key">
                         <span class="esc-text">Esc</span>
-                        <span class="esc-icon"></span>
                     </div>
                     <div class="fiveup-text">
                         <span class="five">Five</span>
@@ -86,9 +930,7 @@
         <div id="homework" class="page">
             <div class="container">
                 <h1 class="page-title">Домашнее задание</h1>
-                <div class="homework-container" id="homework-container">
-                    <!-- Карточки заполняются скриптом -->
-                </div>
+                <div class="homework-container" id="homework-container"></div>
             </div>
         </div>
 
@@ -161,12 +1003,12 @@
             <div class="container">
                 <h1 class="page-title">Электронный дневник</h1>
                 <div class="diary-form">
-                    <label for="diary-name">Название дневника</label>
-                    <input type="text" id="diary-name" placeholder="МЭШ, Сферум, ЭлЖур">
-                    <label for="diary-link">Ссылка на дневник</label>
-                    <input type="url" id="diary-link" placeholder="https://example.com">
-                    <label for="diary-type">Тип дневника</label>
-                    <select id="diary-type">
+                    <label>Название дневника</label>
+                    <input type="text" placeholder="МЭШ, Сферум, ЭлЖур">
+                    <label>Ссылка на дневник</label>
+                    <input type="url" placeholder="https://example.com">
+                    <label>Тип дневника</label>
+                    <select>
                         <option>МЭШ</option>
                         <option>Сферум</option>
                         <option>ЭлЖур</option>
@@ -242,12 +1084,10 @@
                     <div class="settings-section">
                         <h3>Своя тема</h3>
                         <div class="gradient-editor">
-                            <div class="color-inputs">
-                                <div class="color-group"><label>Цвет 1</label><input type="color" id="c1i" value="#ee7752" onchange="updateGradient()"></div>
-                                <div class="color-group"><label>Цвет 2</label><input type="color" id="c2i" value="#e73c7e" onchange="updateGradient()"></div>
-                                <div class="color-group"><label>Цвет 3</label><input type="color" id="c3i" value="#23a6d5" onchange="updateGradient()"></div>
-                                <div class="color-group"><label>Цвет 4</label><input type="color" id="c4i" value="#23d5ab" onchange="updateGradient()"></div>
-                            </div>
+                            <div class="color-group"><label>Цвет 1</label><input type="color" id="c1i" value="#ee7752" onchange="updateGradient()"></div>
+                            <div class="color-group"><label>Цвет 2</label><input type="color" id="c2i" value="#e73c7e" onchange="updateGradient()"></div>
+                            <div class="color-group"><label>Цвет 3</label><input type="color" id="c3i" value="#23a6d5" onchange="updateGradient()"></div>
+                            <div class="color-group"><label>Цвет 4</label><input type="color" id="c4i" value="#23d5ab" onchange="updateGradient()"></div>
                         </div>
                     </div>
                     <div class="settings-section">
@@ -298,7 +1138,7 @@
                 <div class="mod-login-form">
                     <input type="password" id="mod-password" placeholder="Введите пароль" onkeypress="if(event.key==='Enter')checkModPassword()">
                     <button class="btn mod-login-btn" onclick="checkModPassword()">Войти</button>
-                    <p id="mod-error" class="mod-error" style="display:none;">Неверный пароль!</p>
+                    <p id="mod-error" style="display:none;color:#ff6b6b;margin-top:10px;">Неверный пароль!</p>
                 </div>
             </div>
         </div>
@@ -308,11 +1148,11 @@
             <div class="container">
                 <h1 class="page-title">Редактирование домашки</h1>
                 <div class="homework-container" id="mod-homework-container"></div>
-                <div class="mod-actions">
+                <div class="mod-actions" style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
                     <button class="btn" onclick="generateCode()">Завершить и скопировать код</button>
                     <button class="btn" onclick="showLogoutModal()">Выйти</button>
                 </div>
-                <div class="code-output" id="code-output"></div>
+                <div class="code-output" id="code-output" style="display:none;background:rgba(0,0,0,0.3);padding:20px;border-radius:10px;margin-top:20px;color:#fff;text-align:left;max-height:300px;overflow:auto;"></div>
             </div>
         </div>
     </div>
@@ -345,7 +1185,6 @@
     </nav>
 
     <script>
-        // ============ ДАННЫЕ ДОМАШНИХ ЗАДАНИЙ ============
         const homeworkData = [
             { subject: 'География', icon: 'fa-map-marker-alt', content: 'Нет дз', teacher: 'Екатерина Сергеевна Джанджгава' },
             { subject: 'Алгебра', icon: 'fa-calculator', content: '№831 {в,е} , 832 , 833 {д , е} , 835 {в,г}', teacher: 'Анна Константиновна' },
@@ -362,7 +1201,6 @@
             { subject: 'Труд (Д)', icon: 'fa-sewing-needle', content: 'Нет дз', teacher: '' }
         ];
 
-        // ============ ФУНКЦИЯ ОТОБРАЖЕНИЯ ДЗ ============
         function renderHomework(containerId, editable = false) {
             const container = document.getElementById(containerId);
             if (!container) return;
@@ -371,9 +1209,11 @@
                 const card = document.createElement('div');
                 card.className = 'homework-card';
                 if (editable) {
-                    card.innerHTML = `
-                        <div class="edit-pencil" onclick="editHomework(${index})"><i class="fas fa-pencil-alt"></i></div>
-                    `;
+                    const pencil = document.createElement('div');
+                    pencil.className = 'edit-pencil';
+                    pencil.innerHTML = '<i class="fas fa-pencil-alt"></i>';
+                    pencil.onclick = () => editHomework(index);
+                    card.appendChild(pencil);
                 }
                 const iconHtml = item.icon ? `<i class="fas ${item.icon}"></i> ` : '';
                 card.innerHTML += `
@@ -385,7 +1225,6 @@
             });
         }
 
-        // ============ РЕДАКТИРОВАНИЕ ============
         function editHomework(index) {
             const item = homeworkData[index];
             const newContent = prompt(`Редактировать ${item.subject}:`, item.content);
@@ -396,7 +1235,6 @@
             }
         }
 
-        // ============ ГЕНЕРАЦИЯ КОДА ============
         function generateCode() {
             let code = '';
             homeworkData.forEach(item => {
@@ -405,11 +1243,10 @@
             });
             const output = document.getElementById('code-output');
             output.textContent = code;
-            output.classList.add('show');
+            output.style.display = 'block';
             navigator.clipboard.writeText(code).then(() => alert('Код скопирован!'));
         }
 
-        // ============ ПРОВЕРКА ПАРОЛЯ ============
         function checkModPassword() {
             const input = document.getElementById('mod-password').value;
             const error = document.getElementById('mod-error');
@@ -422,7 +1259,6 @@
             }
         }
 
-        // ============ МОДАЛЬНОЕ ОКНО ============
         function showLogoutModal() {
             document.getElementById('logout-modal').classList.add('show');
         }
@@ -436,7 +1272,6 @@
             document.getElementById('nav-profile').checked = true;
         }
 
-        // ============ ГРАДИЕНТ ============
         function updateGradient() {
             document.documentElement.style.setProperty('--c1', document.getElementById('c1i').value);
             document.documentElement.style.setProperty('--c2', document.getElementById('c2i').value);
@@ -444,7 +1279,6 @@
             document.documentElement.style.setProperty('--c4', document.getElementById('c4i').value);
         }
 
-        // ============ ВИКИ ============
         async function askWikiQuestion() {
             const q = document.getElementById('wiki-question').value.trim();
             const a = document.getElementById('wiki-answer');
@@ -476,16 +1310,9 @@
             askWikiQuestion();
         }
 
-        // ============ ИНИЦИАЛИЗАЦИЯ ============
         document.addEventListener('DOMContentLoaded', () => {
             renderHomework('homework-container', false);
             updateGradient();
-            const wikiInput = document.getElementById('wiki-question');
-            if (wikiInput) {
-                wikiInput.addEventListener('keypress', e => {
-                    if (e.key === 'Enter') askWikiQuestion();
-                });
-            }
         });
     </script>
 </body>
