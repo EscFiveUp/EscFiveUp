@@ -9,7 +9,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* ============ БАЗОВЫЕ СБРОСЫ ============ */
         * {
             margin: 0;
             padding: 0;
@@ -22,11 +21,9 @@
             --c3: #23a6d5;
             --c4: #23d5ab;
             --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            --text-primary: #ffffff;
             --glass-bg: rgba(255, 255, 255, 0.15);
             --glass-border: rgba(255, 255, 255, 0.25);
             --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
-            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.12);
             --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.18);
         }
 
@@ -40,15 +37,12 @@
             background-size: 400% 400%;
             animation: gradientBG 12s ease infinite;
             padding-bottom: 100px;
+            color: #fff;
         }
 
         @keyframes gradientBG {
             0%, 100% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
-        }
-
-        body > input[type="radio"] {
-            display: none;
         }
 
         .site-wrapper {
@@ -63,24 +57,30 @@
             padding: 30px 0;
         }
 
-        h1, .page-title {
-            color: var(--text-primary);
-            font-weight: 700;
+        .page {
+            display: none;
+            text-align: center;
+            width: 100%;
+        }
+
+        .page.active {
+            display: block;
         }
 
         .page-title {
             font-size: 2rem;
+            font-weight: 700;
             margin-bottom: 30px;
+            color: #fff;
         }
 
         .site-title {
             font-size: 2rem;
             font-weight: 600;
             margin-bottom: 40px;
-            color: var(--text-primary);
+            color: #fff;
         }
 
-        /* ============ ЛОГОТИП ============ */
         .logo-container {
             display: inline-flex;
             align-items: center;
@@ -92,14 +92,13 @@
 
         .esc-key {
             display: inline-flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
             background: linear-gradient(145deg, #2c2c2c, #1a1a1a);
             border: 2px solid #444;
             border-radius: 8px;
             padding: 8px 12px;
-            box-shadow: 0 4px 0 #0a0a0a, 0 6px 10px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 0 #0a0a0a;
         }
 
         .esc-text {
@@ -107,7 +106,6 @@
             font-weight: 900;
             color: #fff;
             letter-spacing: 1px;
-            line-height: 1;
         }
 
         .fiveup-text {
@@ -132,7 +130,6 @@
             letter-spacing: 2px;
         }
 
-        /* ============ КНОПКИ ============ */
         .buttons {
             display: flex;
             flex-direction: column;
@@ -153,23 +150,22 @@
             border: none;
             border-radius: 16px;
             cursor: pointer;
-            color: var(--text-primary);
+            color: #fff;
             background: var(--glass-bg);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border: 1px solid var(--glass-border);
             box-shadow: var(--shadow-sm);
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: all 0.3s;
             text-align: center;
         }
 
         .btn:hover {
             background: rgba(255, 255, 255, 0.22);
             box-shadow: var(--shadow-lg);
-            transform: translateY(-4px) scale(1.02);
+            transform: translateY(-4px);
         }
 
-        /* ============ КНОПКА С ЛЕНТОЙ ============ */
         .btn-wrapper {
             position: relative;
             display: flex;
@@ -196,59 +192,16 @@
             left: -10%;
             width: 120%;
             height: 45px;
-            background: repeating-linear-gradient(
-                45deg,
-                #e74c3c 0px,
-                #e74c3c 25px,
-                #ffffff 25px,
-                #ffffff 50px
-            );
+            background: repeating-linear-gradient(45deg, #e74c3c 0px, #e74c3c 25px, #ffffff 25px, #ffffff 50px);
             transform: rotate(-15deg);
             z-index: 1;
             pointer-events: none;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.35);
-            border-top: 2px solid rgba(255, 255, 255, 0.4);
-            border-bottom: 2px solid rgba(0, 0, 0, 0.2);
             opacity: 0.9;
         }
 
-        .construction-tape {
-            top: -15%;
-        }
+        .construction-tape { top: -15%; }
+        .construction-tape-second { top: 30%; background: repeating-linear-gradient(-45deg, #e74c3c 0px, #e74c3c 25px, #ffffff 25px, #ffffff 50px); }
 
-        .construction-tape-second {
-            top: 30%;
-            background: repeating-linear-gradient(
-                -45deg,
-                #e74c3c 0px,
-                #e74c3c 25px,
-                #ffffff 25px,
-                #ffffff 50px
-            );
-            opacity: 0.85;
-        }
-
-        /* ============ НАВИГАЦИЯ ============ */
-        .page {
-            display: none;
-            text-align: center;
-            width: 100%;
-        }
-
-        body:has(#nav-main:checked) #main,
-        body:has(#nav-homework:checked) #homework,
-        body:has(#nav-diary:checked) #diary,
-        body:has(#nav-birthdays:checked) #birthdays,
-        body:has(#nav-helper:checked) #helper,
-        body:has(#nav-wiki:checked) #wiki,
-        body:has(#nav-settings:checked) #settings,
-        body:has(#nav-profile:checked) #profile,
-        body:has(#nav-mod-login:checked) #mod-login,
-        body:has(#nav-mod-edit:checked) #mod-edit {
-            display: block;
-        }
-
-        /* ============ КАРТОЧКИ ДЗ ============ */
         .homework-container {
             max-width: 600px;
             margin: 0 auto;
@@ -258,21 +211,19 @@
         .homework-card {
             background: var(--glass-bg);
             backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
             border: 1px solid var(--glass-border);
             border-radius: 16px;
             padding: 18px 22px;
             margin-bottom: 12px;
             box-shadow: var(--shadow-sm);
             text-align: left;
-            color: var(--text-primary);
-            transition: all 0.3s;
+            color: #fff;
             position: relative;
+            transition: all 0.3s;
         }
 
         .homework-card:hover {
             background: rgba(255, 255, 255, 0.2);
-            box-shadow: var(--shadow-lg);
             transform: translateY(-4px);
         }
 
@@ -290,7 +241,6 @@
             font-size: 0.95rem;
             opacity: 0.9;
             margin-bottom: 4px;
-            line-height: 1.5;
         }
 
         .teacher-info {
@@ -303,10 +253,8 @@
             top: 12px;
             right: 14px;
             cursor: pointer;
-            color: #fff;
         }
 
-        /* ============ ДНИ РОЖДЕНИЯ ============ */
         .birthdays-container {
             max-width: 700px;
             margin: 0 auto;
@@ -318,18 +266,11 @@
 
         .birthday-month-card {
             background: var(--glass-bg);
-            backdrop-filter: blur(16px);
             border: 1px solid var(--glass-border);
             border-radius: 16px;
             padding: 18px;
-            color: var(--text-primary);
+            color: #fff;
             text-align: left;
-            transition: all 0.3s;
-        }
-
-        .birthday-month-card:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-4px);
         }
 
         .birthday-month-title {
@@ -348,26 +289,19 @@
             font-size: 0.9rem;
         }
 
-        .birthday-date {
-            opacity: 0.7;
-            font-size: 0.8rem;
-        }
+        .birthday-date { opacity: 0.7; font-size: 0.8rem; }
 
-        /* ============ ФОРМЫ ============ */
-        .diary-form,
-        .mod-login-form {
+        .diary-form, .mod-login-form {
             max-width: 420px;
             margin: 0 auto;
             padding: 24px;
             background: var(--glass-bg);
-            backdrop-filter: blur(16px);
             border: 1px solid var(--glass-border);
             border-radius: 16px;
-            color: var(--text-primary);
+            color: #fff;
         }
 
-        .diary-form label,
-        .mod-login-form label {
+        .diary-form label, .mod-login-form label {
             display: block;
             font-size: 0.9rem;
             font-weight: 600;
@@ -375,9 +309,7 @@
             text-align: left;
         }
 
-        .diary-form input,
-        .diary-form select,
-        .mod-login-form input {
+        .diary-form input, .diary-form select, .mod-login-form input {
             width: 100%;
             padding: 12px 16px;
             margin-bottom: 16px;
@@ -400,20 +332,9 @@
             border-radius: 12px;
             color: #fff;
             cursor: pointer;
-            transition: all 0.3s;
         }
 
-        .btn-submit:hover {
-            background: rgba(35, 166, 213, 0.65);
-            transform: translateY(-3px);
-        }
-
-        .diary-list-title {
-            color: #fff;
-            margin: 20px 0 12px;
-            font-size: 1rem;
-            text-align: left;
-        }
+        .diary-list-title { color: #fff; margin: 20px 0 12px; text-align: left; }
 
         .diary-item {
             background: var(--glass-bg);
@@ -424,18 +345,12 @@
             display: flex;
             justify-content: space-between;
             color: #fff;
-            font-size: 0.9rem;
         }
 
-        /* ============ НАСТРОЙКИ ============ */
-        .settings-container {
-            max-width: 500px;
-            margin: 0 auto;
-        }
+        .settings-container { max-width: 500px; margin: 0 auto; }
 
         .settings-section {
             background: var(--glass-bg);
-            backdrop-filter: blur(16px);
             border: 1px solid var(--glass-border);
             border-radius: 16px;
             padding: 20px;
@@ -443,19 +358,9 @@
             color: #fff;
         }
 
-        .settings-section h3 {
-            font-size: 1rem;
-            font-weight: 700;
-            margin-bottom: 16px;
-            text-align: center;
-        }
+        .settings-section h3 { font-size: 1rem; margin-bottom: 16px; text-align: center; }
 
-        .theme-selector {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
+        .theme-selector { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
 
         .theme-btn {
             display: flex;
@@ -469,89 +374,25 @@
             cursor: pointer;
             color: #fff;
             font-size: 0.8rem;
-            transition: all 0.3s;
         }
 
-        .theme-btn:hover {
-            background: rgba(255, 255, 255, 0.15);
-            transform: translateY(-3px);
-        }
-
-        .theme-preview {
-            width: 50px;
-            height: 30px;
-            border-radius: 6px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-
+        .theme-preview { width: 50px; height: 30px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.3); }
         .default-preview { background: linear-gradient(135deg, #ee7752, #23a6d5); }
         .light-preview { background: linear-gradient(135deg, #f5f7fa, #c3cfe2); }
         .dark-preview { background: linear-gradient(135deg, #1a1a2e, #0f3460); }
         .custom-preview { background: conic-gradient(red, yellow, lime, aqua, blue, magenta, red); }
 
-        .gradient-editor {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            justify-content: center;
-        }
+        .gradient-editor { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+        .color-group { display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 0.75rem; }
+        .color-group input[type="color"] { width: 40px; height: 40px; border-radius: 8px; cursor: pointer; }
 
-        .color-group {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-            font-size: 0.75rem;
-            color: #fff;
-        }
+        .agreement-content { text-align: left; line-height: 1.6; }
+        .agreement-text { font-size: 0.9rem; opacity: 0.85; margin-bottom: 12px; }
+        .agreement-date { text-align: center; margin-top: 16px; padding: 10px; background: rgba(255,255,255,0.08); border-radius: 10px; }
 
-        .color-group input[type="color"] {
-            width: 40px;
-            height: 40px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 8px;
-            cursor: pointer;
-            background: transparent;
-        }
-
-        /* ============ СОГЛАШЕНИЕ ============ */
-        .agreement-content {
-            text-align: left;
-            line-height: 1.6;
-        }
-
-        .agreement-text {
-            font-size: 0.9rem;
-            opacity: 0.85;
-            margin-bottom: 12px;
-        }
-
-        .agreement-date {
-            text-align: center;
-            margin-top: 16px;
-            padding: 10px;
-            background: rgba(255, 255, 255, 0.08);
-            border-radius: 10px;
-            font-size: 0.85rem;
-            font-weight: 600;
-        }
-
-        /* ============ ВИКИ ============ */
-        .wiki-bot-container {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .wiki-search-box {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .wiki-input-wrapper {
-            flex: 1;
-        }
-
+        .wiki-bot-container { max-width: 600px; margin: 0 auto; }
+        .wiki-search-box { display: flex; gap: 10px; margin-bottom: 20px; }
+        .wiki-input-wrapper { flex: 1; }
         .wiki-input {
             width: 100%;
             padding: 14px 18px;
@@ -563,33 +404,7 @@
             font-family: var(--font);
             outline: none;
         }
-
-        .wiki-submit-btn {
-            width: auto !important;
-            padding: 14px 24px !important;
-            background: rgba(35, 213, 171, 0.3) !important;
-            border-color: rgba(35, 213, 171, 0.4) !important;
-        }
-
-        .wiki-loading {
-            text-align: center;
-            padding: 30px;
-            color: #fff;
-        }
-
-        .wiki-loading-spinner {
-            width: 40px;
-            height: 40px;
-            border: 3px solid rgba(255, 255, 255, 0.2);
-            border-top: 3px solid #23d5ab;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-            margin: 0 auto 12px;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
+        .wiki-submit-btn { width: auto !important; padding: 14px 24px !important; }
 
         .wiki-answer {
             background: var(--glass-bg);
@@ -601,74 +416,23 @@
             margin-bottom: 20px;
             display: none;
         }
-
-        .wiki-answer.show {
-            display: block;
-        }
-
-        .wiki-answer h2 {
-            font-size: 1.3rem;
-            margin-bottom: 12px;
-        }
-
-        .wiki-answer p {
-            font-size: 0.95rem;
-            line-height: 1.7;
-            margin-bottom: 12px;
-        }
-
-        .wiki-answer a {
-            color: #23d5ab;
-            text-decoration: none;
-        }
-
-        .wiki-suggestions {
-            text-align: center;
-        }
-
-        .wiki-suggestions-title {
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 0.9rem;
-            margin-bottom: 10px;
-        }
-
-        .wiki-suggestions-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            justify-content: center;
-        }
-
+        .wiki-answer.show { display: block; }
+        .wiki-answer a { color: #23d5ab; }
+        .wiki-suggestions-title { color: rgba(255,255,255,0.7); margin-bottom: 10px; }
+        .wiki-suggestions-list { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
         .wiki-suggestion-btn {
             padding: 8px 16px;
-            background: rgba(255, 255, 255, 0.08);
+            background: rgba(255,255,255,0.08);
             border: 1px solid var(--glass-border);
             border-radius: 20px;
             color: #fff;
             cursor: pointer;
             font-size: 0.85rem;
-            font-family: var(--font);
-            transition: all 0.3s;
         }
 
-        .wiki-suggestion-btn:hover {
-            background: rgba(255, 255, 255, 0.15);
-            transform: translateY(-3px);
-        }
-
-        /* ============ ПРОФИЛЬ ============ */
-        .profile-roles {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 16px;
-            justify-content: center;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
+        .profile-roles { display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; max-width: 700px; margin: 0 auto; }
         .role-card {
             background: var(--glass-bg);
-            backdrop-filter: blur(16px);
             border: 1px solid var(--glass-border);
             border-radius: 20px;
             padding: 24px 20px;
@@ -676,19 +440,14 @@
             min-width: 180px;
             max-width: 220px;
             color: #fff;
-            transition: all 0.4s;
+            transition: all 0.3s;
         }
-
-        .role-card:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-8px);
-        }
-
+        .role-card:hover { transform: translateY(-8px); background: rgba(255,255,255,0.2); }
         .role-icon {
             width: 56px;
             height: 56px;
             border-radius: 16px;
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255,255,255,0.15);
             border: 1px solid var(--glass-border);
             display: flex;
             align-items: center;
@@ -697,47 +456,23 @@
             font-size: 1.4rem;
             transition: all 0.4s;
         }
+        .role-card:hover .role-icon { transform: rotate(360deg); }
+        .role-card h2 { font-size: 1.1rem; margin-bottom: 6px; }
+        .role-card p { font-size: 0.85rem; opacity: 0.75; margin-bottom: 16px; }
+        .role-btn { width: 100% !important; padding: 12px 16px !important; font-size: 0.9rem !important; }
 
-        .role-card:hover .role-icon {
-            transform: rotate(360deg) scale(1.1);
-        }
-
-        .role-card h2 {
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin-bottom: 6px;
-        }
-
-        .role-card p {
-            font-size: 0.85rem;
-            opacity: 0.75;
-            margin-bottom: 16px;
-        }
-
-        .role-btn {
-            width: 100% !important;
-            padding: 12px 16px !important;
-            font-size: 0.9rem !important;
-        }
-
-        /* ============ МОДАЛЬНОЕ ОКНО ============ */
         .modal-overlay {
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0,0,0,0.5);
             z-index: 1000;
             justify-content: center;
             align-items: center;
         }
-
-        .modal-overlay.show {
-            display: flex;
-        }
-
+        .modal-overlay.show { display: flex; }
         .modal-box {
-            background: rgba(30, 30, 30, 0.9);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(30,30,30,0.9);
             border-radius: 20px;
             padding: 24px;
             max-width: 360px;
@@ -745,188 +480,85 @@
             color: #fff;
             text-align: center;
         }
-
-        .modal-box h3 {
-            font-size: 1.1rem;
-            margin-bottom: 16px;
-        }
-
-        .modal-buttons {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-        }
-
+        .modal-buttons { display: flex; gap: 10px; justify-content: center; }
         .modal-btn {
             padding: 10px 20px;
             border-radius: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255,255,255,0.3);
+            background: rgba(255,255,255,0.15);
             color: #fff;
             cursor: pointer;
-            font-size: 0.9rem;
         }
 
-        .modal-btn.confirm {
-            background: rgba(255, 80, 80, 0.3);
-            border-color: rgba(255, 80, 80, 0.5);
-        }
-
-        /* ============ НИЖНЯЯ НАВИГАЦИЯ ============ */
         .bottom-nav {
             position: fixed;
             bottom: 0;
             left: 0;
             right: 0;
             height: 70px;
-            background: rgba(10, 20, 30, 0.7);
+            background: rgba(10,20,30,0.7);
             backdrop-filter: blur(20px);
-            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            border-top: 1px solid rgba(255,255,255,0.15);
             display: flex;
             justify-content: space-around;
             align-items: center;
             z-index: 100;
-            padding: 0 20px;
         }
-
         .nav-item {
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 4px;
             cursor: pointer;
-            color: rgba(255, 255, 255, 0.7);
+            color: rgba(255,255,255,0.7);
             padding: 6px 12px;
             border-radius: 10px;
             transition: all 0.3s;
         }
+        .nav-item:hover { color: #fff; }
+        .nav-item svg { width: 22px; height: 22px; }
+        .nav-item span { font-size: 0.7rem; }
 
-        .nav-item:hover {
-            color: #fff;
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .nav-item svg {
-            width: 22px;
-            height: 22px;
-        }
-
-        .nav-item span {
-            font-size: 0.7rem;
-        }
-
-        /* ============ ТЕМЫ ============ */
-        body:has(#theme-default:checked) {
-            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-            background-size: 400% 400%;
-        }
-
-        body:has(#theme-light:checked) {
-            background: linear-gradient(-45deg, #f5f7fa, #c3cfe2, #e8cbc0, #dcb5ff);
-            background-size: 400% 400%;
-        }
-
-        body:has(#theme-dark:checked) {
-            background: linear-gradient(-45deg, #1a1a2e, #16213e, #0f3460, #1a1a2e);
-            background-size: 400% 400%;
-        }
-
-        body:has(#theme-custom:checked) {
-            background: linear-gradient(-45deg, var(--c1), var(--c2), var(--c3), var(--c4));
-            background-size: 400% 400%;
-        }
-
-        /* ============ АДАПТИВНОСТЬ ============ */
         @media (max-width: 600px) {
-            .btn {
-                width: 100%;
-                padding: 14px 20px;
-                font-size: 0.95rem;
-            }
-            .birthdays-container {
-                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-                gap: 10px;
-            }
-            .bottom-nav {
-                height: 60px;
-                padding: 0 12px;
-            }
-            .wiki-search-box {
-                flex-direction: column;
-            }
-            .wiki-submit-btn {
-                width: 100% !important;
-            }
-            .role-card {
-                min-width: 150px;
-                padding: 18px 14px;
-            }
-            .construction-tape,
-            .construction-tape-second {
-                height: 35px;
-            }
+            .btn { width: 100%; padding: 14px 20px; }
+            .birthdays-container { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+            .bottom-nav { height: 60px; }
+            .wiki-search-box { flex-direction: column; }
+            .wiki-submit-btn { width: 100% !important; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Радио-переключатели страниц -->
-    <input type="radio" name="page" id="nav-main" checked>
-    <input type="radio" name="page" id="nav-homework">
-    <input type="radio" name="page" id="nav-diary">
-    <input type="radio" name="page" id="nav-birthdays">
-    <input type="radio" name="page" id="nav-helper">
-    <input type="radio" name="page" id="nav-settings">
-    <input type="radio" name="page" id="nav-wiki">
-    <input type="radio" name="page" id="nav-profile">
-    <input type="radio" name="page" id="nav-mod-login">
-    <input type="radio" name="page" id="nav-mod-edit">
-
-    <!-- Радио-переключатели тем -->
-    <input type="radio" name="theme" id="theme-default" checked>
-    <input type="radio" name="theme" id="theme-light">
-    <input type="radio" name="theme" id="theme-dark">
-    <input type="radio" name="theme" id="theme-custom">
-
     <div class="site-wrapper">
 
-        <!-- ================= ГЛАВНАЯ ================= -->
-        <div id="main" class="page">
+        <!-- ГЛАВНАЯ -->
+        <div id="main" class="page active">
             <div class="container">
                 <div class="logo-container">
-                    <div class="esc-key">
-                        <span class="esc-text">Esc</span>
-                    </div>
+                    <div class="esc-key"><span class="esc-text">Esc</span></div>
                     <div class="fiveup-text">
                         <span class="five">Five</span>
                         <span class="up">Up</span>
                     </div>
                 </div>
-
                 <h1 class="site-title">Сайт с домашкой</h1>
-
                 <div class="buttons">
-                    <label for="nav-homework" class="btn">
-                        <span class="btn-text">Домашнее задание</span>
-                    </label>
-                    <label for="nav-birthdays" class="btn">
-                        <span class="btn-text">Дни рождения</span>
-                    </label>
+                    <label class="btn" onclick="navigateTo('homework')">Домашнее задание</label>
+                    <label class="btn" onclick="navigateTo('birthdays')">Дни рождения</label>
                     <div class="btn-wrapper">
-                        <label for="nav-helper" class="btn btn-construction">
+                        <label class="btn btn-construction" onclick="navigateTo('helper')">
                             <span class="construction-tape"></span>
                             <span class="construction-tape-second"></span>
                             <span class="btn-text">Помощник в учебе</span>
                         </label>
                     </div>
-                    <label for="nav-settings" class="btn">
-                        <span class="btn-text">Настройки</span>
-                    </label>
+                    <label class="btn" onclick="navigateTo('settings')">Настройки</label>
                 </div>
             </div>
         </div>
 
-        <!-- ================= ДОМАШКА ================= -->
+        <!-- ДОМАШКА -->
         <div id="homework" class="page">
             <div class="container">
                 <h1 class="page-title">Домашнее задание</h1>
@@ -934,140 +566,75 @@
             </div>
         </div>
 
-        <!-- ================= ДНИ РОЖДЕНИЯ ================= -->
+        <!-- ДНИ РОЖДЕНИЯ -->
         <div id="birthdays" class="page">
             <div class="container">
                 <h1 class="page-title">Дни рождения</h1>
                 <div class="birthdays-container">
-                    <div class="birthday-month-card">
-                        <h3 class="birthday-month-title">Январь</h3>
-                        <div class="birthday-item"><span class="birthday-name">Мясоедова Кира</span><span class="birthday-date">1 января</span></div>
-                        <div class="birthday-item"><span class="birthday-name">Соснин Артемий</span><span class="birthday-date">29 января</span></div>
-                    </div>
-                    <div class="birthday-month-card">
-                        <h3 class="birthday-month-title">Февраль</h3>
-                        <div class="birthday-item"><span class="birthday-name">Худяков Артем</span><span class="birthday-date">9 февраля</span></div>
-                        <div class="birthday-item"><span class="birthday-name">Чувичко Алиса</span><span class="birthday-date">16 февраля</span></div>
-                        <div class="birthday-item"><span class="birthday-name">Селиванова Софья</span><span class="birthday-date">21 февраля</span></div>
-                    </div>
-                    <div class="birthday-month-card">
-                        <h3 class="birthday-month-title">Март</h3>
-                        <div class="birthday-item"><span class="birthday-name">Игнашина Мария</span><span class="birthday-date">9 марта</span></div>
-                        <div class="birthday-item"><span class="birthday-name">Орунова Екатерина</span><span class="birthday-date">27 марта</span></div>
-                    </div>
-                    <div class="birthday-month-card">
-                        <h3 class="birthday-month-title">Апрель</h3>
-                        <div class="birthday-item"><span class="birthday-name">Цыбиков Тамир</span><span class="birthday-date">2 апреля</span></div>
-                    </div>
-                    <div class="birthday-month-card">
-                        <h3 class="birthday-month-title">Май</h3>
-                        <div class="birthday-item"><span class="birthday-name">Таранов Артем</span><span class="birthday-date">22 мая</span></div>
-                    </div>
-                    <div class="birthday-month-card">
-                        <h3 class="birthday-month-title">Июнь</h3>
-                        <div class="birthday-item"><span class="birthday-name">Довженок Максим</span><span class="birthday-date">14 июня</span></div>
-                        <div class="birthday-item"><span class="birthday-name">Яшина Марина</span><span class="birthday-date">19 июня</span></div>
-                        <div class="birthday-item"><span class="birthday-name">Попенков Степан</span><span class="birthday-date">26 июня</span></div>
-                        <div class="birthday-item"><span class="birthday-name">Котова Соня</span><span class="birthday-date">30 июня</span></div>
-                        <div class="birthday-item"><span class="birthday-name">Ганичев Ваня</span><span class="birthday-date">30 июня</span></div>
-                    </div>
-                    <div class="birthday-month-card">
-                        <h3 class="birthday-month-title">Август</h3>
-                        <div class="birthday-item"><span class="birthday-name">Джафарова Арина</span><span class="birthday-date">5 августа</span></div>
-                        <div class="birthday-item"><span class="birthday-name">Соловьев Дмитрий</span><span class="birthday-date">8 августа</span></div>
-                        <div class="birthday-item"><span class="birthday-name">Власов Родион</span><span class="birthday-date">17 августа</span></div>
-                    </div>
-                    <div class="birthday-month-card">
-                        <h3 class="birthday-month-title">Сентябрь</h3>
-                        <div class="birthday-item"><span class="birthday-name">Козлов Глеб</span><span class="birthday-date">6 сентября</span></div>
-                        <div class="birthday-item"><span class="birthday-name">Кельбас Алёна</span><span class="birthday-date">20 сентября</span></div>
-                        <div class="birthday-item"><span class="birthday-name">Пасина Зоя</span><span class="birthday-date">27 сентября</span></div>
-                    </div>
-                    <div class="birthday-month-card">
-                        <h3 class="birthday-month-title">Ноябрь</h3>
-                        <div class="birthday-item"><span class="birthday-name">Созыкина Кристина</span><span class="birthday-date">20 ноября</span></div>
-                        <div class="birthday-item"><span class="birthday-name">Школьников Марк</span><span class="birthday-date">21 ноября</span></div>
-                    </div>
-                    <div class="birthday-month-card">
-                        <h3 class="birthday-month-title">Декабрь</h3>
-                        <div class="birthday-item"><span class="birthday-name">Петрова Дарья</span><span class="birthday-date">14 декабря</span></div>
-                        <div class="birthday-item"><span class="birthday-name">Крутова Алена</span><span class="birthday-date">27 декабря</span></div>
-                        <div class="birthday-item"><span class="birthday-name">Бабий Мария</span><span class="birthday-date">29 декабря</span></div>
-                    </div>
+                    <div class="birthday-month-card"><h3>Январь</h3><div class="birthday-item"><span>Мясоедова Кира</span><span>1 января</span></div><div class="birthday-item"><span>Соснин Артемий</span><span>29 января</span></div></div>
+                    <div class="birthday-month-card"><h3>Февраль</h3><div class="birthday-item"><span>Худяков Артем</span><span>9 февраля</span></div><div class="birthday-item"><span>Чувичко Алиса</span><span>16 февраля</span></div><div class="birthday-item"><span>Селиванова Софья</span><span>21 февраля</span></div></div>
+                    <div class="birthday-month-card"><h3>Март</h3><div class="birthday-item"><span>Игнашина Мария</span><span>9 марта</span></div><div class="birthday-item"><span>Орунова Екатерина</span><span>27 марта</span></div></div>
+                    <div class="birthday-month-card"><h3>Апрель</h3><div class="birthday-item"><span>Цыбиков Тамир</span><span>2 апреля</span></div></div>
+                    <div class="birthday-month-card"><h3>Май</h3><div class="birthday-item"><span>Таранов Артем</span><span>22 мая</span></div></div>
+                    <div class="birthday-month-card"><h3>Июнь</h3><div class="birthday-item"><span>Довженок Максим</span><span>14 июня</span></div><div class="birthday-item"><span>Яшина Марина</span><span>19 июня</span></div><div class="birthday-item"><span>Попенков Степан</span><span>26 июня</span></div><div class="birthday-item"><span>Котова Соня</span><span>30 июня</span></div><div class="birthday-item"><span>Ганичев Ваня</span><span>30 июня</span></div></div>
+                    <div class="birthday-month-card"><h3>Август</h3><div class="birthday-item"><span>Джафарова Арина</span><span>5 августа</span></div><div class="birthday-item"><span>Соловьев Дмитрий</span><span>8 августа</span></div><div class="birthday-item"><span>Власов Родион</span><span>17 августа</span></div></div>
+                    <div class="birthday-month-card"><h3>Сентябрь</h3><div class="birthday-item"><span>Козлов Глеб</span><span>6 сентября</span></div><div class="birthday-item"><span>Кельбас Алёна</span><span>20 сентября</span></div><div class="birthday-item"><span>Пасина Зоя</span><span>27 сентября</span></div></div>
+                    <div class="birthday-month-card"><h3>Ноябрь</h3><div class="birthday-item"><span>Созыкина Кристина</span><span>20 ноября</span></div><div class="birthday-item"><span>Школьников Марк</span><span>21 ноября</span></div></div>
+                    <div class="birthday-month-card"><h3>Декабрь</h3><div class="birthday-item"><span>Петрова Дарья</span><span>14 декабря</span></div><div class="birthday-item"><span>Крутова Алена</span><span>27 декабря</span></div><div class="birthday-item"><span>Бабий Мария</span><span>29 декабря</span></div></div>
                 </div>
             </div>
         </div>
 
-        <!-- ================= ДНЕВНИК ================= -->
+        <!-- ДНЕВНИК -->
         <div id="diary" class="page">
             <div class="container">
                 <h1 class="page-title">Электронный дневник</h1>
                 <div class="diary-form">
-                    <label>Название дневника</label>
+                    <label>Название</label>
                     <input type="text" placeholder="МЭШ, Сферум, ЭлЖур">
-                    <label>Ссылка на дневник</label>
+                    <label>Ссылка</label>
                     <input type="url" placeholder="https://example.com">
-                    <label>Тип дневника</label>
-                    <select>
-                        <option>МЭШ</option>
-                        <option>Сферум</option>
-                        <option>ЭлЖур</option>
-                    </select>
-                    <button class="btn-submit" onclick="alert('Функция добавления временно недоступна')">Добавить дневник</button>
-                </div>
-                <div class="diary-list">
-                    <h3 class="diary-list-title">Ваши дневники</h3>
-                    <div class="diary-item"><span>МЭШ</span><span>mesh.mos.ru</span></div>
-                    <div class="diary-item"><span>Сферум</span><span>sferum.ru</span></div>
+                    <label>Тип</label>
+                    <select><option>МЭШ</option><option>Сферум</option><option>ЭлЖур</option></select>
+                    <button class="btn-submit">Добавить дневник</button>
                 </div>
             </div>
         </div>
 
-        <!-- ================= ПОМОЩНИК ================= -->
+        <!-- ПОМОЩНИК -->
         <div id="helper" class="page">
             <div class="container">
                 <h1 class="page-title">Помощник в учебе</h1>
                 <div class="buttons">
-                    <label for="nav-diary" class="btn">
-                        <span class="btn-text">Привязать электронный дневник</span>
-                    </label>
-                    <label for="nav-wiki" class="btn">
-                        <span class="btn-text">Википедия-бот</span>
-                    </label>
+                    <label class="btn" onclick="navigateTo('diary')">Привязать электронный дневник</label>
+                    <label class="btn" onclick="navigateTo('wiki')">Википедия-бот</label>
                 </div>
             </div>
         </div>
 
-        <!-- ================= ВИКИ ================= -->
+        <!-- ВИКИ -->
         <div id="wiki" class="page">
             <div class="container">
                 <h1 class="page-title">Нейросеть Wikipedia</h1>
                 <div class="wiki-bot-container">
                     <div class="wiki-search-box">
-                        <div class="wiki-input-wrapper">
-                            <input type="text" id="wiki-question" placeholder="Введите ваш вопрос..." class="wiki-input">
-                        </div>
-                        <button onclick="askWikiQuestion()" class="btn wiki-submit-btn">Спросить</button>
-                    </div>
-                    <div id="wiki-loading" class="wiki-loading" style="display:none;">
-                        <div class="wiki-loading-spinner"></div>
-                        <p>Ищу информацию...</p>
+                        <input type="text" id="wiki-question" placeholder="Введите ваш вопрос..." class="wiki-input">
+                        <button class="btn wiki-submit-btn" onclick="askWikiQuestion()">Спросить</button>
                     </div>
                     <div id="wiki-answer" class="wiki-answer"></div>
                     <div class="wiki-suggestions">
                         <p class="wiki-suggestions-title">Популярные запросы:</p>
                         <div class="wiki-suggestions-list">
-                            <button onclick="quickWikiAsk('Искусственный интеллект')" class="wiki-suggestion-btn">Искусственный интеллект</button>
-                            <button onclick="quickWikiAsk('Солнечная система')" class="wiki-suggestion-btn">Солнечная система</button>
-                            <button onclick="quickWikiAsk('Древний Египет')" class="wiki-suggestion-btn">Древний Египет</button>
-                            <button onclick="quickWikiAsk('Черные дыры')" class="wiki-suggestion-btn">Черные дыры</button>
+                            <button class="wiki-suggestion-btn" onclick="quickWikiAsk('Искусственный интеллект')">ИИ</button>
+                            <button class="wiki-suggestion-btn" onclick="quickWikiAsk('Солнечная система')">Солнечная система</button>
+                            <button class="wiki-suggestion-btn" onclick="quickWikiAsk('Древний Египет')">Египет</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- ================= НАСТРОЙКИ ================= -->
+        <!-- НАСТРОЙКИ -->
         <div id="settings" class="page">
             <div class="container">
                 <h1 class="page-title">Настройки</h1>
@@ -1075,28 +642,17 @@
                     <div class="settings-section">
                         <h3>Тема оформления</h3>
                         <div class="theme-selector">
-                            <label for="theme-default" class="theme-btn"><span class="theme-preview default-preview"></span> По умолчанию</label>
-                            <label for="theme-light" class="theme-btn"><span class="theme-preview light-preview"></span> Светлая</label>
-                            <label for="theme-dark" class="theme-btn"><span class="theme-preview dark-preview"></span> Тёмная</label>
-                            <label for="theme-custom" class="theme-btn"><span class="theme-preview custom-preview"></span> Свой градиент</label>
-                        </div>
-                    </div>
-                    <div class="settings-section">
-                        <h3>Своя тема</h3>
-                        <div class="gradient-editor">
-                            <div class="color-group"><label>Цвет 1</label><input type="color" id="c1i" value="#ee7752" onchange="updateGradient()"></div>
-                            <div class="color-group"><label>Цвет 2</label><input type="color" id="c2i" value="#e73c7e" onchange="updateGradient()"></div>
-                            <div class="color-group"><label>Цвет 3</label><input type="color" id="c3i" value="#23a6d5" onchange="updateGradient()"></div>
-                            <div class="color-group"><label>Цвет 4</label><input type="color" id="c4i" value="#23d5ab" onchange="updateGradient()"></div>
+                            <label class="theme-btn" onclick="setTheme('default')"><span class="theme-preview default-preview"></span> По умолчанию</label>
+                            <label class="theme-btn" onclick="setTheme('light')"><span class="theme-preview light-preview"></span> Светлая</label>
+                            <label class="theme-btn" onclick="setTheme('dark')"><span class="theme-preview dark-preview"></span> Тёмная</label>
                         </div>
                     </div>
                     <div class="settings-section">
                         <h3>Пользовательское соглашение</h3>
                         <div class="agreement-content">
                             <p class="agreement-text">Администрация сайта стремится предоставлять актуальную информацию о домашних заданиях, но не гарантирует абсолютной точности и полноты размещённых материалов.</p>
-                            <p class="agreement-text">Ответственность за проверку актуальности домашнего задания лежит на самом пользователе. Рекомендуем сверяться с официальными источниками и электронным дневником.</p>
+                            <p class="agreement-text">Ответственность за проверку актуальности домашнего задания лежит на самом пользователе.</p>
                             <p class="agreement-text">Администратор не несёт ответственности за возможные неточности, ошибки или упущения в информации.</p>
-                            <p class="agreement-text">Используя данный сайт, вы соглашаетесь с тем, что информация предоставляется «как есть».</p>
                             <div class="agreement-date">Добавлено на сайт 29.08.2026</div>
                         </div>
                     </div>
@@ -1104,102 +660,89 @@
             </div>
         </div>
 
-        <!-- ================= ПРОФИЛЬ ================= -->
+        <!-- ПРОФИЛЬ -->
         <div id="profile" class="page">
             <div class="container">
                 <h1 class="page-title">Выберите роль</h1>
                 <div class="profile-roles">
-                    <div class="role-card role-admin">
+                    <div class="role-card">
                         <div class="role-icon"><i class="fas fa-dove"></i></div>
                         <h2>Администратор</h2>
-                        <p>Полный доступ ко всем настройкам</p>
-                        <button class="btn role-btn" onclick="alert('Функция администратора пока недоступна')">Войти как Admin</button>
+                        <p>Полный доступ</p>
+                        <button class="btn role-btn">Войти</button>
                     </div>
-                    <div class="role-card role-moderator">
+                    <div class="role-card">
                         <div class="role-icon"><i class="fas fa-shield-halved"></i></div>
                         <h2>Модератор</h2>
-                        <p>Доступ к управлению контентом</p>
-                        <label for="nav-mod-login" class="btn role-btn">Войти как Moder</label>
+                        <p>Управление контентом</p>
+                        <button class="btn role-btn" onclick="navigateTo('mod-login')">Войти</button>
                     </div>
-                    <div class="role-card role-guest">
+                    <div class="role-card">
                         <div class="role-icon"><i class="fas fa-user"></i></div>
                         <h2>Гость</h2>
-                        <p>Базовый доступ к сайту</p>
-                        <label for="nav-main" class="btn role-btn">Войти как Гость</label>
+                        <p>Базовый доступ</p>
+                        <button class="btn role-btn" onclick="navigateTo('main')">Войти</button>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- ================= ВХОД МОДЕРАТОРА ================= -->
+        <!-- ВХОД МОДЕРАТОРА -->
         <div id="mod-login" class="page">
             <div class="container">
                 <h1 class="page-title">Вход для модератора</h1>
                 <div class="mod-login-form">
-                    <input type="password" id="mod-password" placeholder="Введите пароль" onkeypress="if(event.key==='Enter')checkModPassword()">
-                    <button class="btn mod-login-btn" onclick="checkModPassword()">Войти</button>
-                    <p id="mod-error" style="display:none;color:#ff6b6b;margin-top:10px;">Неверный пароль!</p>
+                    <input type="password" id="mod-password" placeholder="Введите пароль">
+                    <button class="btn" onclick="checkModPassword()">Войти</button>
                 </div>
             </div>
         </div>
 
-        <!-- ================= РЕДАКТОР ДЗ ================= -->
+        <!-- РЕДАКТОР -->
         <div id="mod-edit" class="page">
             <div class="container">
                 <h1 class="page-title">Редактирование домашки</h1>
                 <div class="homework-container" id="mod-homework-container"></div>
-                <div class="mod-actions" style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
-                    <button class="btn" onclick="generateCode()">Завершить и скопировать код</button>
-                    <button class="btn" onclick="showLogoutModal()">Выйти</button>
-                </div>
-                <div class="code-output" id="code-output" style="display:none;background:rgba(0,0,0,0.3);padding:20px;border-radius:10px;margin-top:20px;color:#fff;text-align:left;max-height:300px;overflow:auto;"></div>
+                <button class="btn" onclick="generateCode()">Скопировать код</button>
             </div>
         </div>
     </div>
 
-    <!-- Модальное окно выхода -->
-    <div class="modal-overlay" id="logout-modal">
-        <div class="modal-box">
-            <h3>Вы действительно хотите выйти?</h3>
-            <div class="modal-buttons">
-                <button class="modal-btn" onclick="closeLogoutModal()">Отмена</button>
-                <button class="modal-btn confirm" onclick="confirmLogout()">Выйти</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Нижняя навигация -->
+    <!-- НИЖНЯЯ НАВИГАЦИЯ -->
     <nav class="bottom-nav">
-        <label for="nav-main" class="nav-item">
-            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l9-9 9 9"/><path d="M9 21V12h6v9"/></svg>
+        <div class="nav-item" onclick="navigateTo('main')">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12l9-9 9 9"/><path d="M9 21V12h6v9"/></svg>
             <span>Главная</span>
-        </label>
-        <label for="nav-homework" class="nav-item">
-            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        </div>
+        <div class="nav-item" onclick="navigateTo('homework')">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
             <span>ДЗ</span>
-        </label>
-        <label for="nav-profile" class="nav-item">
-            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
+        </div>
+        <div class="nav-item" onclick="navigateTo('profile')">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
             <span>Профиль</span>
-        </label>
+        </div>
     </nav>
 
     <script>
         const homeworkData = [
-            { subject: 'География', icon: 'fa-map-marker-alt', content: 'Нет дз', teacher: 'Екатерина Сергеевна Джанджгава' },
-            { subject: 'Алгебра', icon: 'fa-calculator', content: '№831 {в,е} , 832 , 833 {д , е} , 835 {в,г}', teacher: 'Анна Константиновна' },
-            { subject: 'Геометрия', icon: 'fa-shapes', content: '№274 + §37 читать , учить', teacher: 'Анна Константиновна' },
+            { subject: 'География', icon: 'fa-map-marker-alt', content: 'Нет дз', teacher: 'Екатерина Сергеевна' },
+            { subject: 'Алгебра', icon: 'fa-calculator', content: '№831, 832, 833, 835', teacher: 'Анна Константиновна' },
+            { subject: 'Геометрия', icon: 'fa-shapes', content: '№274 + §37', teacher: 'Анна Константиновна' },
             { subject: 'Физика', icon: 'fa-atom', content: 'Нет дз', teacher: 'Наталья Валерьевна' },
             { subject: 'Русский язык', icon: 'fa-language', content: '№386', teacher: 'Екатерина Сергеевна' },
-            { subject: 'Вероятность и статистика', icon: 'fa-chart-bar', content: '—', teacher: 'Анна Константиновна' },
-            { subject: 'Биология', icon: 'fa-dna', content: 'Нет дз', teacher: 'Степанова Светлана Александровна' },
-            { subject: 'Музыка', icon: 'fa-music', content: 'РЭШ урок №10', teacher: '—' },
-            { subject: 'Английский Язык', icon: 'fa-globe', content: 'Группы в чате Сферума', teacher: '' },
+            { subject: 'Биология', icon: 'fa-dna', content: 'Нет дз', teacher: 'Степанова Светлана' },
+            { subject: 'Музыка', icon: 'fa-music', content: 'РЭШ урок №10', teacher: '' },
             { subject: 'Литература', icon: 'fa-book', content: 'Учить отрывок из «Данко»', teacher: 'Екатерина Сергеевна' },
             { subject: 'История', icon: 'fa-landmark', content: 'Учить даты, нарисовать Заячий остров', teacher: 'Виктория Константиновна' },
-            { subject: 'Труд (М)', icon: 'fa-tools', content: 'Нет дз', teacher: 'Кирюхин Александр Александрович' },
+            { subject: 'Труд (М)', icon: 'fa-tools', content: 'Нет дз', teacher: 'Кирюхин Александр' },
             { subject: 'Труд (Д)', icon: 'fa-sewing-needle', content: 'Нет дз', teacher: '' }
         ];
+
+        function navigateTo(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+        }
 
         function renderHomework(containerId, editable = false) {
             const container = document.getElementById(containerId);
@@ -1241,67 +784,47 @@
                 const iconHtml = item.icon ? `<i class="fas ${item.icon}"></i> ` : '';
                 code += `<div class="homework-card"><div class="subject-title">${iconHtml}${item.subject}</div><div class="homework-content">${item.content}</div>${item.teacher ? `<div class="teacher-info">${item.teacher}</div>` : ''}</div>\n`;
             });
-            const output = document.getElementById('code-output');
-            output.textContent = code;
-            output.style.display = 'block';
             navigator.clipboard.writeText(code).then(() => alert('Код скопирован!'));
         }
 
         function checkModPassword() {
             const input = document.getElementById('mod-password').value;
-            const error = document.getElementById('mod-error');
             if (input === '564255') {
-                error.style.display = 'none';
-                document.getElementById('nav-mod-edit').checked = true;
+                navigateTo('mod-edit');
                 renderHomework('mod-homework-container', true);
             } else {
-                error.style.display = 'block';
+                alert('Неверный пароль!');
             }
         }
 
-        function showLogoutModal() {
-            document.getElementById('logout-modal').classList.add('show');
-        }
-
-        function closeLogoutModal() {
-            document.getElementById('logout-modal').classList.remove('show');
-        }
-
-        function confirmLogout() {
-            document.getElementById('logout-modal').classList.remove('show');
-            document.getElementById('nav-profile').checked = true;
-        }
-
-        function updateGradient() {
-            document.documentElement.style.setProperty('--c1', document.getElementById('c1i').value);
-            document.documentElement.style.setProperty('--c2', document.getElementById('c2i').value);
-            document.documentElement.style.setProperty('--c3', document.getElementById('c3i').value);
-            document.documentElement.style.setProperty('--c4', document.getElementById('c4i').value);
+        function setTheme(theme) {
+            if (theme === 'default') {
+                document.body.style.background = 'linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab)';
+            } else if (theme === 'light') {
+                document.body.style.background = 'linear-gradient(-45deg, #f5f7fa, #c3cfe2, #e8cbc0, #dcb5ff)';
+            } else if (theme === 'dark') {
+                document.body.style.background = 'linear-gradient(-45deg, #1a1a2e, #16213e, #0f3460, #1a1a2e)';
+            }
+            document.body.style.backgroundSize = '400% 400%';
         }
 
         async function askWikiQuestion() {
             const q = document.getElementById('wiki-question').value.trim();
             const a = document.getElementById('wiki-answer');
-            const l = document.getElementById('wiki-loading');
             if (!q) return;
-            a.style.display = 'none';
-            l.style.display = 'block';
+            a.style.display = 'block';
+            a.innerHTML = '<p>Загрузка...</p>';
             try {
                 const r = await fetch(`https://ru.wikipedia.org/w/api.php?action=query&format=json&origin=*&prop=extracts&exintro&explaintext&generator=search&gsrsearch=${encodeURIComponent(q)}&gsrlimit=1`);
                 const d = await r.json();
-                l.style.display = 'none';
                 if (d.query && d.query.pages) {
                     const p = Object.values(d.query.pages)[0];
-                    a.innerHTML = `<h2>${p.title}</h2><p>${p.extract.substring(0, 800)}...</p><a href="https://ru.wikipedia.org/wiki/${encodeURIComponent(p.title)}" target="_blank">Читать полностью</a>`;
+                    a.innerHTML = `<h2>${p.title}</h2><p>${p.extract.substring(0, 500)}...</p>`;
                 } else {
-                    a.innerHTML = `<p>Ничего не найдено.</p>`;
+                    a.innerHTML = '<p>Ничего не найдено.</p>';
                 }
-                a.style.display = 'block';
-                a.classList.add('show');
             } catch (e) {
-                l.style.display = 'none';
-                a.innerHTML = `<p>Ошибка соединения.</p>`;
-                a.style.display = 'block';
+                a.innerHTML = '<p>Ошибка соединения.</p>';
             }
         }
 
@@ -1312,7 +835,6 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             renderHomework('homework-container', false);
-            updateGradient();
         });
     </script>
 </body>
