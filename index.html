@@ -25,25 +25,93 @@
                 <h1>Сайт с домашкой</h1>
 
                 <div class="buttons">
-                    <label class="btn" onclick="navigateTo('homework')">Домашнее задание</label>
-                    <label class="btn" onclick="navigateTo('birthdays')">Дни рождения</label>
-                    <div class="btn-wrapper">
-                        <label class="btn btn-construction" onclick="navigateTo('helper')">
-                            <span class="construction-tape"></span>
-                            <span class="construction-tape-second"></span>
-                            <span class="btn-text">Помощник в учебе</span>
-                        </label>
-                    </div>
-                    <label class="btn" onclick="navigateTo('settings')">Настройки</label>
-                </div>
+    <label class="btn" onclick="navigateTo('homework')">Домашнее задание</label>
+    <label class="btn" onclick="navigateTo('schedule')">Расписание уроков</label>
+    <label class="btn" onclick="navigateTo('birthdays')">Дни рождения</label>
+    <div class="btn-wrapper">
+        <label class="btn btn-construction">
+            <span class="construction-tape"></span>
+            <span class="construction-tape-second"></span>
+            <span class="btn-text">Помощник в учебе</span>
+        </label>
+    </div>
+    <label class="btn" onclick="navigateTo('settings')">Настройки</label>
+</div>
             </div>
         </div>
 
-        <!-- ДОМАШКА -->
-        <div id="homework" class="page">
+<!-- ДОМАШКА -->
+<div id="homework" class="page">
+    <div class="container">
+        <h1 class="page-title">Домашнее задание</h1>
+        <div class="day-selector">
+            <button class="day-btn active" onclick="selectDay('monday', this)">ПН</button>
+            <button class="day-btn" onclick="selectDay('tuesday', this)">ВТ</button>
+            <button class="day-btn" onclick="selectDay('wednesday', this)">СР</button>
+            <button class="day-btn" onclick="selectDay('thursday', this)">ЧТ</button>
+            <button class="day-btn" onclick="selectDay('friday', this)">ПТ</button>
+        </div>
+        <div class="homework-container" id="homework-container"></div>
+    </div>
+</div>
+        <!-- РАСПИСАНИЕ -->
+        <div id="schedule" class="page">
             <div class="container">
-                <h1 class="page-title">Домашнее задание</h1>
-                <div class="homework-container" id="homework-container"></div>
+                <h1 class="page-title">Расписание уроков</h1>
+                <div class="schedule-container">
+<!-- Понедельник -->
+<div class="schedule-day-card">
+    <h3 class="schedule-day-title">Понедельник</h3>
+    <div class="schedule-lessons">
+        <div class="schedule-lesson"><span class="lesson-num">1</span><span class="lesson-time">09:00–09:45</span><span class="lesson-name">Разговоры о важном</span><span class="lesson-room">TEST</span></div>
+        <div class="schedule-lesson"><span class="lesson-num">2</span><span class="lesson-time">10:05–10:50</span><span class="lesson-name">История</span><span class="lesson-room">TEST</span></div>
+        <div class="schedule-lesson"><span class="lesson-num">3</span><span class="lesson-time">11:10–11:55</span><span class="lesson-name">Геометрия</span><span class="lesson-room">TEST</span></div>
+        <div class="schedule-lesson"><span class="lesson-num">4</span><span class="lesson-time">12:10–12:55</span><span class="lesson-name">Иностранный язык (английский)</span><span class="lesson-room">TEST</span></div>
+        <div class="schedule-lesson"><span class="lesson-num">5</span><span class="lesson-time">13:10–13:55</span><span class="lesson-name">Химия</span><span class="lesson-room">TEST</span></div>
+        <div class="schedule-lesson"><span class="lesson-num">6</span><span class="lesson-time">14:05–14:50</span><span class="lesson-name">Биология</span><span class="lesson-room">TEST</span></div>
+        <div class="schedule-lesson"><span class="lesson-num">7</span><span class="lesson-time">15:00–15:45</span><span class="lesson-name">Музыка</span><span class="lesson-room">TEST</span></div>
+    </div>
+</div>
+<!-- Вторник -->
+<div class="schedule-day-card">
+    <h3 class="schedule-day-title">Вторник</h3>
+    <div class="schedule-lessons">
+        <div class="schedule-lesson"><span class="lesson-num">1</span><span class="lesson-time">09:00–09:45</span><span class="lesson-name">Вероятность и статистика</span><span class="lesson-room">TEST</span></div>
+        <div class="schedule-lesson"><span class="lesson-num">2</span><span class="lesson-time">10:05–10:50</span><span class="lesson-name">Русский язык</span><span class="lesson-room">TEST</span></div>
+        <div class="schedule-lesson"><span class="lesson-num">3</span><span class="lesson-time">11:10–11:55</span><span class="lesson-name">Технология</span><span class="lesson-room">TEST</span></div>
+        <div class="schedule-lesson"><span class="lesson-num">4</span><span class="lesson-time">12:10–12:55</span><span class="lesson-name">История</span><span class="lesson-room">TEST</span></div>
+        <div class="schedule-lesson"><span class="lesson-num">5</span><span class="lesson-time">13:10–13:55</span><span class="lesson-name">Алгебра</span><span class="lesson-room">TEST</span></div>
+        <div class="schedule-lesson"><span class="lesson-num">6</span><span class="lesson-time">14:05–14:50</span><span class="lesson-name">Физическая культура</span><span class="lesson-room">TEST</span></div>
+        <div class="schedule-lesson"><span class="lesson-num">7</span><span class="lesson-time">15:00–15:45</span><span class="lesson-name">Информатика</span><span class="lesson-room">TEST</span></div>
+    </div>
+</div>
+
+<!-- Четверг -->
+<div class="schedule-day-card">
+    <h3 class="schedule-day-title">Четверг</h3>
+    <div class="schedule-lessons">
+        <div class="schedule-lesson"><span class="lesson-num">1</span><span class="lesson-time">09:00–09:45</span><span class="lesson-name">Химия</span><span class="lesson-room">TEST</span></div>
+        <div class="schedule-lesson"><span class="lesson-num">2</span><span class="lesson-time">10:05–10:50</span><span class="lesson-name">Алгебра</span><span class="lesson-room">TEST</span></div>
+        <div class="schedule-lesson"><span class="lesson-num">3</span><span class="lesson-time">11:10–11:55</span><span class="lesson-name">Русский язык</span><span class="lesson-room">TEST</span></div>
+        <div class="schedule-lesson"><span class="lesson-num">4</span><span class="lesson-time">12:10–12:55</span><span class="lesson-name">Физическая культура</span><span class="lesson-room">TEST</span></div>
+        <div class="schedule-lesson"><span class="lesson-num">5</span><span class="lesson-time">13:10–13:55</span><span class="lesson-name">Биология</span><span class="lesson-room">TEST</span></div>
+        <div class="schedule-lesson"><span class="lesson-num">6</span><span class="lesson-time">14:05–14:50</span><span class="lesson-name">Русский язык</span><span class="lesson-room">TEST</span></div>
+        <div class="schedule-lesson"><span class="lesson-num">7</span><span class="lesson-time">15:00–15:45</span><span class="lesson-name">Иностранный язык (английский)</span><span class="lesson-room">TEST</span></div>
+    </div>
+</div>
+<!-- Пятница -->
+<div class="schedule-day-card">
+    <h3 class="schedule-day-title">Пятница</h3>
+    <div class="schedule-lessons">
+        <div class="schedule-lesson"><span class="lesson-num">1</span><span class="lesson-time">09:00–09:45</span><span class="lesson-name">Литература</span><span class="lesson-room">TEST</span></div>
+        <div class="schedule-lesson"><span class="lesson-num">2</span><span class="lesson-time">10:05–10:50</span><span class="lesson-name">История</span><span class="lesson-room">TEST</span></div>
+        <div class="schedule-lesson"><span class="lesson-num">3</span><span class="lesson-time">11:10–11:55</span><span class="lesson-name">География</span><span class="lesson-room">TEST</span></div>
+        <div class="schedule-lesson"><span class="lesson-num">4</span><span class="lesson-time">12:10–12:55</span><span class="lesson-name">Алгебра</span><span class="lesson-room">TEST</span></div>
+        <div class="schedule-lesson"><span class="lesson-num">5</span><span class="lesson-time">13:10–13:55</span><span class="lesson-name">Физика</span><span class="lesson-room">TEST</span></div>
+        <div class="schedule-lesson"><span class="lesson-num">6</span><span class="lesson-time">14:05–14:50</span><span class="lesson-name">Информатика</span><span class="lesson-room">TEST</span></div>
+    </div>
+</div>
+                </div>
             </div>
         </div>
 
@@ -93,28 +161,7 @@
             </div>
         </div>
 
-        <!-- ВИКИ -->
-        <div id="wiki" class="page">
-            <div class="container">
-                <h1 class="page-title">Нейросеть Wikipedia</h1>
-                <div class="wiki-bot-container">
-                    <div class="wiki-search-box">
-                        <input type="text" id="wiki-question" placeholder="Введите ваш вопрос..." class="wiki-input">
-                        <button class="btn wiki-submit-btn" onclick="askWikiQuestion()">Спросить</button>
-                    </div>
-                    <div id="wiki-answer" class="wiki-answer"></div>
-                    <div class="wiki-suggestions">
-                        <p style="margin-bottom:10px;opacity:.7;">Популярные запросы:</p>
-                        <div class="wiki-suggestions-list">
-                            <button class="wiki-suggestion-btn" onclick="quickWikiAsk('Искусственный интеллект')">ИИ</button>
-                            <button class="wiki-suggestion-btn" onclick="quickWikiAsk('Солнечная система')">Солнечная система</button>
-                            <button class="wiki-suggestion-btn" onclick="quickWikiAsk('Древний Египет')">Египет</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+      
         <!-- НАСТРОЙКИ -->
         <div id="settings" class="page">
             <div class="container">
@@ -135,6 +182,7 @@
                             <p class="agreement-text">Ответственность за проверку актуальности домашнего задания лежит на самом пользователе.</p>
                             <p class="agreement-text">Администратор не несёт ответственности за возможные неточности, ошибки или упущения в информации.</p>
                             <div class="agreement-date">Добавлено на сайт 29.08.2026</div>
+                                                      <div class="agreement-date">Актуальная версия сайта: EscFiveUp V4.1</div>
                         </div>
                     </div>
                 </div>
@@ -206,120 +254,186 @@
     </nav>
 
     <script>
-        const homeworkData = [
-            { subject: 'География', icon: 'fa-map-marker-alt', content: 'нет дз', teacher: 'Екатерина Сергеевна Джанджгава' },
-            { subject: 'Алгебра', icon: 'fa-calculator', content: '№316, 317, 321', teacher: 'Анна Константиновна' },
-            { subject: 'Химия', icon: 'fa-calculator', content: 'учить правила поведения при работе с химическими веществами стр.20', teacher: 'Наталья Казимировна' },
-            { subject: 'Геометрия', icon: 'fa-shapes', content: '§48, 49 учить №471-475', teacher: 'Анна Константиновна' },
-            { subject: 'Физика', icon: 'fa-atom', content: 'стр. 15 №2', teacher: 'Наталья Валерьевна' },
-            { subject: 'Русский язык', icon: 'fa-language', content: 'Нет дз , старое дз. Разобрать любое предложение по разборам 1,2,3,4,5,6, а так же проект в группах №3', teacher: 'Екатерина Сергеевна' },
-            { subject: 'Вероятность и статистика', icon: 'fa-chart-bar', content: '—', teacher: 'Анна Константиновна' },
-            { subject: 'Биология', icon: 'fa-dna', content: 'Параграф 3 (стр. 14-15) читать, выучить строение животной клетки Найти и выписать сходства и отличия растительной и животной клетки', teacher: 'Степанова Светлана Александровна' },
-            { subject: 'Музыка', icon: 'fa-music', content: 'нет дз', teacher: '' },
-            { subject: 'Английский Язык', icon: 'fa-globe', content: 'Группа Марины Бахытовны учить диалог в парах №3 стр.12', teacher: '' },
-            { subject: 'Литература', icon: 'fa-book', content: 'стр.14 отвечать на вопросы 1-3 письменно+ готовиться к чению повести по ролям', teacher: 'Екатерина Сергеевна' },
-            { subject: 'История', icon: 'fa-landmark', content: 'учить термины, §3' },
-            { subject: 'Труд (М)', icon: 'fa-tools', content: 'Нет дз', teacher: 'Кирюхин Александр' },
-            { subject: 'Труд (Д)', icon: 'fa-sewing-needle', content: 'Нет дз', teacher: '' }
-        ];
+/*
+ * НОВАЯ СТРУКТУРА ДАННЫХ
+ * ----------------------
+ * Каждый предмет описан ОДНИМ объектом:
+ *   subject  — название
+ *   icon     — иконка Font Awesome
+ *   content  — текст домашнего задания (пишется ОДИН раз)
+ *   teacher  — учитель
+ *   days     — массив дней недели, в которых этот предмет есть
+ *
+ * Благодаря этому:
+ *  - Алгебра есть в ВТ, СР, ЧТ, ПТ — пишем ДЗ один раз, а days: ['tuesday','wednesday','thursday','friday']
+ *  - География есть в СР и ПТ — пишем days: ['wednesday','friday']
+ *  - Меняешь content — меняется сразу во всех днях, где есть предмет
+ */
 
-        function navigateTo(pageId) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.getElementById(pageId).classList.add('active');
+const subjectsData = [
+    // ===== ПОНЕДЕЛЬНИК =====
+    { subject: 'Разговоры о важном', icon: 'fa-comments', content: 'Нет дз', teacher: '', days: ['monday'] },
+    { subject: 'История', icon: 'fa-landmark', content: 'учить термины, §3', teacher: 'Виктория Константиновна', days: ['monday', 'tuesday', 'friday'] },
+    { subject: 'Геометрия', icon: 'fa-shapes', content: '§48, 49 учить №471-475', teacher: 'Анна Константиновна', days: ['monday', 'wednesday'] },
+    { subject: 'Иностранный язык (английский)', icon: 'fa-globe', content: 'Группа Марины Бахытовны учить диалог в парах №3 стр.', teacher: '', days: ['monday', 'wednesday', 'thursday'] },
+    { subject: 'Химия', icon: 'fa-flask', content: 'Нет дз', teacher: '', days: ['monday', 'thursday'] },
+    { subject: 'Биология', icon: 'fa-dna', content: 'Параграф 3 (стр. 14-15) читать, выучить строение животной клетки Найти и выписать сходства и отличия растительной и животной клетки', teacher: 'Степанова Светлана Александровна', days: ['monday', 'thursday'] },
+    { subject: 'Музыка', icon: 'fa-music', content: 'Нет дз', teacher: '', days: ['monday'] },
+    { subject: 'Вероятность и статистика', icon: 'fa-chart-bar', content: '—', teacher: 'Анна Константиновна', days: ['tuesday'] },
+    { subject: 'Русский язык', icon: 'fa-language', content: 'нет дз/ старое дз разобрать любое предложение по разборам 1,2,3,4,5,6, а так же проект в группах №3', teacher: 'Екатерина Сергеевна', days: ['tuesday', 'thursday'] },
+    { subject: 'Технология', icon: 'fa-tools', content: 'Нет дз', teacher: 'Кирюхин Александр', days: ['tuesday'] },
+    { subject: 'Алгебра', icon: 'fa-calculator', content: '№316, 317, 321', teacher: 'Анна Константиновна', days: ['tuesday', 'wednesday', 'thursday', 'friday'] },
+    { subject: 'Физическая культура', icon: 'fa-dumbbell', content: 'Нет дз', teacher: '', days: ['tuesday', 'thursday'] },
+    { subject: 'Информатика', icon: 'fa-laptop-code', content: 'Нет дз', teacher: '', days: ['tuesday', 'friday'] },
+    { subject: 'ОБЗР', icon: 'fa-shield-halved', content: 'Нет дз', teacher: '', days: ['wednesday'] },
+    { subject: 'Физика', icon: 'fa-atom', content: '_', teacher: 'Наталья Валерьевна', days: ['wednesday', 'friday'] },
+    { subject: 'География', icon: 'fa-map-marker-alt', content: 'Нет дз', teacher: 'Екатерина Сергеевна Джанджгава', days: ['wednesday', 'friday'] },
+    { subject: 'Литература', icon: 'fa-book', content: 'стр.14 отвечать на вопросы 1-3 письменно+ готовиться к чению повести по ролям', teacher: 'Екатерина Сергеевна', days: ['wednesday', 'friday'] }
+];
+
+/*
+ * ПОРЯДОК ПРЕДМЕТОВ В КАЖДОМ ДНЕ (номера уроков)
+ * Здесь указываем только названия предметов в нужном порядке.
+ * ДЗ и учитель подтянутся из subjectsData автоматически.
+ */
+const scheduleOrder = {
+    monday: [
+        'Разговоры о важном',
+        'История',
+        'Геометрия',
+        'Иностранный язык (английский)',
+        'Химия',
+        'Биология',
+        'Музыка'
+    ],
+    tuesday: [
+        'Вероятность и статистика',
+        'Русский язык',
+        'Технология',
+        'История',
+        'Алгебра',
+        'Физическая культура',
+        'Информатика'
+    ],
+    wednesday: [
+        'ОБЗР',
+        'Физика',
+        'Алгебра',
+        'Геометрия',
+        'География',
+        'Литература',
+        'Иностранный язык (английский)'
+    ],
+    thursday: [
+        'Химия',
+        'Алгебра',
+        'Русский язык',
+        'Физическая культура',
+        'Биология',
+        'Русский язык',
+        'Иностранный язык (английский)'
+    ],
+    friday: [
+        'Литература',
+        'История',
+        'География',
+        'Алгебра',
+        'Физика',
+        'Информатика'
+    ]
+};
+
+let currentDay = 'monday';
+
+function navigateTo(pageId) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById(pageId).classList.add('active');
+}
+
+function selectDay(day, btn) {
+    currentDay = day;
+    document.querySelectorAll('.day-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderHomework();
+}
+
+/* Находим данные предмета по названию */
+function findSubject(name) {
+    return subjectsData.find(s => s.subject === name);
+}
+
+/* Отрисовка домашки для выбранного дня */
+function renderHomework() {
+    const container = document.getElementById('homework-container');
+    if (!container) return;
+    container.innerHTML = '';
+
+    const order = scheduleOrder[currentDay] || [];
+
+    order.forEach((subjectName) => {
+        const item = findSubject(subjectName);
+        if (!item) return;
+
+        const card = document.createElement('div');
+        card.className = 'homework-card';
+        const iconHtml = item.icon ? `<i class="fas ${item.icon}"></i> ` : '';
+        card.innerHTML = `
+            <div class="subject-title">${iconHtml}${item.subject}</div>
+            <div class="homework-content">${item.content}</div>
+            ${item.teacher ? `<div class="teacher-info">${item.teacher}</div>` : ''}
+        `;
+        container.appendChild(card);
+    });
+}
+
+function checkModPassword() {
+    const input = document.getElementById('mod-password').value;
+    if (input === '564255') {
+        alert('Вход выполнен!');
+    } else {
+        alert('Неверный пароль!');
+    }
+}
+
+function setTheme(theme) {
+    if (theme === 'default') {
+        document.body.style.background = 'linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab)';
+    } else if (theme === 'light') {
+        document.body.style.background = 'linear-gradient(-45deg, #f5f7fa, #c3cfe2, #e8cbc0, #dcb5ff)';
+    } else if (theme === 'dark') {
+        document.body.style.background = 'linear-gradient(-45deg, #1a1a2e, #16213e, #0f3460, #1a1a2e)';
+    }
+    document.body.style.backgroundSize = '400% 400%';
+}
+
+async function askWikiQuestion() {
+    const q = document.getElementById('wiki-question').value.trim();
+    const a = document.getElementById('wiki-answer');
+    if (!q) return;
+    a.style.display = 'block';
+    a.innerHTML = '<p>Загрузка...</p>';
+    try {
+        const r = await fetch(`https://ru.wikipedia.org/w/api.php?action=query&format=json&origin=*&prop=extracts&exintro&explaintext&generator=search&gsrsearch=${encodeURIComponent(q)}&gsrlimit=1`);
+        const d = await r.json();
+        if (d.query && d.query.pages) {
+            const p = Object.values(d.query.pages)[0];
+            a.innerHTML = `<h2>${p.title}</h2><p>${p.extract.substring(0, 500)}...</p>`;
+        } else {
+            a.innerHTML = '<p>Ничего не найдено.</p>';
         }
+    } catch (e) {
+        a.innerHTML = '<p>Ошибка соединения.</p>';
+    }
+}
 
-        function renderHomework(containerId, editable = false) {
-            const container = document.getElementById(containerId);
-            if (!container) return;
-            container.innerHTML = '';
-            homeworkData.forEach((item, index) => {
-                const card = document.createElement('div');
-                card.className = 'homework-card';
-                if (editable) {
-                    const pencil = document.createElement('div');
-                    pencil.className = 'edit-pencil';
-                    pencil.innerHTML = '<i class="fas fa-pencil-alt"></i>';
-                    pencil.onclick = () => editHomework(index);
-                    card.appendChild(pencil);
-                }
-                const iconHtml = item.icon ? `<i class="fas ${item.icon}"></i> ` : '';
-                card.innerHTML += `
-                    <div class="subject-title">${iconHtml}${item.subject}</div>
-                    <div class="homework-content">${item.content}</div>
-                    ${item.teacher ? `<div class="teacher-info">${item.teacher}</div>` : ''}
-                `;
-                container.appendChild(card);
-            });
-        }
+function quickWikiAsk(q) {
+    document.getElementById('wiki-question').value = q;
+    askWikiQuestion();
+}
 
-        function editHomework(index) {
-            const item = homeworkData[index];
-            const newContent = prompt(`Редактировать ${item.subject}:`, item.content);
-            if (newContent !== null) {
-                item.content = newContent;
-                renderHomework('mod-homework-container', true);
-                renderHomework('homework-container', false);
-            }
-        }
-
-        function generateCode() {
-            let code = '';
-            homeworkData.forEach(item => {
-                const iconHtml = item.icon ? `<i class="fas ${item.icon}"></i> ` : '';
-                code += `<div class="homework-card"><div class="subject-title">${iconHtml}${item.subject}</div><div class="homework-content">${item.content}</div>${item.teacher ? `<div class="teacher-info">${item.teacher}</div>` : ''}</div>\n`;
-            });
-            navigator.clipboard.writeText(code).then(() => alert('Код скопирован!'));
-        }
-
-        function checkModPassword() {
-            const input = document.getElementById('mod-password').value;
-            if (input === '564255') {
-                navigateTo('mod-edit');
-                renderHomework('mod-homework-container', true);
-            } else {
-                alert('Неверный пароль!');
-            }
-        }
-
-        function setTheme(theme) {
-            if (theme === 'default') {
-                document.body.style.background = 'linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab)';
-            } else if (theme === 'light') {
-                document.body.style.background = 'linear-gradient(-45deg, #f5f7fa, #c3cfe2, #e8cbc0, #dcb5ff)';
-            } else if (theme === 'dark') {
-                document.body.style.background = 'linear-gradient(-45deg, #1a1a2e, #16213e, #0f3460, #1a1a2e)';
-            }
-            document.body.style.backgroundSize = '400% 400%';
-        }
-
-        async function askWikiQuestion() {
-            const q = document.getElementById('wiki-question').value.trim();
-            const a = document.getElementById('wiki-answer');
-            if (!q) return;
-            a.style.display = 'block';
-            a.innerHTML = '<p>Загрузка...</p>';
-            try {
-                const r = await fetch(`https://ru.wikipedia.org/w/api.php?action=query&format=json&origin=*&prop=extracts&exintro&explaintext&generator=search&gsrsearch=${encodeURIComponent(q)}&gsrlimit=1`);
-                const d = await r.json();
-                if (d.query && d.query.pages) {
-                    const p = Object.values(d.query.pages)[0];
-                    a.innerHTML = `<h2>${p.title}</h2><p>${p.extract.substring(0, 500)}...</p>`;
-                } else {
-                    a.innerHTML = '<p>Ничего не найдено.</p>';
-                }
-            } catch (e) {
-                a.innerHTML = '<p>Ошибка соединения.</p>';
-            }
-        }
-
-        function quickWikiAsk(q) {
-            document.getElementById('wiki-question').value = q;
-            askWikiQuestion();
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            renderHomework('homework-container', false);
-        });
+document.addEventListener('DOMContentLoaded', () => {
+    renderHomework();
+});
     </script>
 </body>
 </html>
