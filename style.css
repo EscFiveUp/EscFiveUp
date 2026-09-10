@@ -177,6 +177,42 @@ h1 {
     box-shadow: 0 5px 15px rgba(0, 0, 0, .2);
 }
 
+/* КНОПКИ ДНЕЙ НЕДЕЛИ */
+.day-selector {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+}
+
+.day-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    border: 2px solid rgba(255, 255, 255, .4);
+    background: rgba(255, 255, 255, .15);
+    color: #fff;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all .3s;
+    letter-spacing: 1px;
+}
+
+.day-btn:hover {
+    transform: translateY(-3px);
+    background: rgba(255, 255, 255, .3);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, .2);
+}
+
+.day-btn.active {
+    background: linear-gradient(135deg, #23d5ab, #23a6d5);
+    border-color: rgba(255, 255, 255, .8);
+    box-shadow: 0 8px 25px rgba(35, 213, 171, .5);
+    transform: translateY(-3px);
+}
+
 /* КНОПКА С ЛЕНТОЙ */
 .btn-wrapper {
     position: relative;
@@ -275,6 +311,101 @@ h1 {
 .edit-pencil:hover {
     opacity: 1;
     transform: scale(1.2);
+}
+
+/* РАСПИСАНИЕ */
+.schedule-container {
+    max-width: 700px;
+    margin: 0 auto;
+    padding-bottom: 30px;
+}
+
+.schedule-day-card {
+    background: rgba(255, 255, 255, .15);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, .3);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 18px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, .15);
+    transition: all .3s;
+}
+
+.schedule-day-card:hover {
+    transform: translateY(-3px);
+    background: rgba(255, 255, 255, .2);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, .25);
+}
+
+.schedule-day-title {
+    font-size: 1.2rem;
+    font-weight: 800;
+    margin-bottom: 15px;
+    text-align: center;
+    padding-bottom: 10px;
+    border-bottom: 2px solid rgba(255, 255, 255, .3);
+    letter-spacing: 1px;
+}
+
+.schedule-lessons {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.schedule-lesson {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    background: rgba(255, 255, 255, .08);
+    border-radius: 8px;
+    transition: all .3s;
+    font-size: 0.9rem;
+}
+
+.schedule-lesson:hover {
+    background: rgba(255, 255, 255, .15);
+    transform: translateX(5px);
+}
+
+.lesson-num {
+    min-width: 25px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, .2);
+    border-radius: 50%;
+    font-weight: 700;
+    font-size: 0.8rem;
+    flex-shrink: 0;
+}
+
+.lesson-time {
+    min-width: 80px;
+    font-size: 0.8rem;
+    opacity: .8;
+    flex-shrink: 0;
+}
+
+.lesson-name {
+    flex: 1;
+    text-align: left;
+    font-weight: 500;
+}
+
+.lesson-room {
+    min-width: 50px;
+    text-align: center;
+    padding: 3px 8px;
+    background: rgba(255, 255, 255, .15);
+    border: 1px solid rgba(255, 255, 255, .3);
+    border-radius: 5px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    flex-shrink: 0;
 }
 
 /* ДНИ РОЖДЕНИЯ */
@@ -658,4 +789,8 @@ h1 {
     .wiki-search-box { flex-direction: column; }
     .wiki-submit-btn { width: 100% !important; }
     .role-card { min-width: 150px; }
+    .schedule-lesson { flex-wrap: wrap; gap: 5px; }
+    .lesson-time { min-width: 70px; }
+    .lesson-room { margin-left: auto; }
+    .day-btn { width: 45px; height: 45px; font-size: 0.8rem; }
 }
