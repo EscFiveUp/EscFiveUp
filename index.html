@@ -6,8 +6,226 @@
     <title>Сайт с домашкой</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* ============================================================
+           ЭКРАН ЗАГРУЗКИ — ПОЛНАЯ АНИМАЦИЯ
+           ============================================================ */
+        #preloader {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: grad 8s ease infinite;
+            color: #fff;
+            transition: opacity .8s ease, visibility .8s ease;
+            overflow: hidden;
+        }
+
+        #preloader.hide { opacity: 0; visibility: hidden; }
+
+        #preloader::before,
+        #preloader::after {
+            content: '';
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,255,255,.15), transparent 70%);
+            pointer-events: none;
+        }
+        #preloader::before { top: -200px; left: -200px; animation: floatBlob 10s ease-in-out infinite; }
+        #preloader::after  { bottom: -200px; right: -200px; animation: floatBlob 12s ease-in-out infinite reverse; }
+
+        .loader-container {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 26px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .loader-logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            user-select: none;
+            opacity: 0;
+            animation: logoAppear .7s cubic-bezier(.2,.9,.3,1.4) .2s forwards;
+        }
+
+        .loader-logo .esc-key {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(145deg, #2c2c2c, #1a1a1a);
+            border: 2px solid #444;
+            border-radius: 8px;
+            padding: 8px 12px;
+            box-shadow: 0 4px 0 #0a0a0a, 0 6px 10px rgba(0, 0, 0, 0.3);
+            transform: translateX(-40px) rotate(-15deg);
+            opacity: 0;
+            animation: escAppear .6s cubic-bezier(.2,.9,.3,1.4) .3s forwards;
+        }
+
+        .loader-logo .esc-text { font-size: 18px; font-weight: 900; color: #fff; letter-spacing: 1px; }
+
+        .loader-logo .fiveup-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1;
+            transform: translateX(-20px);
+            opacity: 0;
+            animation: fiveAppear .6s cubic-bezier(.2,.9,.3,1.4) .55s forwards;
+        }
+
+        .loader-logo .five {
+            font-size: 32px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .loader-logo .up { font-size: 32px; font-weight: 300; color: #fff; letter-spacing: 2px; }
+
+        .loader-title {
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, .3);
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: 3px solid rgba(255,255,255,.9);
+            width: 0;
+            margin: 0 auto;
+            opacity: 0;
+            animation:
+                showTitle .4s ease .25s forwards,
+                typing 1.6s steps(18, end) .6s forwards,
+                caret .7s step-end .6s 5,
+                hideCaret 0s linear 3.2s forwards;
+        }
+
+        .loader-progress {
+            width: 320px;
+            max-width: 80vw;
+            height: 8px;
+            background: rgba(255, 255, 255, .2);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, .35);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, .2);
+            opacity: 0;
+            animation: fadeInUp .7s ease .2s forwards;
+        }
+
+        .loader-progress-fill {
+            height: 100%;
+            width: 0%;
+            border-radius: 10px;
+            background: linear-gradient(90deg, #23d5ab, #23a6d5, #23d5ab);
+            background-size: 200% 100%;
+            box-shadow: 0 0 15px rgba(35, 213, 171, .8);
+            animation:
+                barFill 2.6s cubic-bezier(.6,.05,.4,1) .3s forwards,
+                shineBar 1s linear infinite;
+        }
+
+        .loader-text {
+            font-size: .85rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            opacity: 0;
+            animation: fadeInUp .6s ease .4s forwards;
+        }
+
+        .loader-text .dot {
+            display: inline-block;
+            width: 4px;
+            height: 4px;
+            margin-left: 3px;
+            border-radius: 50%;
+            background: #fff;
+            opacity: .3;
+            animation: dotBlink 1.2s infinite;
+        }
+        .loader-text .dot:nth-child(2) { animation-delay: .2s; }
+        .loader-text .dot:nth-child(3) { animation-delay: .4s; }
+
+        @keyframes grad {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        @keyframes logoAppear {
+            from { opacity: 0; transform: scale(.85); }
+            to   { opacity: 1; transform: scale(1); }
+        }
+        @keyframes escAppear {
+            from { opacity: 0; transform: translateX(-40px) rotate(-15deg); }
+            to   { opacity: 1; transform: translateX(0) rotate(0); }
+        }
+        @keyframes fiveAppear {
+            from { opacity: 0; transform: translateX(-20px); }
+            to   { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes showTitle { to { opacity: 1; } }
+        @keyframes typing { from { width: 0; } to { width: 18ch; } }
+        @keyframes caret { 50% { border-color: transparent; } }
+        @keyframes hideCaret { to { border-color: transparent; } }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(15px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes barFill { from { width: 0%; } to { width: 100%; } }
+        @keyframes shineBar {
+            from { background-position: 0% 50%; }
+            to   { background-position: 200% 50%; }
+        }
+        @keyframes dotBlink {
+            0%, 100% { opacity: .25; transform: scale(1); }
+            50%      { opacity: 1;   transform: scale(1.3); }
+        }
+        @keyframes floatBlob {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50%      { transform: translate(40px, -30px) scale(1.1); }
+        }
+    </style>
 </head>
 <body>
+
+    <!-- ===== ЭКРАН ЗАГРУЗКИ ===== -->
+    <div id="preloader">
+        <div class="loader-container">
+            <div class="loader-logo">
+                <div class="esc-key"><span class="esc-text">Esc</span></div>
+                <div class="fiveup-text">
+                    <span class="five">Five</span>
+                    <span class="up">Up</span>
+                </div>
+            </div>
+
+            <h1 class="loader-title">Сайт с домашкой</h1>
+
+            <div class="loader-progress">
+                <div class="loader-progress-fill"></div>
+            </div>
+
+            <div class="loader-text">
+                Загрузка<span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            </div>
+        </div>
+    </div>
 
     <div class="site-wrapper">
 
@@ -25,92 +243,88 @@
                 <h1>Сайт с домашкой</h1>
 
                 <div class="buttons">
-    <label class="btn" onclick="navigateTo('homework')">Домашнее задание</label>
-    <label class="btn" onclick="navigateTo('schedule')">Расписание уроков</label>
-    <label class="btn" onclick="navigateTo('birthdays')">Дни рождения</label>
-    <div class="btn-wrapper">
-        <label class="btn btn-construction">
-            <span class="construction-tape"></span>
-            <span class="construction-tape-second"></span>
-            <span class="btn-text">Помощник в учебе</span>
-        </label>
-    </div>
-    <label class="btn" onclick="navigateTo('settings')">Настройки</label>
-</div>
+                    <label class="btn" onclick="navigateTo('homework')">Домашнее задание</label>
+                    <label class="btn" onclick="navigateTo('schedule')">Расписание уроков</label>
+                    <label class="btn" onclick="navigateTo('birthdays')">Дни рождения</label>
+                    <div class="btn-wrapper">
+                        <label class="btn btn-construction">
+                            <span class="construction-tape"></span>
+                            <span class="construction-tape-second"></span>
+                            <span class="btn-text">Помощник в учебе</span>
+                        </label>
+                    </div>
+                    <label class="btn" onclick="navigateTo('settings')">Настройки</label>
+                </div>
             </div>
         </div>
 
-<!-- ДОМАШКА -->
-<div id="homework" class="page">
-    <div class="container">
-        <h1 class="page-title">Домашнее задание</h1>
-        <div class="day-selector">
-            <button class="day-btn active" onclick="selectDay('monday', this)">ПН</button>
-            <button class="day-btn" onclick="selectDay('tuesday', this)">ВТ</button>
-            <button class="day-btn" onclick="selectDay('wednesday', this)">СР</button>
-            <button class="day-btn" onclick="selectDay('thursday', this)">ЧТ</button>
-            <button class="day-btn" onclick="selectDay('friday', this)">ПТ</button>
+        <!-- ДОМАШКА -->
+        <div id="homework" class="page">
+            <div class="container">
+                <h1 class="page-title">Домашнее задание</h1>
+                <div class="day-selector">
+                    <button class="day-btn active" onclick="selectDay('monday', this)">ПН</button>
+                    <button class="day-btn" onclick="selectDay('tuesday', this)">ВТ</button>
+                    <button class="day-btn" onclick="selectDay('wednesday', this)">СР</button>
+                    <button class="day-btn" onclick="selectDay('thursday', this)">ЧТ</button>
+                    <button class="day-btn" onclick="selectDay('friday', this)">ПТ</button>
+                </div>
+                <div class="homework-container" id="homework-container"></div>
+            </div>
         </div>
-        <div class="homework-container" id="homework-container"></div>
-    </div>
-</div>
+
         <!-- РАСПИСАНИЕ -->
         <div id="schedule" class="page">
             <div class="container">
                 <h1 class="page-title">Расписание уроков</h1>
                 <div class="schedule-container">
-<!-- Понедельник -->
-<div class="schedule-day-card">
-    <h3 class="schedule-day-title">Понедельник</h3>
-    <div class="schedule-lessons">
-        <div class="schedule-lesson"><span class="lesson-num">1</span><span class="lesson-time">09:00–09:45</span><span class="lesson-name">Разговоры о важном</span><span class="lesson-room">TEST</span></div>
-        <div class="schedule-lesson"><span class="lesson-num">2</span><span class="lesson-time">10:05–10:50</span><span class="lesson-name">История</span><span class="lesson-room">TEST</span></div>
-        <div class="schedule-lesson"><span class="lesson-num">3</span><span class="lesson-time">11:10–11:55</span><span class="lesson-name">Геометрия</span><span class="lesson-room">TEST</span></div>
-        <div class="schedule-lesson"><span class="lesson-num">4</span><span class="lesson-time">12:10–12:55</span><span class="lesson-name">Иностранный язык (английский)</span><span class="lesson-room">TEST</span></div>
-        <div class="schedule-lesson"><span class="lesson-num">5</span><span class="lesson-time">13:10–13:55</span><span class="lesson-name">Химия</span><span class="lesson-room">TEST</span></div>
-        <div class="schedule-lesson"><span class="lesson-num">6</span><span class="lesson-time">14:05–14:50</span><span class="lesson-name">Биология</span><span class="lesson-room">TEST</span></div>
-        <div class="schedule-lesson"><span class="lesson-num">7</span><span class="lesson-time">15:00–15:45</span><span class="lesson-name">Музыка</span><span class="lesson-room">TEST</span></div>
-    </div>
-</div>
-<!-- Вторник -->
-<div class="schedule-day-card">
-    <h3 class="schedule-day-title">Вторник</h3>
-    <div class="schedule-lessons">
-        <div class="schedule-lesson"><span class="lesson-num">1</span><span class="lesson-time">09:00–09:45</span><span class="lesson-name">Вероятность и статистика</span><span class="lesson-room">TEST</span></div>
-        <div class="schedule-lesson"><span class="lesson-num">2</span><span class="lesson-time">10:05–10:50</span><span class="lesson-name">Русский язык</span><span class="lesson-room">TEST</span></div>
-        <div class="schedule-lesson"><span class="lesson-num">3</span><span class="lesson-time">11:10–11:55</span><span class="lesson-name">Технология</span><span class="lesson-room">TEST</span></div>
-        <div class="schedule-lesson"><span class="lesson-num">4</span><span class="lesson-time">12:10–12:55</span><span class="lesson-name">История</span><span class="lesson-room">TEST</span></div>
-        <div class="schedule-lesson"><span class="lesson-num">5</span><span class="lesson-time">13:10–13:55</span><span class="lesson-name">Алгебра</span><span class="lesson-room">TEST</span></div>
-        <div class="schedule-lesson"><span class="lesson-num">6</span><span class="lesson-time">14:05–14:50</span><span class="lesson-name">Физическая культура</span><span class="lesson-room">TEST</span></div>
-        <div class="schedule-lesson"><span class="lesson-num">7</span><span class="lesson-time">15:00–15:45</span><span class="lesson-name">Информатика</span><span class="lesson-room">TEST</span></div>
-    </div>
-</div>
-
-<!-- Четверг -->
-<div class="schedule-day-card">
-    <h3 class="schedule-day-title">Четверг</h3>
-    <div class="schedule-lessons">
-        <div class="schedule-lesson"><span class="lesson-num">1</span><span class="lesson-time">09:00–09:45</span><span class="lesson-name">Химия</span><span class="lesson-room">TEST</span></div>
-        <div class="schedule-lesson"><span class="lesson-num">2</span><span class="lesson-time">10:05–10:50</span><span class="lesson-name">Алгебра</span><span class="lesson-room">TEST</span></div>
-        <div class="schedule-lesson"><span class="lesson-num">3</span><span class="lesson-time">11:10–11:55</span><span class="lesson-name">Русский язык</span><span class="lesson-room">TEST</span></div>
-        <div class="schedule-lesson"><span class="lesson-num">4</span><span class="lesson-time">12:10–12:55</span><span class="lesson-name">Физическая культура</span><span class="lesson-room">TEST</span></div>
-        <div class="schedule-lesson"><span class="lesson-num">5</span><span class="lesson-time">13:10–13:55</span><span class="lesson-name">Биология</span><span class="lesson-room">TEST</span></div>
-        <div class="schedule-lesson"><span class="lesson-num">6</span><span class="lesson-time">14:05–14:50</span><span class="lesson-name">Русский язык</span><span class="lesson-room">TEST</span></div>
-        <div class="schedule-lesson"><span class="lesson-num">7</span><span class="lesson-time">15:00–15:45</span><span class="lesson-name">Иностранный язык (английский)</span><span class="lesson-room">TEST</span></div>
-    </div>
-</div>
-<!-- Пятница -->
-<div class="schedule-day-card">
-    <h3 class="schedule-day-title">Пятница</h3>
-    <div class="schedule-lessons">
-        <div class="schedule-lesson"><span class="lesson-num">1</span><span class="lesson-time">09:00–09:45</span><span class="lesson-name">Литература</span><span class="lesson-room">TEST</span></div>
-        <div class="schedule-lesson"><span class="lesson-num">2</span><span class="lesson-time">10:05–10:50</span><span class="lesson-name">История</span><span class="lesson-room">TEST</span></div>
-        <div class="schedule-lesson"><span class="lesson-num">3</span><span class="lesson-time">11:10–11:55</span><span class="lesson-name">География</span><span class="lesson-room">TEST</span></div>
-        <div class="schedule-lesson"><span class="lesson-num">4</span><span class="lesson-time">12:10–12:55</span><span class="lesson-name">Алгебра</span><span class="lesson-room">TEST</span></div>
-        <div class="schedule-lesson"><span class="lesson-num">5</span><span class="lesson-time">13:10–13:55</span><span class="lesson-name">Физика</span><span class="lesson-room">TEST</span></div>
-        <div class="schedule-lesson"><span class="lesson-num">6</span><span class="lesson-time">14:05–14:50</span><span class="lesson-name">Информатика</span><span class="lesson-room">TEST</span></div>
-    </div>
-</div>
+                    <div class="schedule-day-card">
+                        <h3 class="schedule-day-title">Понедельник</h3>
+                        <div class="schedule-lessons">
+                            <div class="schedule-lesson"><span class="lesson-num">1</span><span class="lesson-time">09:00–09:45</span><span class="lesson-name">Разговоры о важном</span><span class="lesson-room">TEST</span></div>
+                            <div class="schedule-lesson"><span class="lesson-num">2</span><span class="lesson-time">10:05–10:50</span><span class="lesson-name">История</span><span class="lesson-room">TEST</span></div>
+                            <div class="schedule-lesson"><span class="lesson-num">3</span><span class="lesson-time">11:10–11:55</span><span class="lesson-name">Геометрия</span><span class="lesson-room">TEST</span></div>
+                            <div class="schedule-lesson"><span class="lesson-num">4</span><span class="lesson-time">12:10–12:55</span><span class="lesson-name">Иностранный язык (английский)</span><span class="lesson-room">TEST</span></div>
+                            <div class="schedule-lesson"><span class="lesson-num">5</span><span class="lesson-time">13:10–13:55</span><span class="lesson-name">Химия</span><span class="lesson-room">TEST</span></div>
+                            <div class="schedule-lesson"><span class="lesson-num">6</span><span class="lesson-time">14:05–14:50</span><span class="lesson-name">Биология</span><span class="lesson-room">TEST</span></div>
+                            <div class="schedule-lesson"><span class="lesson-num">7</span><span class="lesson-time">15:00–15:45</span><span class="lesson-name">Музыка</span><span class="lesson-room">TEST</span></div>
+                        </div>
+                    </div>
+                    <div class="schedule-day-card">
+                        <h3 class="schedule-day-title">Вторник</h3>
+                        <div class="schedule-lessons">
+                            <div class="schedule-lesson"><span class="lesson-num">1</span><span class="lesson-time">09:00–09:45</span><span class="lesson-name">Вероятность и статистика</span><span class="lesson-room">TEST</span></div>
+                            <div class="schedule-lesson"><span class="lesson-num">2</span><span class="lesson-time">10:05–10:50</span><span class="lesson-name">Русский язык</span><span class="lesson-room">TEST</span></div>
+                            <div class="schedule-lesson"><span class="lesson-num">3</span><span class="lesson-time">11:10–11:55</span><span class="lesson-name">Технология</span><span class="lesson-room">TEST</span></div>
+                            <div class="schedule-lesson"><span class="lesson-num">4</span><span class="lesson-time">12:10–12:55</span><span class="lesson-name">История</span><span class="lesson-room">TEST</span></div>
+                            <div class="schedule-lesson"><span class="lesson-num">5</span><span class="lesson-time">13:10–13:55</span><span class="lesson-name">Алгебра</span><span class="lesson-room">TEST</span></div>
+                            <div class="schedule-lesson"><span class="lesson-num">6</span><span class="lesson-time">14:05–14:50</span><span class="lesson-name">Физическая культура</span><span class="lesson-room">TEST</span></div>
+                            <div class="schedule-lesson"><span class="lesson-num">7</span><span class="lesson-time">15:00–15:45</span><span class="lesson-name">Информатика</span><span class="lesson-room">TEST</span></div>
+                        </div>
+                    </div>
+                    <div class="schedule-day-card">
+                        <h3 class="schedule-day-title">Четверг</h3>
+                        <div class="schedule-lessons">
+                            <div class="schedule-lesson"><span class="lesson-num">1</span><span class="lesson-time">09:00–09:45</span><span class="lesson-name">Химия</span><span class="lesson-room">TEST</span></div>
+                            <div class="schedule-lesson"><span class="lesson-num">2</span><span class="lesson-time">10:05–10:50</span><span class="lesson-name">Алгебра</span><span class="lesson-room">TEST</span></div>
+                            <div class="schedule-lesson"><span class="lesson-num">3</span><span class="lesson-time">11:10–11:55</span><span class="lesson-name">Русский язык</span><span class="lesson-room">TEST</span></div>
+                            <div class="schedule-lesson"><span class="lesson-num">4</span><span class="lesson-time">12:10–12:55</span><span class="lesson-name">Физическая культура</span><span class="lesson-room">TEST</span></div>
+                            <div class="schedule-lesson"><span class="lesson-num">5</span><span class="lesson-time">13:10–13:55</span><span class="lesson-name">Биология</span><span class="lesson-room">TEST</span></div>
+                            <div class="schedule-lesson"><span class="lesson-num">6</span><span class="lesson-time">14:05–14:50</span><span class="lesson-name">Русский язык</span><span class="lesson-room">TEST</span></div>
+                            <div class="schedule-lesson"><span class="lesson-num">7</span><span class="lesson-time">15:00–15:45</span><span class="lesson-name">Иностранный язык (английский)</span><span class="lesson-room">TEST</span></div>
+                        </div>
+                    </div>
+                    <div class="schedule-day-card">
+                        <h3 class="schedule-day-title">Пятница</h3>
+                        <div class="schedule-lessons">
+                            <div class="schedule-lesson"><span class="lesson-num">1</span><span class="lesson-time">09:00–09:45</span><span class="lesson-name">Литература</span><span class="lesson-room">TEST</span></div>
+                            <div class="schedule-lesson"><span class="lesson-num">2</span><span class="lesson-time">10:05–10:50</span><span class="lesson-name">История</span><span class="lesson-room">TEST</span></div>
+                            <div class="schedule-lesson"><span class="lesson-num">3</span><span class="lesson-time">11:10–11:55</span><span class="lesson-name">География</span><span class="lesson-room">TEST</span></div>
+                            <div class="schedule-lesson"><span class="lesson-num">4</span><span class="lesson-time">12:10–12:55</span><span class="lesson-name">Алгебра</span><span class="lesson-room">TEST</span></div>
+                            <div class="schedule-lesson"><span class="lesson-num">5</span><span class="lesson-time">13:10–13:55</span><span class="lesson-name">Физика</span><span class="lesson-room">TEST</span></div>
+                            <div class="schedule-lesson"><span class="lesson-num">6</span><span class="lesson-time">14:05–14:50</span><span class="lesson-name">Информатика</span><span class="lesson-room">TEST</span></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -134,34 +348,6 @@
             </div>
         </div>
 
-        <!-- ДНЕВНИК -->
-        <div id="diary" class="page">
-            <div class="container">
-                <h1 class="page-title">Электронный дневник</h1>
-                <div class="diary-form">
-                    <label>Название дневника</label>
-                    <input type="text" placeholder="МЭШ, Сферум, ЭлЖур">
-                    <label>Ссылка на дневник</label>
-                    <input type="url" placeholder="https://example.com">
-                    <label>Тип дневника</label>
-                    <select><option>МЭШ</option><option>Сферум</option><option>ЭлЖур</option></select>
-                    <button class="btn-submit">Добавить дневник</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- ПОМОЩНИК -->
-        <div id="helper" class="page">
-            <div class="container">
-                <h1 class="page-title">Помощник в учебе</h1>
-                <div class="buttons">
-                    <label class="btn" onclick="navigateTo('diary')">Привязать электронный дневник</label>
-                    <label class="btn" onclick="navigateTo('wiki')">Википедия-бот</label>
-                </div>
-            </div>
-        </div>
-
-      
         <!-- НАСТРОЙКИ -->
         <div id="settings" class="page">
             <div class="container">
@@ -182,7 +368,6 @@
                             <p class="agreement-text">Ответственность за проверку актуальности домашнего задания лежит на самом пользователе.</p>
                             <p class="agreement-text">Администратор не несёт ответственности за возможные неточности, ошибки или упущения в информации.</p>
                             <div class="agreement-date">Добавлено на сайт 29.08.2026</div>
-                                                      <div class="agreement-date">Актуальная версия сайта: EscFiveUp V4.1</div>
                         </div>
                     </div>
                 </div>
@@ -226,15 +411,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- РЕДАКТОР -->
-        <div id="mod-edit" class="page">
-            <div class="container">
-                <h1 class="page-title">Редактирование домашки</h1>
-                <div class="homework-container" id="mod-homework-container"></div>
-                <button class="btn" onclick="generateCode()">Завершить и скопировать код</button>
-            </div>
-        </div>
     </div>
 
     <!-- НИЖНЯЯ НАВИГАЦИЯ -->
@@ -254,186 +430,107 @@
     </nav>
 
     <script>
-/*
- * НОВАЯ СТРУКТУРА ДАННЫХ
- * ----------------------
- * Каждый предмет описан ОДНИМ объектом:
- *   subject  — название
- *   icon     — иконка Font Awesome
- *   content  — текст домашнего задания (пишется ОДИН раз)
- *   teacher  — учитель
- *   days     — массив дней недели, в которых этот предмет есть
- *
- * Благодаря этому:
- *  - Алгебра есть в ВТ, СР, ЧТ, ПТ — пишем ДЗ один раз, а days: ['tuesday','wednesday','thursday','friday']
- *  - География есть в СР и ПТ — пишем days: ['wednesday','friday']
- *  - Меняешь content — меняется сразу во всех днях, где есть предмет
- */
+        /* ===== СКРЫТИЕ ЛОАДЕРА ===== */
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('preloader').classList.add('hide');
+            }, 4800);
+        });
 
-const subjectsData = [
-    // ===== ПОНЕДЕЛЬНИК =====
-    { subject: 'Разговоры о важном', icon: 'fa-comments', content: 'Нет дз', teacher: '', days: ['monday'] },
-    { subject: 'История', icon: 'fa-landmark', content: 'учить термины, §3 готовиться к практической ', teacher: 'Виктория Константиновна', days: ['monday', 'tuesday', 'friday'] },
-    { subject: 'Геометрия', icon: 'fa-shapes', content: '§48, 49 учить №471-475, учить 7 признаков паралелограмма', teacher: 'Анна Константиновна', days: ['monday', 'wednesday'] },
-    { subject: 'Иностранный язык (английский)', icon: 'fa-globe', content: 'Группа Марины Бахытовны учить диалог в парах №3 стр.', teacher: '', days: ['monday', 'wednesday', 'thursday'] },
-    { subject: 'Химия', icon: 'fa-flask', content: '§3 №4', teacher: '', days: ['monday', 'thursday'] },
-    { subject: 'Биология', icon: 'fa-dna', content: 'Параграф 3 (стр. 14-15) читать, выучить строение животной клетки Найти и выписать сходства и отличия растительной и животной клетки', teacher: 'Степанова Светлана Александровна', days: ['monday', 'thursday'] },
-    { subject: 'Музыка', icon: 'fa-music', content: 'Нет дз', teacher: '', days: ['monday'] },
-    { subject: 'Вероятность и статистика', icon: 'fa-chart-bar', content: 'учи ру', teacher: 'Анна Константиновна', days: ['tuesday'] },
-    { subject: 'Русский язык', icon: 'fa-language', content: 'нет дз/ старое дз разобрать любое предложение по разборам 1,2,3,4,5,6, а так же проект в группах №3', teacher: 'Екатерина Сергеевна', days: ['tuesday', 'thursday'] },
-    { subject: 'Технология', icon: 'fa-tools', content: 'Нет дз', teacher: 'Кирюхин Александр', days: ['tuesday'] },
-    { subject: 'Алгебра', icon: 'fa-calculator', content: '_', teacher: 'Анна Константиновна', days: ['tuesday', 'wednesday', 'thursday', 'friday'] },
-    { subject: 'Физическая культура', icon: 'fa-dumbbell', content: 'Нет дз', teacher: '', days: ['tuesday', 'thursday'] },
-    { subject: 'Информатика', icon: 'fa-laptop-code', content: 'Нет дз', teacher: '', days: ['tuesday', 'friday'] },
-    { subject: 'ОБЗР', icon: 'fa-shield-halved', content: 'Нет дз', teacher: '', days: ['wednesday'] },
-    { subject: 'Физика', icon: 'fa-atom', content: '_', teacher: 'Наталья Валерьевна', days: ['wednesday', 'friday'] },
-    { subject: 'География', icon: 'fa-map-marker-alt', content: 'Заполнить таблицу', teacher: 'Екатерина Сергеевна Джанджгава', days: ['wednesday', 'friday'] },
-    { subject: 'Литература', icon: 'fa-book', content: 'стр.14 отвечать на вопросы 1-3 письменно+ готовиться к чению повести по ролям', teacher: 'Екатерина Сергеевна', days: ['wednesday', 'friday'] }
-];
+        /* ===== ДАННЫЕ ДОМАШКИ ===== */
+        const subjectsData = [
+            { subject: 'География', icon: 'fa-map-marker-alt', content: 'нет дз', teacher: 'Екатерина Сергеевна Джанджгава', days: ['wednesday', 'friday'] },
+            { subject: 'Алгебра', icon: 'fa-calculator', content: '№316, 317, 321', teacher: 'Анна Константиновна', days: ['tuesday', 'wednesday', 'thursday', 'friday'] },
+            { subject: 'Химия', icon: 'fa-flask', content: '§2 №5 проект ', teacher: 'Наталья Казимировна', days: ['monday', 'thursday'] },
+            { subject: 'Геометрия', icon: 'fa-shapes', content: 'читать пункт 42,43 №476', teacher: 'Анна Константиновна', days: ['monday', 'wednesday'] },
+            { subject: 'Физика', icon: 'fa-atom', content: 'стр. 15 №2', teacher: 'Наталья Валерьевна', days: ['wednesday', 'friday'] },
+            { subject: 'Русский язык', icon: 'fa-language', content: 'Нет дз /старое дз. Разобрать любое предложение по разборам 1,2,3,4,5,6, а так же проект в группах №3', teacher: 'Екатерина Сергеевна', days: ['tuesday', 'thursday'] },
+            { subject: 'Вероятность и статистика', icon: 'fa-chart-bar', content: 'учи ру', teacher: 'Анна Константиновна', days: ['tuesday'] },
+            { subject: 'Биология', icon: 'fa-dna', content: '§4, деделать лабораторную работу', teacher: 'Степанова Светлана Александровна', days: ['monday', 'thursday'] },
+            { subject: 'Музыка', icon: 'fa-music', content: 'нет дз', teacher: '', days: ['monday'] },
+            { subject: 'Английский Язык', icon: 'fa-globe', content: 'Группа Марины Бахытовны №3 стр.19', teacher: '', days: ['monday', 'wednesday', 'thursday'] },
+            { subject: 'Литература', icon: 'fa-book', content: 'нет дз/ старое дз стр.14 отвечать на вопросы 1-3 письменно+ готовиться к чению повести по ролям', teacher: 'Екатерина Сергеевна', days: ['wednesday', 'friday'] },
+            { subject: 'История', icon: 'fa-landmark', content: 'нет дз', teacher: '', days: ['monday', 'tuesday', 'friday'] },
+            { subject: 'Труд (М)', icon: 'fa-tools', content: 'Нет дз', teacher: 'Кирюхин Александр', days: ['tuesday'] },
+            { subject: 'Труд (Д)', icon: 'fa-sewing-needle', content: 'Нет дз', teacher: '', days: ['tuesday'] },
+            { subject: 'Разговоры о важном', icon: 'fa-comments', content: 'Нет дз', teacher: '', days: ['monday'] },
+            { subject: 'Физическая культура', icon: 'fa-dumbbell', content: 'Нет дз', teacher: '', days: ['tuesday', 'thursday'] },
+            { subject: 'Информатика', icon: 'fa-laptop-code', content: 'Нет дз', teacher: '', days: ['tuesday', 'friday'] },
+            { subject: 'ОБЗР', icon: 'fa-shield-halved', content: 'Нет дз', teacher: '', days: ['wednesday'] }
+        ];
 
-/*
- * ПОРЯДОК ПРЕДМЕТОВ В КАЖДОМ ДНЕ (номера уроков)
- * Здесь указываем только названия предметов в нужном порядке.
- * ДЗ и учитель подтянутся из subjectsData автоматически.
- */
-const scheduleOrder = {
-    monday: [
-        'Разговоры о важном',
-        'История',
-        'Геометрия',
-        'Иностранный язык (английский)',
-        'Химия',
-        'Биология',
-        'Музыка'
-    ],
-    tuesday: [
-        'Вероятность и статистика',
-        'Русский язык',
-        'Технология',
-        'История',
-        'Алгебра',
-        'Физическая культура',
-        'Информатика'
-    ],
-    wednesday: [
-        'ОБЗР',
-        'Физика',
-        'Алгебра',
-        'Геометрия',
-        'География',
-        'Литература',
-        'Иностранный язык (английский)'
-    ],
-    thursday: [
-        'Химия',
-        'Алгебра',
-        'Русский язык',
-        'Физическая культура',
-        'Биология',
-        'Русский язык',
-        'Иностранный язык (английский)'
-    ],
-    friday: [
-        'Литература',
-        'История',
-        'География',
-        'Алгебра',
-        'Физика',
-        'Информатика'
-    ]
-};
+        const scheduleOrder = {
+            monday: ['Разговоры о важном', 'История', 'Геометрия', 'Английский Язык', 'Химия', 'Биология', 'Музыка'],
+            tuesday: ['Вероятность и статистика', 'Русский язык', 'Труд (М)', 'История', 'Алгебра', 'Физическая культура', 'Информатика'],
+            wednesday: ['ОБЗР', 'Физика', 'Алгебра', 'Геометрия', 'География', 'Литература', 'Английский Язык'],
+            thursday: ['Химия', 'Алгебра', 'Русский язык', 'Физическая культура', 'Биология', 'Русский язык', 'Английский Язык'],
+            friday: ['Литература', 'История', 'География', 'Алгебра', 'Физика', 'Информатика']
+        };
 
-let currentDay = 'monday';
+        let currentDay = 'monday';
 
-function navigateTo(pageId) {
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.getElementById(pageId).classList.add('active');
-}
-
-function selectDay(day, btn) {
-    currentDay = day;
-    document.querySelectorAll('.day-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    renderHomework();
-}
-
-/* Находим данные предмета по названию */
-function findSubject(name) {
-    return subjectsData.find(s => s.subject === name);
-}
-
-/* Отрисовка домашки для выбранного дня */
-function renderHomework() {
-    const container = document.getElementById('homework-container');
-    if (!container) return;
-    container.innerHTML = '';
-
-    const order = scheduleOrder[currentDay] || [];
-
-    order.forEach((subjectName) => {
-        const item = findSubject(subjectName);
-        if (!item) return;
-
-        const card = document.createElement('div');
-        card.className = 'homework-card';
-        const iconHtml = item.icon ? `<i class="fas ${item.icon}"></i> ` : '';
-        card.innerHTML = `
-            <div class="subject-title">${iconHtml}${item.subject}</div>
-            <div class="homework-content">${item.content}</div>
-            ${item.teacher ? `<div class="teacher-info">${item.teacher}</div>` : ''}
-        `;
-        container.appendChild(card);
-    });
-}
-
-function checkModPassword() {
-    const input = document.getElementById('mod-password').value;
-    if (input === '564255') {
-        alert('Вход выполнен!');
-    } else {
-        alert('Неверный пароль!');
-    }
-}
-
-function setTheme(theme) {
-    if (theme === 'default') {
-        document.body.style.background = 'linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab)';
-    } else if (theme === 'light') {
-        document.body.style.background = 'linear-gradient(-45deg, #f5f7fa, #c3cfe2, #e8cbc0, #dcb5ff)';
-    } else if (theme === 'dark') {
-        document.body.style.background = 'linear-gradient(-45deg, #1a1a2e, #16213e, #0f3460, #1a1a2e)';
-    }
-    document.body.style.backgroundSize = '400% 400%';
-}
-
-async function askWikiQuestion() {
-    const q = document.getElementById('wiki-question').value.trim();
-    const a = document.getElementById('wiki-answer');
-    if (!q) return;
-    a.style.display = 'block';
-    a.innerHTML = '<p>Загрузка...</p>';
-    try {
-        const r = await fetch(`https://ru.wikipedia.org/w/api.php?action=query&format=json&origin=*&prop=extracts&exintro&explaintext&generator=search&gsrsearch=${encodeURIComponent(q)}&gsrlimit=1`);
-        const d = await r.json();
-        if (d.query && d.query.pages) {
-            const p = Object.values(d.query.pages)[0];
-            a.innerHTML = `<h2>${p.title}</h2><p>${p.extract.substring(0, 500)}...</p>`;
-        } else {
-            a.innerHTML = '<p>Ничего не найдено.</p>';
+        function navigateTo(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
         }
-    } catch (e) {
-        a.innerHTML = '<p>Ошибка соединения.</p>';
-    }
-}
 
-function quickWikiAsk(q) {
-    document.getElementById('wiki-question').value = q;
-    askWikiQuestion();
-}
+        function selectDay(day, btn) {
+            currentDay = day;
+            document.querySelectorAll('.day-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderHomework();
+        }
 
-document.addEventListener('DOMContentLoaded', () => {
-    renderHomework();
-});
+        function findSubject(name) {
+            return subjectsData.find(s => s.subject === name);
+        }
+
+        function renderHomework() {
+            const container = document.getElementById('homework-container');
+            if (!container) return;
+            container.innerHTML = '';
+
+            const order = scheduleOrder[currentDay] || [];
+
+            order.forEach((subjectName) => {
+                const item = findSubject(subjectName);
+                if (!item) return;
+
+                const card = document.createElement('div');
+                card.className = 'homework-card';
+                const iconHtml = item.icon ? `<i class="fas ${item.icon}"></i> ` : '';
+                card.innerHTML = `
+                    <div class="subject-title">${iconHtml}${item.subject}</div>
+                    <div class="homework-content">${item.content}</div>
+                    ${item.teacher ? `<div class="teacher-info">${item.teacher}</div>` : ''}
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function checkModPassword() {
+            const input = document.getElementById('mod-password').value;
+            if (input === '564255') {
+                alert('Вход выполнен!');
+            } else {
+                alert('Неверный пароль!');
+            }
+        }
+
+        function setTheme(theme) {
+            if (theme === 'default') {
+                document.body.style.background = 'linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab)';
+            } else if (theme === 'light') {
+                document.body.style.background = 'linear-gradient(-45deg, #f5f7fa, #c3cfe2, #e8cbc0, #dcb5ff)';
+            } else if (theme === 'dark') {
+                document.body.style.background = 'linear-gradient(-45deg, #1a1a2e, #16213e, #0f3460, #1a1a2e)';
+            }
+            document.body.style.backgroundSize = '400% 400%';
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderHomework();
+        });
     </script>
 </body>
 </html>
