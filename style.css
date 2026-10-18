@@ -1,211 +1,198 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+/* ============================================================
+   БАЗА
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-:root {
-    --c1: #ee7752;
-    --c2: #e73c7e;
-    --c3: #23a6d5;
-    --c4: #23d5ab;
+html {
+    background-color: #7D1C46;
+    transition: background-color .5s ease;
+    scroll-behavior: smooth;
 }
+html.theme-light { background-color: #eef2f7; }
+html.theme-dark  { background-color: #0d0d18; }
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: linear-gradient(-45deg, var(--c1), var(--c2), var(--c3), var(--c4));
-    background-size: 400% 400%;
-    animation: grad 8s ease infinite;
-    padding-bottom: 90px;
     color: #fff;
+    overflow-x: hidden;
+    position: relative;
+    background: transparent;
 }
 
-@keyframes grad {
-    0%, 100% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
+/* ============================================================
+   ФОН С ВОЛНАМИ
+   ============================================================ */
+.wave-bg {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    min-height: 100vh;
+    z-index: 0;
+    overflow: hidden;
+    background-color: #7D1C46;
+    transition: background-color .5s ease;
+    pointer-events: none;
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-20px); }
-    to { opacity: 1; transform: translateY(0); }
+.wave {
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 300%; height: 100%;
+    display: flex;
+    align-items: flex-end;
+    pointer-events: none;
 }
 
-@keyframes pulse {
-    0%, 100% { box-shadow: 0 5px 15px rgba(255, 255, 255, .2); }
-    50% { box-shadow: 0 5px 30px rgba(255, 255, 255, .4); }
+.wave svg { width: 33.333%; height: 100%; flex-shrink: 0; display: block; }
+.wave svg path { transition: fill .5s ease; }
+
+@keyframes waveMoveRight {
+    0%   { transform: translateX(0)         translateY(0); }
+    50%  { transform: translateX(-16.666%)  translateY(-12px); }
+    100% { transform: translateX(-33.333%)  translateY(0); }
+}
+@keyframes waveMoveLeft {
+    0%   { transform: translateX(-33.333%)  translateY(0); }
+    50%  { transform: translateX(-16.666%)  translateY(12px); }
+    100% { transform: translateX(0)          translateY(0); }
 }
 
-@keyframes bookPulse {
-    0%, 100% { box-shadow: 0 8px 25px rgba(35, 213, 171, .5); }
-    50% { box-shadow: 0 8px 40px rgba(35, 213, 171, .8); }
-}
+.wave-2 { z-index: 2; animation: waveMoveRight 14s ease-in-out infinite; animation-delay: -7s; }
+.wave-3 { z-index: 3; animation: waveMoveLeft  12s ease-in-out infinite; animation-delay: -4s; }
+.wave-4 { z-index: 4; animation: waveMoveRight 16s ease-in-out infinite; animation-delay: -10s; }
+.wave-5 { z-index: 5; animation: waveMoveLeft  13s ease-in-out infinite; animation-delay: -2s; }
+.wave-6 { z-index: 6; animation: waveMoveRight 11s ease-in-out infinite; animation-delay: -6s; }
+.wave-7 { z-index: 7; animation: waveMoveLeft  15s ease-in-out infinite; animation-delay: -8s; }
 
+/* ТЕМЫ ДЛЯ ВОЛН */
+.wave-bg { background-color: #7D1C46; }
+.wave-2 path { fill: #B3254B; }
+.wave-3 path { fill: #E83F4A; }
+.wave-4 path { fill: #F2653C; }
+.wave-5 path { fill: #F69A66; }
+.wave-6 path { fill: #F8D57E; }
+.wave-7 path { fill: #2B1C4E; }
+
+body.theme-light .wave-bg { background-color: #eef2f7; }
+body.theme-light .wave-2 path { fill: #dfe7f0; }
+body.theme-light .wave-3 path { fill: #cdd9e6; }
+body.theme-light .wave-4 path { fill: #bccbdb; }
+body.theme-light .wave-5 path { fill: #d8e2ec; }
+body.theme-light .wave-6 path { fill: #e8eef4; }
+body.theme-light .wave-7 path { fill: #fbfbfd; }
+
+body.theme-dark .wave-bg { background-color: #0d0d18; }
+body.theme-dark .wave-2 path { fill: #1a1a2e; }
+body.theme-dark .wave-3 path { fill: #16213e; }
+body.theme-dark .wave-4 path { fill: #0f3460; }
+body.theme-dark .wave-5 path { fill: #1f4068; }
+body.theme-dark .wave-6 path { fill: #2e5185; }
+body.theme-dark .wave-7 path { fill: #4a6fa5; }
+
+/* ============================================================
+   КОНТЕНТ
+   ============================================================ */
 .site-wrapper {
+    position: relative;
+    z-index: 10;
     width: 100%;
     max-width: 800px;
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 40px 20px 110px;
+    pointer-events: auto;
 }
 
-.container {
-    text-align: center;
-    padding: 40px 20px;
-}
+.container { text-align: center; padding: 20px 0; }
+.page { display: none; width: 100%; }
+.page.active { display: block; animation: fadeIn .4s ease; }
 
-.page {
-    display: none;
-    text-align: center;
-    width: 100%;
-}
+h1, .page-title { color: inherit; font-weight: 800; text-shadow: 2px 2px 10px rgba(0, 0, 0, .3); }
+h1 { font-size: 3rem; margin-bottom: 50px; letter-spacing: 2px; }
+.page-title { font-size: 2.5rem; margin-bottom: 30px; }
 
-.page.active {
-    display: block;
-    animation: fadeIn 0.4s ease;
-}
-
-h1, .page-title {
-    color: #fff;
-    font-weight: 800;
-    text-shadow: 2px 2px 10px rgba(0, 0, 0, .3);
-}
-
-h1 {
-    font-size: 3rem;
-    margin-bottom: 50px;
-    letter-spacing: 2px;
-}
-
-.page-title {
-    font-size: 2.5rem;
-    margin-bottom: 30px;
-}
-
-/* ЛОГОТИП */
+/* ============================================================
+   ЛОГОТИП
+   ============================================================ */
 .logo-container {
-    display: inline-flex;
-    align-items: center;
-    gap: 15px;
-    cursor: pointer;
-    user-select: none;
-    margin-bottom: 20px;
+    display: inline-flex; align-items: center; gap: 15px;
+    cursor: pointer; user-select: none; margin-bottom: 20px;
 }
-
 .esc-key {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+    display: inline-flex; align-items: center; justify-content: center;
     background: linear-gradient(145deg, #2c2c2c, #1a1a1a);
-    border: 2px solid #444;
-    border-radius: 8px;
-    padding: 8px 12px;
-    box-shadow: 0 4px 0 #0a0a0a, 0 6px 10px rgba(0, 0, 0, 0.3);
+    border: 2px solid #444; border-radius: 8px; padding: 8px 12px;
+    box-shadow: 0 4px 0 #0a0a0a, 0 6px 10px rgba(0, 0, 0, .3);
 }
-
-.esc-text {
-    font-size: 18px;
-    font-weight: 900;
-    color: #fff;
-    letter-spacing: 1px;
-}
-
-.fiveup-text {
-    display: flex;
-    flex-direction: column;
-    line-height: 1;
-}
-
+.esc-text { font-size: 18px; font-weight: 900; color: #fff; letter-spacing: 1px; }
+.fiveup-text { display: flex; flex-direction: column; line-height: 1; }
 .five {
-    font-size: 32px;
-    font-weight: 900;
+    font-size: 32px; font-weight: 900;
     background: linear-gradient(135deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
 }
+.up { font-size: 32px; font-weight: 300; color: #fff; letter-spacing: 2px; }
+.theme-light .up { color: #2a2f3a; }
 
-.up {
-    font-size: 32px;
-    font-weight: 300;
-    color: #fff;
-    letter-spacing: 2px;
-}
-
-/* КНОПКИ */
-.buttons {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-}
-
+/* ============================================================
+   КНОПКИ
+   ============================================================ */
+.buttons { display: flex; flex-direction: column; align-items: center; gap: 20px; }
 .btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 360px;
-    max-width: 100%;
-    padding: 16px 32px;
-    font-size: 1.1rem;
-    font-weight: 700;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    width: 360px; max-width: 100%; padding: 16px 32px;
+    font: 700 1.1rem/1 inherit; letter-spacing: 1px;
     color: #fff;
     background: rgba(255, 255, 255, .25);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
     border: 2px solid rgba(255, 255, 255, .5);
+    border-radius: 10px;
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
     box-shadow: 0 10px 30px rgba(0, 0, 0, .2);
-    letter-spacing: 1px;
+    cursor: pointer; text-align: center;
     transition: all .3s;
-    text-align: center;
 }
-
 .btn:hover {
     transform: translateY(-5px);
-    box-shadow: 0 15px 40px rgba(0, 0, 0, .3);
     background: rgba(255, 255, 255, .4);
     border-color: rgba(255, 255, 255, .8);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, .3);
 }
+.btn:active { transform: translateY(0); box-shadow: 0 5px 15px rgba(0, 0, 0, .2); }
 
-.btn:active {
-    transform: translateY(0);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, .2);
-}
-
-/* КНОПКИ ДНЕЙ НЕДЕЛИ */
-.day-selector {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    margin-bottom: 25px;
-    flex-wrap: wrap;
-}
-
-.day-btn {
-    width: 50px;
-    height: 50px;
-    border-radius: 10px;
-    border: 2px solid rgba(255, 255, 255, .4);
-    background: rgba(255, 255, 255, .15);
-    color: #fff;
-    font-size: 0.9rem;
+/* Кнопка с плюсом */
+.btn-safety { position: relative; overflow: visible; }
+.safety-plus {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    width: 22px;
+    height: 22px;
+    display: block;
+    font-size: 20px;
     font-weight: 700;
-    cursor: pointer;
-    transition: all .3s;
-    letter-spacing: 1px;
+    line-height: 20px;
+    text-align: center;
+    color: #fff;
+    background: #23d5ab;
+    border-radius: 50%;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, .3);
+    padding-top: 1px;
+    box-sizing: border-box;
 }
 
-.day-btn:hover {
-    transform: translateY(-3px);
-    background: rgba(255, 255, 255, .3);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, .2);
+/* ============================================================
+   ДНИ НЕДЕЛИ
+   ============================================================ */
+.day-selector { display: flex; gap: 10px; justify-content: center; margin-bottom: 25px; flex-wrap: wrap; }
+.day-btn {
+    width: 50px; height: 50px; border-radius: 10px;
+    font-size: .9rem; font-weight: 700; letter-spacing: 1px;
+    color: #fff;
+    background: rgba(255, 255, 255, .15);
+    border: 2px solid rgba(255, 255, 255, .4);
+    cursor: pointer; transition: all .3s;
 }
-
+.day-btn:hover { transform: translateY(-3px); background: rgba(255, 255, 255, .3); box-shadow: 0 8px 20px rgba(0, 0, 0, .2); }
 .day-btn.active {
     background: linear-gradient(135deg, #23d5ab, #23a6d5);
     border-color: rgba(255, 255, 255, .8);
@@ -213,584 +200,470 @@ h1 {
     transform: translateY(-3px);
 }
 
-/* КНОПКА С ЛЕНТОЙ */
-.btn-wrapper {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    max-width: 360px;
-    margin: 0 auto;
+/* ============================================================
+   КНОПКА С ЛЕНТОЙ
+   ============================================================ */
+.btn-wrapper { position: relative; display: flex; justify-content: center; width: 100%; max-width: 360px; margin: 0 auto; }
+.btn-construction { position: relative; overflow: hidden; width: 100%; }
+.btn-construction .btn-text { position: relative; z-index: 2; }
+.construction-tape, .construction-tape-second {
+    position: absolute; left: -10%; width: 120%; height: 40px;
+    background: repeating-linear-gradient(45deg, #e74c3c 0 25px, #fff 25px 50px);
+    transform: rotate(-15deg); z-index: 1; pointer-events: none;
+    opacity: .9; box-shadow: 0 4px 15px rgba(0, 0, 0, .35);
 }
-
-.btn-construction {
-    position: relative;
-    overflow: hidden;
-    width: 100%;
-}
-
-.btn-construction .btn-text {
-    position: relative;
-    z-index: 2;
-}
-
-.construction-tape,
-.construction-tape-second {
-    position: absolute;
-    left: -10%;
-    width: 120%;
-    height: 40px;
-    background: repeating-linear-gradient(45deg, #e74c3c 0px, #e74c3c 25px, #ffffff 25px, #ffffff 50px);
-    transform: rotate(-15deg);
-    z-index: 1;
-    pointer-events: none;
-    opacity: 0.9;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.35);
-}
-
 .construction-tape { top: -12%; }
-.construction-tape-second { top: 35%; background: repeating-linear-gradient(-45deg, #e74c3c 0px, #e74c3c 25px, #ffffff 25px, #ffffff 50px); }
+.construction-tape-second { top: 35%; background: repeating-linear-gradient(-45deg, #e74c3c 0 25px, #fff 25px 50px); }
 
-/* КАРТОЧКИ ДЗ */
-.homework-container {
-    max-width: 700px;
-    margin: 0 auto;
-    padding-bottom: 30px;
-}
-
+/* ============================================================
+   КАРТОЧКИ ДЗ
+   ============================================================ */
+.homework-container { max-width: 700px; margin: 0 auto; padding-bottom: 30px; }
 .homework-card {
+    position: relative; text-align: left; color: inherit;
+    padding: 18px 52px 18px 22px; margin-bottom: 12px;
     background: rgba(255, 255, 255, .15);
-    backdrop-filter: blur(10px);
     border: 2px solid rgba(255, 255, 255, .3);
-    border-radius: 10px;
-    padding: 18px 22px;
-    margin-bottom: 12px;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, .15);
-    text-align: left;
-    color: #fff;
-    position: relative;
-    transition: all .3s;
-}
-
-.homework-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 35px rgba(0, 0, 0, .25);
-    background: rgba(255, 255, 255, .25);
-}
-
-.subject-title {
-    font-size: 18px;
-    margin-bottom: 8px;
-    font-weight: bold;
-}
-
-.subject-title i {
-    margin-right: 10px;
-}
-
-.homework-content {
-    font-size: 16px;
-    opacity: .95;
-    margin-bottom: 6px;
-}
-
-.teacher-info {
-    font-size: 14px;
-    opacity: .8;
-}
-
-.edit-pencil {
-    position: absolute;
-    top: 12px;
-    right: 14px;
-    cursor: pointer;
-    opacity: .7;
-    transition: all .3s;
-}
-
-.edit-pencil:hover {
-    opacity: 1;
-    transform: scale(1.2);
-}
-
-/* РАСПИСАНИЕ */
-.schedule-container {
-    max-width: 700px;
-    margin: 0 auto;
-    padding-bottom: 30px;
-}
-
-.schedule-day-card {
-    background: rgba(255, 255, 255, .15);
-    backdrop-filter: blur(10px);
-    border: 2px solid rgba(255, 255, 255, .3);
-    border-radius: 10px;
-    padding: 20px;
-    margin-bottom: 18px;
+    border-radius: 10px; backdrop-filter: blur(10px);
     box-shadow: 0 8px 25px rgba(0, 0, 0, .15);
     transition: all .3s;
 }
+.homework-card:hover { transform: translateY(-5px); background: rgba(255, 255, 255, .25); box-shadow: 0 12px 35px rgba(0, 0, 0, .25); }
+.subject-title { font-size: 18px; margin-bottom: 8px; font-weight: bold; }
+.subject-title i { margin-right: 10px; }
+.homework-content { font-size: 16px; opacity: .95; margin-bottom: 6px; }
+.teacher-info { font-size: 14px; opacity: .8; }
 
-.schedule-day-card:hover {
-    transform: translateY(-3px);
-    background: rgba(255, 255, 255, .2);
-    box-shadow: 0 12px 35px rgba(0, 0, 0, .25);
-}
-
-.schedule-day-title {
-    font-size: 1.2rem;
-    font-weight: 800;
-    margin-bottom: 15px;
-    text-align: center;
-    padding-bottom: 10px;
-    border-bottom: 2px solid rgba(255, 255, 255, .3);
-    letter-spacing: 1px;
-}
-
-.schedule-lessons {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-}
-
-.schedule-lesson {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 8px 12px;
-    background: rgba(255, 255, 255, .08);
-    border-radius: 8px;
-    transition: all .3s;
-    font-size: 0.9rem;
-}
-
-.schedule-lesson:hover {
-    background: rgba(255, 255, 255, .15);
-    transform: translateX(5px);
-}
-
-.lesson-num {
-    min-width: 25px;
-    height: 25px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(255, 255, 255, .2);
-    border-radius: 50%;
-    font-weight: 700;
-    font-size: 0.8rem;
-    flex-shrink: 0;
-}
-
-.lesson-time {
-    min-width: 80px;
-    font-size: 0.8rem;
-    opacity: .8;
-    flex-shrink: 0;
-}
-
-.lesson-name {
-    flex: 1;
-    text-align: left;
-    font-weight: 500;
-}
-
-.lesson-room {
-    min-width: 50px;
-    text-align: center;
-    padding: 3px 8px;
-    background: rgba(255, 255, 255, .15);
-    border: 1px solid rgba(255, 255, 255, .3);
-    border-radius: 5px;
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 1px;
-    flex-shrink: 0;
-}
-
-/* ДНИ РОЖДЕНИЯ */
-.birthdays-container {
-    max-width: 700px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 15px;
-    padding-bottom: 30px;
-}
-
-.birthday-month-card {
-    background: rgba(255, 255, 255, .15);
-    backdrop-filter: blur(10px);
-    border: 2px solid rgba(255, 255, 255, .3);
-    border-radius: 10px;
-    padding: 18px;
-    color: #fff;
-    text-align: left;
-    transition: all .3s;
-}
-
-.birthday-month-card:hover {
-    transform: translateY(-5px);
-    background: rgba(255, 255, 255, .25);
-}
-
-.birthday-month-title {
-    font-size: 1rem;
-    font-weight: bold;
-    margin-bottom: 12px;
-    text-align: center;
-    padding-bottom: 8px;
-    border-bottom: 1px solid rgba(255, 255, 255, .3);
-}
-
-.birthday-item {
-    display: flex;
-    justify-content: space-between;
-    padding: 6px 0;
-    font-size: 0.9rem;
-}
-
-.birthday-date {
-    opacity: .7;
-    font-size: .8rem;
-}
-
-/* ФОРМЫ */
-.diary-form,
-.mod-login-form {
-    max-width: 450px;
-    margin: 0 auto;
-    padding: 25px;
-    background: rgba(255, 255, 255, .15);
-    backdrop-filter: blur(10px);
-    border: 2px solid rgba(255, 255, 255, .3);
-    border-radius: 10px;
-    color: #fff;
-}
-
-.diary-form label,
-.mod-login-form label {
-    display: block;
-    font-size: 1rem;
-    margin-bottom: 8px;
-    font-weight: 600;
-    text-align: left;
-}
-
-.diary-form input,
-.diary-form select,
-.mod-login-form input {
-    width: 100%;
-    padding: 12px 15px;
-    margin-bottom: 18px;
-    border: 2px solid rgba(255, 255, 255, .3);
-    border-radius: 8px;
-    background: rgba(255, 255, 255, .1);
-    color: #fff;
-    font-size: 1rem;
-    outline: none;
-}
-
-.btn-submit {
-    width: 100%;
-    padding: 14px;
-    font-size: 1.1rem;
-    font-weight: 700;
-    background: rgba(35, 166, 213, .6);
-    border: 2px solid #23a6d5;
-    border-radius: 8px;
-    color: #fff;
-    cursor: pointer;
-    transition: all .3s;
-}
-
-.btn-submit:hover {
-    background: rgba(35, 166, 213, .8);
-    transform: translateY(-2px);
-}
-
-/* НАСТРОЙКИ */
-.settings-container {
-    max-width: 550px;
-    margin: 0 auto;
-}
-
-.settings-section {
-    background: rgba(255, 255, 255, .15);
-    backdrop-filter: blur(10px);
-    border: 2px solid rgba(255, 255, 255, .3);
-    border-radius: 10px;
-    padding: 20px;
-    margin-bottom: 18px;
-    color: #fff;
-}
-
-.settings-section h3 {
-    margin-bottom: 16px;
-    font-size: 1.2rem;
-    text-align: center;
-}
-
-.theme-selector {
-    display: flex;
-    gap: 12px;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
-.theme-btn {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-    background: rgba(255, 255, 255, .1);
-    border: 2px solid rgba(255, 255, 255, .3);
-    border-radius: 8px;
-    padding: 12px 16px;
-    cursor: pointer;
-    color: #fff;
+.hw-check {
+    position: absolute; top: 16px; right: 16px;
+    width: 26px; height: 26px; border-radius: 7px;
+    display: flex; align-items: center; justify-content: center;
     font-size: .85rem;
-    transition: all .3s;
+    border: 2px solid rgba(255, 255, 255, .6);
+    background: rgba(255, 255, 255, .15);
+    cursor: pointer; transition: all .25s;
 }
+.hw-check.done { background: #23d5ab; border-color: #23d5ab; color: #0a3f33; box-shadow: 0 0 15px rgba(35, 213, 171, .8); }
+.homework-card.done { opacity: .55; filter: grayscale(.35); }
+.homework-card.done .homework-content { text-decoration: line-through; }
 
-.theme-btn:hover {
-    background: rgba(255, 255, 255, .25);
-    transform: translateY(-3px);
-}
+.hw-meta { font-size: .78rem; opacity: .85; margin-top: 6px; display: flex; gap: 12px; flex-wrap: wrap; }
+.hw-photo { margin-top: 12px; max-width: 100%; border-radius: 10px; border: 2px solid rgba(255, 255, 255, .3); display: block; cursor: zoom-in; }
 
-.theme-preview {
-    width: 50px;
-    height: 30px;
-    border-radius: 6px;
-    border: 2px solid rgba(255, 255, 255, .4);
-}
-
-.default-preview { background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab); }
-.light-preview { background: linear-gradient(-45deg, #f5f7fa, #c3cfe2); }
-.dark-preview { background: linear-gradient(-45deg, #1a1a2e, #0f3460); }
-
-.agreement-content {
-    text-align: left;
+/* ============================================================
+   БЕРЕГИТЕ СЕБЯ
+   ============================================================ */
+.safety-intro {
+    max-width: 700px;
+    margin: 0 auto 20px;
+    opacity: .9;
+    font-size: 1.05rem;
     line-height: 1.6;
 }
 
-.agreement-text {
-    font-size: 0.9rem;
-    opacity: .85;
-    margin-bottom: 12px;
-}
-
-.agreement-date {
-    text-align: center;
-    margin-top: 16px;
-    padding: 10px;
-    background: rgba(255, 255, 255, .08);
-    border-radius: 8px;
-    font-size: .85rem;
-}
-
-/* ВИКИ */
-.wiki-bot-container {
-    max-width: 650px;
-    margin: 0 auto;
-}
-
-.wiki-search-box {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
-}
-
-.wiki-input {
-    flex: 1;
-    padding: 14px 18px;
-    border: 2px solid rgba(255, 255, 255, .3);
-    border-radius: 8px;
-    background: rgba(255, 255, 255, .15);
-    color: #fff;
-    font-size: 1rem;
-    outline: none;
-}
-
-.wiki-submit-btn {
-    width: auto !important;
-    padding: 14px 24px !important;
-    border-radius: 8px !important;
-}
-
-.wiki-answer {
-    background: rgba(255, 255, 255, .15);
-    border: 2px solid rgba(255, 255, 255, .3);
-    border-radius: 10px;
-    padding: 20px;
-    color: #fff;
+.safety-card {
+    max-width: 700px;
+    margin: 0 auto 16px;
+    padding: 20px 24px;
     text-align: left;
-    margin-bottom: 20px;
-    display: none;
-}
-
-.wiki-answer.show { display: block; }
-
-.wiki-suggestions-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    justify-content: center;
-}
-
-.wiki-suggestion-btn {
-    padding: 8px 16px;
-    background: rgba(255, 255, 255, .1);
-    border: 1px solid rgba(255, 255, 255, .2);
-    border-radius: 20px;
-    color: #fff;
-    cursor: pointer;
-    font-size: .85rem;
-}
-
-/* ПРОФИЛЬ */
-.profile-roles {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-    max-width: 750px;
-    margin: 0 auto;
-}
-
-.role-card {
     background: rgba(255, 255, 255, .15);
-    backdrop-filter: blur(15px);
     border: 2px solid rgba(255, 255, 255, .3);
     border-radius: 10px;
-    padding: 25px 20px;
-    flex: 1;
-    min-width: 200px;
-    max-width: 240px;
-    color: #fff;
-    transition: all .4s;
-}
-
-.role-card:hover {
-    transform: translateY(-8px);
-    background: rgba(255, 255, 255, .2);
-    box-shadow: 0 20px 50px rgba(0, 0, 0, .3);
-}
-
-.role-icon {
-    width: 60px;
-    height: 60px;
-    border-radius: 10px;
-    background: rgba(255, 255, 255, .2);
-    border: 2px solid rgba(255, 255, 255, .4);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 15px;
-    font-size: 1.5rem;
-    transition: all .4s;
-}
-
-.role-card:hover .role-icon {
-    transform: rotate(360deg) scale(1.1);
-}
-
-.role-card h2 {
-    font-size: 1.3rem;
-    margin-bottom: 8px;
-}
-
-.role-card p {
-    font-size: .9rem;
-    opacity: .8;
-    margin-bottom: 18px;
-}
-
-.role-btn {
-    width: 100% !important;
-    padding: 12px 16px !important;
-    font-size: .95rem !important;
-    border-radius: 8px !important;
-}
-
-/* НИЖНЯЯ НАВИГАЦИЯ */
-.bottom-nav {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 70px;
-    background: rgba(255, 255, 255, .15);
-    backdrop-filter: blur(20px);
-    border-top: 2px solid rgba(255, 255, 255, .3);
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    z-index: 100;
-    padding: 0 20px;
-}
-
-.nav-icon-wrapper {
-    width: 45px;
-    height: 45px;
-    border-radius: 10px;
-    background: rgba(255, 255, 255, .2);
-    border: 2px solid rgba(255, 255, 255, .4);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all .4s;
-    animation: pulse 2.5s infinite;
-}
-
-.nav-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-    cursor: pointer;
-    color: rgba(255, 255, 255, .7);
-    padding: 5px 10px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, .15);
+    color: inherit;
     transition: all .3s;
 }
-
-.nav-item:hover .nav-icon-wrapper {
-    transform: scale(1.15);
-    background: rgba(255, 255, 255, .35);
+.safety-card:hover {
+    background: rgba(255, 255, 255, .25);
+    transform: translateY(-3px);
 }
 
-.nav-item:hover {
-    color: #fff;
+.safety-card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.safety-card h3 i {
+    color: #ffe9b0;
+    font-size: 1.1rem;
 }
 
-.nav-item svg {
-    width: 22px;
-    height: 22px;
-    color: #fff;
+.safety-card ol,
+.safety-card ul {
+    padding-left: 20px;
+    line-height: 1.7;
+    font-size: .95rem;
+    margin-bottom: 10px;
+}
+.safety-card li { margin-bottom: 8px; }
+.safety-card li::marker { color: #23d5ab; font-weight: 700; }
+
+.safety-sub {
+    font-size: .9rem;
+    opacity: .9;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255, 255, 255, .15);
 }
 
-.nav-item span {
-    font-size: .7rem;
-    font-weight: 600;
-    text-transform: uppercase;
+.safety-danger,
+.safety-warn,
+.safety-ok { color: #fff; font-weight: 800; }
+
+.safety-alert {
+    display: flex;
+    gap: 14px;
+    border-color: rgba(239, 71, 111, .6);
+    background: rgba(239, 71, 111, .15);
+}
+.safety-alert i {
+    font-size: 1.6rem;
+    color: #ef476f;
+    flex-shrink: 0;
+    margin-top: 2px;
 }
 
-.book-wrapper {
-    background: linear-gradient(135deg, #23d5ab, #23a6d5) !important;
-    animation: bookPulse 2s infinite !important;
+.safety-footer {
+    text-align: center;
+    opacity: .7;
+    font-size: .85rem;
+    padding: 20px;
 }
 
+body.theme-light .safety-card {
+    background: rgba(255, 255, 255, .9);
+    border: 1px solid rgba(0, 0, 0, .06);
+    color: #2a2f3a;
+    box-shadow: 0 6px 20px rgba(60, 80, 120, .08);
+}
+body.theme-light .safety-card h3 i { color: #7fa9c9; }
+body.theme-light .safety-alert {
+    background: rgba(239, 71, 111, .1);
+    border-color: rgba(239, 71, 111, .3);
+}
+body.theme-light .safety-sub { border-top-color: rgba(0, 0, 0, .1); }
+body.theme-light .safety-danger,
+body.theme-light .safety-warn,
+body.theme-light .safety-ok { color: #2a2f3a; }
+
+/* ============================================================
+   РАСПИСАНИЕ
+   ============================================================ */
+.schedule-container { max-width: 700px; margin: 0 auto; padding-bottom: 30px; }
+.schedule-day-card {
+    padding: 20px; margin-bottom: 18px;
+    background: rgba(255, 255, 255, .15);
+    border: 2px solid rgba(255, 255, 255, .3);
+    border-radius: 10px; backdrop-filter: blur(10px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, .15);
+    transition: all .3s;
+}
+.schedule-day-card:hover { transform: translateY(-3px); background: rgba(255, 255, 255, .2); box-shadow: 0 12px 35px rgba(0, 0, 0, .25); }
+.schedule-day-title {
+    font-size: 1.2rem; font-weight: 800; letter-spacing: 1px;
+    text-align: center; margin-bottom: 15px; padding-bottom: 10px;
+    border-bottom: 2px solid rgba(255, 255, 255, .3);
+}
+.schedule-lessons { display: flex; flex-direction: column; gap: 6px; }
+.schedule-lesson {
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px 12px; font-size: .9rem;
+    background: rgba(255, 255, 255, .08);
+    border-radius: 8px; transition: all .3s;
+}
+.schedule-lesson:hover { background: rgba(255, 255, 255, .15); transform: translateX(5px); }
+.lesson-num {
+    min-width: 25px; height: 25px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: .8rem; font-weight: 700;
+    background: rgba(255, 255, 255, .2); border-radius: 50%;
+}
+.lesson-time { min-width: 80px; flex-shrink: 0; font-size: .8rem; opacity: .8; }
+.lesson-name { flex: 1; text-align: left; font-weight: 500; }
+.lesson-room {
+    min-width: 50px; flex-shrink: 0; text-align: center;
+    padding: 3px 8px; font-size: .75rem; font-weight: 700; letter-spacing: 1px;
+    background: rgba(255, 255, 255, .15);
+    border: 1px solid rgba(255, 255, 255, .3);
+    border-radius: 5px;
+}
+
+/* ============================================================
+   ДНИ РОЖДЕНИЯ
+   ============================================================ */
+.birthdays-container {
+    max-width: 700px; margin: 0 auto; padding-bottom: 30px;
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+}
+.birthday-month-card {
+    padding: 18px; color: inherit; text-align: left;
+    background: rgba(255, 255, 255, .15);
+    border: 2px solid rgba(255, 255, 255, .3);
+    border-radius: 10px; backdrop-filter: blur(10px);
+    transition: all .3s;
+}
+.birthday-month-card:hover { transform: translateY(-5px); background: rgba(255, 255, 255, .25); }
+.birthday-month-title {
+    font-size: 1rem; font-weight: bold; text-align: center;
+    margin-bottom: 12px; padding-bottom: 8px;
+    border-bottom: 1px solid rgba(255, 255, 255, .3);
+}
+.birthday-item { display: flex; justify-content: space-between; padding: 6px 0; font-size: .9rem; }
+.birthday-date { opacity: .7; font-size: .8rem; }
+
+/* ============================================================
+   НАСТРОЙКИ
+   ============================================================ */
+.settings-container { max-width: 550px; margin: 0 auto; }
+.settings-section {
+    padding: 20px; margin-bottom: 18px; color: inherit;
+    background: rgba(255, 255, 255, .15);
+    border: 2px solid rgba(255, 255, 255, .3);
+    border-radius: 10px; backdrop-filter: blur(10px);
+}
+.settings-section h3 { margin-bottom: 16px; font-size: 1.2rem; text-align: center; }
+.theme-selector { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.theme-btn {
+    display: flex; flex-direction: column; align-items: center; gap: 6px;
+    padding: 12px 16px; font-size: .85rem; color: inherit;
+    background: rgba(255, 255, 255, .1);
+    border: 2px solid rgba(255, 255, 255, .3);
+    border-radius: 8px; cursor: pointer; transition: all .3s;
+}
+.theme-btn:hover { background: rgba(255, 255, 255, .25); transform: translateY(-3px); }
+.theme-preview { width: 50px; height: 30px; border-radius: 6px; border: 2px solid rgba(255, 255, 255, .4); }
+.theme-btn.active-theme { outline: 3px solid #fff; outline-offset: 2px; }
+
+.agreement-content { text-align: left; line-height: 1.6; }
+.agreement-text { font-size: .9rem; opacity: .85; margin-bottom: 12px; }
+.agreement-date {
+    text-align: center; margin-top: 16px; padding: 10px;
+    background: rgba(255, 255, 255, .08);
+    border-radius: 8px; font-size: .85rem;
+}
+
+/* ============================================================
+   СРЕДНИЙ БАЛЛ
+   ============================================================ */
+.grade-box {
+    max-width: 620px; margin: 0 auto; padding: 24px; color: inherit;
+    background: rgba(255, 255, 255, .15);
+    border: 2px solid rgba(255, 255, 255, .3);
+    border-radius: 12px; backdrop-filter: blur(10px);
+}
+.add-subject {
+    width: 100%; padding: 11px; margin-bottom: 16px;
+    font-weight: 700; color: inherit;
+    background: rgba(255, 255, 255, .08);
+    border: 2px dashed rgba(255, 255, 255, .5);
+    border-radius: 8px; cursor: pointer; transition: all .25s;
+}
+.add-subject:hover { background: rgba(255, 255, 255, .2); }
+
+.subject-card {
+    position: relative; text-align: left;
+    padding: 14px 18px; margin-bottom: 10px;
+    background: rgba(255, 255, 255, .12);
+    border: 2px solid rgba(255, 255, 255, .25);
+    border-radius: 10px; cursor: pointer; transition: all .25s;
+}
+.subject-card:hover { background: rgba(255, 255, 255, .2); transform: translateY(-2px); }
+.subject-card .sc-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.subject-card .sc-name { font-weight: 800; font-size: 1.05rem; }
+.subject-card .sc-avg {
+    padding: 3px 12px; font-weight: 800; color: #fff;
+    background: linear-gradient(135deg, #23d5ab, #23a6d5);
+    border-radius: 6px;
+}
+.subject-card .sc-grades { font-size: .82rem; opacity: .8; margin-top: 4px; }
+
+.sc-menu {
+    position: absolute; top: 50%; right: 14px; transform: translateY(-50%);
+    display: none; gap: 6px;
+}
+.subject-card.menu-open .sc-menu { display: flex; }
+.subject-card.menu-open .sc-avg { display: none; }
+.sc-menu button {
+    padding: 6px 12px; font-size: .8rem; font-weight: 700;
+    color: #fff; border: none; border-radius: 6px;
+    cursor: pointer; transition: all .2s;
+}
+.sc-menu .m-edit   { background: #23a6d5; }
+.sc-menu .m-del    { background: #ef476f; }
+.sc-menu .m-cancel { background: rgba(255, 255, 255, .25); }
+.sc-menu button:hover { transform: translateY(-2px); }
+
+.subject-edit { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+.subject-edit input {
+    padding: 8px 12px; font-size: .9rem; color: inherit;
+    background: rgba(255, 255, 255, .15);
+    border: 2px solid rgba(255, 255, 255, .3);
+    border-radius: 6px; outline: none;
+}
+.subject-edit input:focus { border-color: #23a6d5; }
+.subject-edit .e-name { flex: 0 0 140px; }
+.subject-edit .e-grades { flex: 1; }
+.subject-edit button {
+    padding: 8px 14px; font-weight: 700;
+    color: #0a3f33; background: #23d5ab;
+    border: none; border-radius: 6px; cursor: pointer;
+}
+
+/* ============================================================
+   ПРОФИЛЬ
+   ============================================================ */
+.profile-card {
+    max-width: 480px; margin: 0 auto 24px; padding: 26px;
+    text-align: center;
+    background: rgba(255, 255, 255, .15);
+    border: 2px solid rgba(255, 255, 255, .35);
+    border-radius: 14px; backdrop-filter: blur(12px);
+}
+.profile-label { font-size: .8rem; letter-spacing: 2px; text-transform: uppercase; opacity: .8; margin-bottom: 10px; }
+.profile-avatar {
+    width: 90px; height: 90px; margin: 0 auto 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2.4rem; color: #111;
+    background: #fff; border-radius: 50%;
+    border: 3px solid rgba(255, 255, 255, .6);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, .3);
+}
+.profile-id {
+    display: inline-block; margin-bottom: 14px; padding: 5px 14px;
+    font-size: .8rem; letter-spacing: 1px;
+    background: rgba(0, 0, 0, .25);
+    border: 1px solid rgba(255, 255, 255, .3);
+    border-radius: 20px;
+}
+.profile-card input {
+    width: 100%; padding: 10px 14px; margin-bottom: 10px;
+    font-size: 1rem; text-align: center; color: inherit;
+    background: rgba(255, 255, 255, .12);
+    border: 2px solid rgba(255, 255, 255, .3);
+    border-radius: 8px; outline: none;
+}
+.profile-card input::placeholder { color: rgba(255, 255, 255, .6); }
+.profile-save {
+    margin-top: 8px; padding: 12px 26px;
+    font-weight: 800; letter-spacing: 1px; color: #fff;
+    background: linear-gradient(135deg, #23d5ab, #23a6d5);
+    border: none; border-radius: 8px; cursor: pointer; transition: all .25s;
+}
+.profile-save:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(35, 213, 171, .4); }
+.profile-note {
+    max-width: 480px; margin: 0 auto 24px; padding: 14px 18px;
+    font-size: .85rem; line-height: 1.5; text-align: left; opacity: .85;
+    background: rgba(0, 0, 0, .15);
+    border: 1px solid rgba(255, 255, 255, .2);
+    border-radius: 10px;
+}
+
+/* ============================================================
+   РОЛИ
+   ============================================================ */
+.profile-roles {
+    display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;
+    max-width: 750px; margin: 0 auto;
+}
+.role-card {
+    flex: 1; min-width: 200px; max-width: 240px; padding: 25px 20px;
+    color: inherit; text-align: center;
+    background: rgba(255, 255, 255, .15);
+    border: 2px solid rgba(255, 255, 255, .3);
+    border-radius: 10px; backdrop-filter: blur(15px);
+    transition: all .4s;
+}
+.role-card:hover { transform: translateY(-8px); background: rgba(255, 255, 255, .2); box-shadow: 0 20px 50px rgba(0, 0, 0, .3); }
+.role-icon {
+    width: 60px; height: 60px; margin: 0 auto 15px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem;
+    background: rgba(255, 255, 255, .2);
+    border: 2px solid rgba(255, 255, 255, .4);
+    border-radius: 10px; transition: all .4s;
+}
+.role-card:hover .role-icon { transform: rotate(360deg) scale(1.1); }
+.role-card h2 { font-size: 1.3rem; margin-bottom: 8px; }
+.role-card p { font-size: .9rem; opacity: .8; margin-bottom: 18px; }
+.role-btn { width: 100% !important; padding: 12px 16px !important; font-size: .95rem !important; border-radius: 8px !important; }
+
+/* ============================================================
+   ВХОД МОДЕРАТОРА
+   ============================================================ */
+.mod-login-form {
+    max-width: 450px; margin: 0 auto; padding: 25px; color: inherit;
+    background: rgba(255, 255, 255, .15);
+    border: 2px solid rgba(255, 255, 255, .3);
+    border-radius: 10px; backdrop-filter: blur(10px);
+}
+.mod-login-form input {
+    width: 100%; padding: 12px 15px; margin-bottom: 18px;
+    font-size: 1rem; color: inherit;
+    background: rgba(255, 255, 255, .1);
+    border: 2px solid rgba(255, 255, 255, .3);
+    border-radius: 8px; outline: none;
+}
+
+/* ============================================================
+   ФОТО
+   ============================================================ */
+.photo-viewer {
+    position: fixed; inset: 0; z-index: 9998; padding: 20px;
+    display: none; justify-content: center; align-items: center;
+    background: rgba(0, 0, 0, .85); cursor: zoom-out;
+}
+.photo-viewer.show { display: flex; }
+.photo-viewer img { max-width: 95%; max-height: 95%; border-radius: 12px; }
+
+/* ============================================================
+   НИЖНЯЯ НАВИГАЦИЯ
+   ============================================================ */
+.bottom-nav {
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;
+    height: 70px; padding: 0 20px;
+    display: flex; justify-content: space-around; align-items: center;
+    background: rgba(255, 255, 255, .15);
+    border-top: 2px solid rgba(255, 255, 255, .3);
+    backdrop-filter: blur(20px);
+}
+.nav-icon-wrapper {
+    width: 45px; height: 45px;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(255, 255, 255, .2);
+    border: 2px solid rgba(255, 255, 255, .4);
+    border-radius: 10px; transition: all .4s;
+    animation: pulse 2.5s infinite;
+}
+.nav-item {
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+    padding: 5px 10px; color: rgba(255, 255, 255, .7);
+    cursor: pointer; transition: all .3s;
+}
+.nav-item:hover .nav-icon-wrapper { transform: scale(1.15); background: rgba(255, 255, 255, .35); }
+.nav-item:hover { color: #fff; }
+.nav-item svg { width: 22px; height: 22px; color: #fff; }
+.nav-item span { font-size: .7rem; font-weight: 600; text-transform: uppercase; }
+.book-wrapper { background: linear-gradient(135deg, #23d5ab, #23a6d5) !important; animation: bookPulse 2s infinite !important; }
+
+/* ============================================================
+   АДАПТИВ
+   ============================================================ */
 @media (max-width: 600px) {
     h1 { font-size: 2rem; }
     .page-title { font-size: 1.8rem; }
     .btn { width: 100%; padding: 14px 20px; font-size: 1rem; }
     .birthdays-container { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
     .bottom-nav { height: 60px; }
-    .wiki-search-box { flex-direction: column; }
-    .wiki-submit-btn { width: 100% !important; }
     .role-card { min-width: 150px; }
     .schedule-lesson { flex-wrap: wrap; gap: 5px; }
     .lesson-time { min-width: 70px; }
     .lesson-room { margin-left: auto; }
-    .day-btn { width: 45px; height: 45px; font-size: 0.8rem; }
+    .day-btn { width: 45px; height: 45px; font-size: .8rem; }
+    .safety-card { padding: 16px 18px; }
+    .safety-card h3 { font-size: 1.05rem; }
+    .safety-intro { font-size: .95rem; }
 }
