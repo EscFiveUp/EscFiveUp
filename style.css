@@ -27,7 +27,6 @@ body {
     position: absolute;
     top: 0; left: 0;
     width: 100%; height: 100%;
-    min-height: 100vh;
     z-index: 0;
     overflow: hidden;
     background-color: #7D1C46;
@@ -178,6 +177,7 @@ h1 { font-size: 3rem; margin-bottom: 50px; letter-spacing: 2px; }
     box-shadow: 0 2px 6px rgba(0, 0, 0, .3);
     padding-top: 1px;
     box-sizing: border-box;
+    z-index: 10; /* Чтобы плюс не прятался под кнопкой */
 }
 
 /* ============================================================
@@ -609,14 +609,15 @@ body.theme-light .safety-ok { color: #2a2f3a; }
 }
 
 /* ============================================================
-   ФОТО
+   ФОТО (скрыто по умолчанию)
    ============================================================ */
 .photo-viewer {
     position: fixed; inset: 0; z-index: 9998; padding: 20px;
-    display: none; justify-content: center; align-items: center;
+    display: none; /* Жестко скрываем, чтобы не висело справа */
+    justify-content: center; align-items: center;
     background: rgba(0, 0, 0, .85); cursor: zoom-out;
 }
-.photo-viewer.show { display: flex; }
+.photo-viewer.show { display: flex !important; } /* Показываем только при клике */
 .photo-viewer img { max-width: 95%; max-height: 95%; border-radius: 12px; }
 
 /* ============================================================
@@ -650,7 +651,7 @@ body.theme-light .safety-ok { color: #2a2f3a; }
 .book-wrapper { background: linear-gradient(135deg, #23d5ab, #23a6d5) !important; animation: bookPulse 2s infinite !important; }
 
 /* ============================================================
-   АДАПТИВ
+   АДАПТИВ (мобилки)
    ============================================================ */
 @media (max-width: 600px) {
     h1 { font-size: 2rem; }
