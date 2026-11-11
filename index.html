@@ -1,1 +1,667 @@
+<!DOCTYPE html>
+<html lang="ru" class="theme-classic">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Сайт с домашкой</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="theme-classic">
 
+<!-- ФОН: ЖИВЫЕ ВОЛНЫ -->
+<div class="wave-bg">
+    <div class="wave wave-2">
+        <svg viewBox="0 0 1000 1000" preserveAspectRatio="none"><path d="M0,150 Q250,200 500,150 T1000,150 L1000,1000 L0,1000 Z"></path></svg>
+        <svg viewBox="0 0 1000 1000" preserveAspectRatio="none"><path d="M0,150 Q250,200 500,150 T1000,150 L1000,1000 L0,1000 Z"></path></svg>
+        <svg viewBox="0 0 1000 1000" preserveAspectRatio="none"><path d="M0,150 Q250,200 500,150 T1000,150 L1000,1000 L0,1000 Z"></path></svg>
+    </div>
+    <div class="wave wave-3">
+        <svg viewBox="0 0 1000 1000" preserveAspectRatio="none"><path d="M0,280 Q250,230 500,280 T1000,280 L1000,1000 L0,1000 Z"></path></svg>
+        <svg viewBox="0 0 1000 1000" preserveAspectRatio="none"><path d="M0,280 Q250,230 500,280 T1000,280 L1000,1000 L0,1000 Z"></path></svg>
+        <svg viewBox="0 0 1000 1000" preserveAspectRatio="none"><path d="M0,280 Q250,230 500,280 T1000,280 L1000,1000 L0,1000 Z"></path></svg>
+    </div>
+    <div class="wave wave-4">
+        <svg viewBox="0 0 1000 1000" preserveAspectRatio="none"><path d="M0,420 Q250,470 500,420 T1000,420 L1000,1000 L0,1000 Z"></path></svg>
+        <svg viewBox="0 0 1000 1000" preserveAspectRatio="none"><path d="M0,420 Q250,470 500,420 T1000,420 L1000,1000 L0,1000 Z"></path></svg>
+        <svg viewBox="0 0 1000 1000" preserveAspectRatio="none"><path d="M0,420 Q250,470 500,420 T1000,420 L1000,1000 L0,1000 Z"></path></svg>
+    </div>
+    <div class="wave wave-5">
+        <svg viewBox="0 0 1000 1000" preserveAspectRatio="none"><path d="M0,580 Q250,530 500,580 T1000,580 L1000,1000 L0,1000 Z"></path></svg>
+        <svg viewBox="0 0 1000 1000" preserveAspectRatio="none"><path d="M0,580 Q250,530 500,580 T1000,580 L1000,1000 L0,1000 Z"></path></svg>
+        <svg viewBox="0 0 1000 1000" preserveAspectRatio="none"><path d="M0,580 Q250,530 500,580 T1000,580 L1000,1000 L0,1000 Z"></path></svg>
+    </div>
+    <div class="wave wave-6">
+        <svg viewBox="0 0 1000 1000" preserveAspectRatio="none"><path d="M0,720 Q250,770 500,720 T1000,720 L1000,1000 L0,1000 Z"></path></svg>
+        <svg viewBox="0 0 1000 1000" preserveAspectRatio="none"><path d="M0,720 Q250,770 500,720 T1000,720 L1000,1000 L0,1000 Z"></path></svg>
+        <svg viewBox="0 0 1000 1000" preserveAspectRatio="none"><path d="M0,720 Q250,770 500,720 T1000,720 L1000,1000 L0,1000 Z"></path></svg>
+    </div>
+    <div class="wave wave-7">
+        <svg viewBox="0 0 1000 1000" preserveAspectRatio="none"><path d="M0,830 Q250,880 500,830 T1000,830 L1000,1000 L0,1000 Z"></path></svg>
+        <svg viewBox="0 0 1000 1000" preserveAspectRatio="none"><path d="M0,830 Q250,880 500,830 T1000,830 L1000,1000 L0,1000 Z"></path></svg>
+        <svg viewBox="0 0 1000 1000" preserveAspectRatio="none"><path d="M0,830 Q250,880 500,830 T1000,830 L1000,1000 L0,1000 Z"></path></svg>
+    </div>
+</div>
+
+<!-- КОНТЕНТ -->
+<div class="site-wrapper">
+
+    <!-- ГЛАВНАЯ -->
+    <div id="main" class="page active">
+        <div class="container main-container">
+            <div class="logo-container">
+                <div class="esc-key"><span class="esc-text">Esc</span></div>
+                <div class="fiveup-text">
+                    <span class="five">Five</span>
+                    <span class="up">Up</span>
+                </div>
+            </div>
+            <h1>Сайт с домашкой</h1>
+
+            <div class="buttons">
+                <label class="btn" onclick="navigateTo('homework')">Домашнее задание</label>
+                <label class="btn btn-safety" onclick="navigateTo('safety')">
+                    Берегите себя
+                    <span class="safety-plus">+</span>
+                </label>
+                <label class="btn" onclick="navigateTo('schedule')">Расписание уроков</label>
+                <label class="btn" onclick="navigateTo('birthdays')">Дни рождения</label>
+                <label class="btn" onclick="navigateTo('grades')">Средний балл</label>
+                <label class="btn" onclick="navigateTo('settings')">Настройки</label>
+            </div>
+        </div>
+    </div>
+
+    <!-- ДОМАШКА -->
+    <div id="homework" class="page">
+        <div class="container">
+            <h1 class="page-title">Домашнее задание</h1>
+            <div class="day-selector">
+                <button class="day-btn active" onclick="selectDay('monday', this)">ПН</button>
+                <button class="day-btn" onclick="selectDay('tuesday', this)">ВТ</button>
+                <button class="day-btn" onclick="selectDay('wednesday', this)">СР</button>
+                <button class="day-btn" onclick="selectDay('thursday', this)">ЧТ</button>
+                <button class="day-btn" onclick="selectDay('friday', this)">ПТ</button>
+            </div>
+            <div class="homework-container" id="homework-container"></div>
+        </div>
+    </div>
+
+    <!-- БЕРЕГИТЕ СЕБЯ -->
+    <div id="safety" class="page">
+        <div class="container">
+            <h1 class="page-title">Берегите себя</h1>
+            
+            <div class="safety-intro">
+                <p>Памятка о том, как действовать в опасных ситуациях и как помочь себе или другому человеку до приезда скорой. Вся информация взята с официальных сайтов МЧС РФ</p>
+            </div>
+
+            <div class="safety-card safety-alert">
+                <i class="fas fa-triangle-exclamation"></i>
+                <p><strong>Главное :</strong> если вы видите что-то подозрительное — не подходите, не трогайте, не снимайте на видео. Сначала <strong>сообщите по телефону 112</strong> и позаботьтесь о своей безопасности. Любая попытка «разобраться самому» может стоить жизни.</p>
+            </div>
+
+            <!-- ДРОНЫ -->
+            <div class="safety-card">
+                <h3><i class="fas fa-plane-up"></i> Если увидел дрон (БПЛА)</h3>
+                <ol>
+                    <li><strong>Сохраняйте спокойствие.</strong> Оцените, где находитесь. Не паникуйте.</li>
+                    <li><strong>Предупредите окружающих.</strong> Тихо скажите людям рядом, чтобы они отошли в безопасное место.</li>
+                    <li><strong>Уйдите в укрытие.</strong> Зайдите в здание, подвал или паркинг. <span class="safety-danger">Не подходите к окнам!</span> Спуститесь на нижние этажи.</li>
+                    <li><strong>Не снимайте на видео.</strong> <span class="safety-danger">Категорически нельзя</span> фотографировать и выкладывать в сеть координаты дрона.</li>
+                    <li><strong>Позвоните 112.</strong> Сообщите место, время и количество. Если нашли упавший дрон — <span class="safety-danger">не трогайте его</span>, отойдите на 100 метров и вызовите службы.</li>
+                </ol>
+                <p class="safety-sub"><strong>Чего нельзя:</strong> подходить к упавшему аппарату, пользоваться мобильной связью прямо рядом с ним.</p>
+            </div>
+
+            <!-- ЕСЛИ ДРОН ПОПАЛ В СОСЕДНИЙ ДОМ -->
+            <div class="safety-card">
+                <h3><i class="fas fa-house-crack"></i> Если дрон попал в соседний дом</h3>
+                <ol>
+                    <li><strong>Не выходите из дома и оставайтесь внутри.</strong> Выходить на улицу опасно, потому что:
+                        <ul>
+                            <li>в воздухе могут быть <strong>вторичные обломки</strong> и осколки;</li>
+                            <li>возможен <strong>повторный удар</strong> или детонация;</li>
+                            <li>на улице может быть <strong>пожар, дым или обрушение</strong> конструкций;</li>
+                            <li>спецслужбам нужно <strong>свободное место для работы</strong> — не мешайте им.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Отойдите от окон.</strong> <span class="safety-danger">Не подходите к окнам и не выглядывайте</span>. Осколки от ударной волны могут ранить.</li>
+                    <li><strong>Позвоните 112.</strong> Сообщите точный адрес, что произошло, есть ли видимые разрушения или пожар. Не приближайтесь к месту падения.</li>
+                    <li><strong>Если начался пожар</strong> и есть угроза вашему дому — эвакуируйтесь. Используйте лестницу, <span class="safety-danger">не пользуйтесь лифтом</span>. Закрывайте дыхательные пути влажной тканью.</li>
+                    <li><strong>Помогите, если можете.</strong> Если рядом есть пострадавшие и вы можете помочь, не подвергая себя опасности, — окажите первую помощь (см. ниже) и дождитесь скорой.</li>
+                </ol>
+                <p class="safety-sub"><strong>Важно:</strong> после взрыва может быть вторичное обрушение. Не возвращайтесь в повреждённые здания, пока власти не разрешат.</p>
+            </div>
+
+            <!-- КРОВОТЕЧЕНИЕ -->
+            <div class="safety-card">
+                <h3><i class="fas fa-kit-medical"></i> Первая помощь: сильное кровотечение</h3>
+                <p>Самое опасное при ранении — быстрая потеря крови. Действовать нужно немедленно.</p>
+                <ol>
+                    <li><strong>Убедитесь, что вам ничего не угрожает.</strong> Не оказывайте помощь в зоне опасности (под обстрелом, у горящего здания).</li>
+                    <li><strong>Прямое давление.</strong> Прижмите рану чистой тканью, бинтом или ладонью. Держите крепко <strong>минимум 5–10 минут</strong>, не проверяя, остановилась ли кровь.</li>
+                    <li><strong>Поднимите конечность</strong> (руку или ногу) выше уровня сердца, если это возможно.</li>
+                    <li><strong>Давящая повязка.</strong> Если кровь проступает, наложите поверх ещё слой ткани и забинтуйте плотнее.</li>
+                    <li><strong>Жгут — только при артериальном кровотечении</strong> (кровь бьёт фонтаном, ярко-алая). Наложите жгут <strong>выше раны</strong>, на мягкую подкладку.</li>
+                </ol>
+                <p class="safety-sub"><span class="safety-warn">Важно:</span> жгут нельзя держать дольше <strong>1 часа в холод</strong> и <strong>1.5 часов в тепло</strong>. Запишите время наложения (на теле или бумаге) и обязательно скажите врачам.</p>
+                <p class="safety-sub"><span class="safety-danger">Нельзя:</span> доставать из раны осколки, промывать глубокую рану водой, заливать йодом или спиртом. Это усилит кровотечение.</p>
+            </div>
+
+            <!-- ОЖОГИ -->
+            <div class="safety-card">
+                <h3><i class="fas fa-fire"></i> Первая помощь: ожоги</h3>
+                <ol>
+                    <li><strong>Прекратите воздействие.</strong> Потушите горящую одежду (накройте плотной тканью, водой, снегом). Не бегайте в горящей одежде.</li>
+                    <li><strong>Охладите.</strong> Лейте прохладную (не ледяную) воду на ожог <strong>10–15 минут</strong>. Это уменьшит боль и глубину поражения.</li>
+                    <li><strong>Снимите одежду, но не отдирайте.</strong> Если ткань прилипла к коже, <span class="safety-danger">не срывайте её</span> — аккуратно обрежьте вокруг.</li>
+                    <li><strong>Накройте чистой сухой тканью</strong> или стерильной салфеткой. <span class="safety-danger">Не вскрывайте пузыри</span> и не мажьте ожог маслом или кремом.</li>
+                </ol>
+                <p class="safety-sub"><span class="safety-warn">Важно:</span> при ожогах большой площади или глубоких ожогах (обугливание, чёрная кожа) — немедленно вызывайте скорую. Давайте пострадавшему воду, если он в сознании.</p>
+            </div>
+
+            <!-- ЧТО ИМЕТЬ С СОБОЙ -->
+            <div class="safety-card">
+                <h3><i class="fas fa-briefcase-medical"></i> Что стоит иметь с собой</h3>
+                <p>Небольшой набор в рюкзаке или сумке может спасти жизнь вам или близким.</p>
+                <ul>
+                    <li><strong>Бинт или эластичный бинт</strong> — для давящей повязки.</li>
+                    <li><strong>Жгут (турникет)</strong> — если умеете пользоваться. Или плотная ткань.</li>
+                    <li><strong>Стерильные салфетки</strong> — для закрытия ран.</li>
+                    <li><strong>Пластырь</strong> (в том числе рулонный).</li>
+                    <li><strong>Антисептик</strong> (хлоргексидин, мирамистин) — <span class="safety-danger">не спирт!</span> Спирт усиливает боль и повреждает ткани.</li>
+                    <li><strong>Обезболивающее</strong> (парацетамол, ибупрофен) — если нет аллергии.</li>
+                    <li><strong>Влажные салфетки</strong> и <strong>бутылка воды</strong> — для промывания и питья.</li>
+                    <li><strong>Фонарик</strong> (телефон тоже подойдёт, но отдельный надёжнее).</li>
+                    <li><strong>Заряженный пауэрбанк</strong> — чтобы позвонить 112.</li>
+                    <li><strong>Копия документов</strong> (или фото в телефоне).</li>
+                </ul>
+                <p class="safety-sub">Сложите это в небольшой герметичный пакет и держите в рюкзаке. Периодически проверяйте сроки годности.</p>
+            </div>
+
+            <!-- ГЛАВНОЕ -->
+            <div class="safety-card">
+                <h3><i class="fas fa-circle-info"></i> Запомни главное</h3>
+                <ul>
+                    <li><span class="safety-ok">112</span> — единый номер экстренных служб. Работает без денег на счету и без сим-карты.</li>
+                    <li>Если человек без сознания, но дышит — положите его на бок (чтобы не задохнулся).</li>
+                    <li>Если не дышит — начинайте сердечно-лёгочную реанимацию: <strong>30 нажатий на грудину + 2 вдоха</strong>.</li>
+                    <li>Не давайте пить человеку без сознания.</li>
+                    <li>Согрейте пострадавшего, если холодно, и укройте от солнца, если жарко.</li>
+                </ul>
+            </div>
+            
+            <div class="safety-footer">пожалуйста Берегите себя и близких.</div>
+        </div>
+    </div>
+
+    <!-- РАСПИСАНИЕ -->
+    <div id="schedule" class="page">
+        <div class="container">
+            <h1 class="page-title">Расписание уроков</h1>
+            <div class="schedule-container">
+                <div class="schedule-day-card">
+                    <h3 class="schedule-day-title">Понедельник</h3>
+                    <div class="schedule-lessons">
+                        <div class="schedule-lesson"><span class="lesson-num">1</span><span class="lesson-time">09:00–09:45</span><span class="lesson-name">Разговоры о важном</span><span class="lesson-room">—</span></div>
+                        <div class="schedule-lesson"><span class="lesson-num">2</span><span class="lesson-time">10:05–10:50</span><span class="lesson-name">История</span><span class="lesson-room">2.374</span></div>
+                        <div class="schedule-lesson"><span class="lesson-num">3</span><span class="lesson-time">11:10–11:55</span><span class="lesson-name">Геометрия</span><span class="lesson-room">4.575</span></div>
+                        <div class="schedule-lesson"><span class="lesson-num">4</span><span class="lesson-time">12:10–12:55</span><span class="lesson-name">Иностранный язык (английский)</span><span class="lesson-room">1.209 / 1.210</span></div>
+                        <div class="schedule-lesson"><span class="lesson-num">5</span><span class="lesson-time">13:10–13:55</span><span class="lesson-name">Химия</span><span class="lesson-room">1.070</span></div>
+                        <div class="schedule-lesson"><span class="lesson-num">6</span><span class="lesson-time">14:05–14:50</span><span class="lesson-name">Биология</span><span class="lesson-room">4.510</span></div>
+                        <div class="schedule-lesson"><span class="lesson-num">7</span><span class="lesson-time">15:00–15:45</span><span class="lesson-name">Музыка</span><span class="lesson-room">3.495</span></div>
+                    </div>
+                </div>
+
+                <div class="schedule-day-card">
+                    <h3 class="schedule-day-title">Вторник</h3>
+                    <div class="schedule-lessons">
+                        <div class="schedule-lesson"><span class="lesson-num">1</span><span class="lesson-time">09:00–09:45</span><span class="lesson-name">Вероятность и статистика</span><span class="lesson-room">4.575</span></div>
+                        <div class="schedule-lesson"><span class="lesson-num">2</span><span class="lesson-time">10:05–10:50</span><span class="lesson-name">Русский язык</span><span class="lesson-room">3.488</span></div>
+                        <div class="schedule-lesson"><span class="lesson-num">3</span><span class="lesson-time">11:10–11:55</span><span class="lesson-name">Технология</span><span class="lesson-room">2.382 / 2.357</span></div>
+                        <div class="schedule-lesson"><span class="lesson-num">4</span><span class="lesson-time">12:10–12:55</span><span class="lesson-name">История</span><span class="lesson-room">2.374</span></div>
+                        <div class="schedule-lesson"><span class="lesson-num">5</span><span class="lesson-time">13:10–13:55</span><span class="lesson-name">Алгебра</span><span class="lesson-room">4.575</span></div>
+                        <div class="schedule-lesson"><span class="lesson-num">6</span><span class="lesson-time">14:05–14:50</span><span class="lesson-name">Физическая культура</span><span class="lesson-room">Большой спортзал</span></div>
+                        <div class="schedule-lesson"><span class="lesson-num">7</span><span class="lesson-time">15:00–15:45</span><span class="lesson-name">Информатика</span><span class="lesson-room">2.382 / 2.387</span></div>
+                    </div>
+                </div>
+
+                <div class="schedule-day-card">
+                    <h3 class="schedule-day-title">Среда</h3>
+                    <div class="schedule-lessons">
+                        <div class="schedule-lesson"><span class="lesson-num">1</span><span class="lesson-time">09:00–09:45</span><span class="lesson-name">ОБЗР</span><span class="lesson-room">4.576</span></div>
+                        <div class="schedule-lesson"><span class="lesson-num">2</span><span class="lesson-time">10:05–10:50</span><span class="lesson-name">Физика</span><span class="lesson-room">2.258</span></div>
+                        <div class="schedule-lesson"><span class="lesson-num">3</span><span class="lesson-time">11:10–11:55</span><span class="lesson-name">Алгебра</span><span class="lesson-room">4.575</span></div>
+                        <div class="schedule-lesson"><span class="lesson-num">4</span><span class="lesson-time">12:10–12:55</span><span class="lesson-name">Геометрия</span><span class="lesson-room">4.575</span></div>
+                        <div class="schedule-lesson"><span class="lesson-num">5</span><span class="lesson-time">13:10–13:55</span><span class="lesson-name">География</span><span class="lesson-room">2.371</span></div>
+                        <div class="schedule-lesson"><span class="lesson-num">6</span><span class="lesson-time">14:05–14:50</span><span class="lesson-name">Литература</span><span class="lesson-room">3.488</span></div>
+                        <div class="schedule-lesson"><span class="lesson-num">7</span><span class="lesson-time">15:00–15:45</span><span class="lesson-name">Иностранный язык (английский)</span><span class="lesson-room">1.209 / 1.210</span></div>
+                    </div>
+                </div>
+
+                <div class="schedule-day-card">
+                    <h3 class="schedule-day-title">Четверг</h3>
+                    <div class="schedule-lessons">
+                        <div class="schedule-lesson"><span class="lesson-num">1</span><span class="lesson-time">09:00–09:45</span><span class="lesson-name">Химия</span><span class="lesson-room">1.070</span></div>
+                        <div class="schedule-lesson"><span class="lesson-num">2</span><span class="lesson-time">10:05–10:50</span><span class="lesson-name">Алгебра</span><span class="lesson-room">4.575</span></div>
+                        <div class="schedule-lesson"><span class="lesson-num">3</span><span class="lesson-time">11:10–11:55</span><span class="lesson-name">Русский язык</span><span class="lesson-room">3.488</span></div>
+                        <div class="schedule-lesson"><span class="lesson-num">4</span><span class="lesson-time">12:10–12:55</span><span class="lesson-name">Физическая культура</span><span class="lesson-room">Большой спортзал</span></div>
+                        <div class="schedule-lesson"><span class="lesson-num">5</span><span class="lesson-time">13:10–13:55</span><span class="lesson-name">Биология</span><span class="lesson-room">4.510</span></div>
+                        <div class="schedule-lesson"><span class="lesson-num">6</span><span class="lesson-time">14:05–14:50</span><span class="lesson-name">Русский язык</span><span class="lesson-room">3.488</span></div>
+                        <div class="schedule-lesson"><span class="lesson-num">7</span><span class="lesson-time">15:00–15:45</span><span class="lesson-name">Иностранный язык (английский)</span><span class="lesson-room">1.209 / 1.210</span></div>
+                    </div>
+                </div>
+
+                <div class="schedule-day-card">
+                    <h3 class="schedule-day-title">Пятница</h3>
+                    <div class="schedule-lessons">
+                        <div class="schedule-lesson"><span class="lesson-num">1</span><span class="lesson-time">09:00–09:45</span><span class="lesson-name">Литература</span><span class="lesson-room">3.488</span></div>
+                        <div class="schedule-lesson"><span class="lesson-num">2</span><span class="lesson-time">10:05–10:50</span><span class="lesson-name">История</span><span class="lesson-room">2.374</span></div>
+                        <div class="schedule-lesson"><span class="lesson-num">3</span><span class="lesson-time">11:10–11:55</span><span class="lesson-name">География</span><span class="lesson-room">2.371</span></div>
+                        <div class="schedule-lesson"><span class="lesson-num">4</span><span class="lesson-time">12:10–12:55</span><span class="lesson-name">Алгебра</span><span class="lesson-room">4.575</span></div>
+                        <div class="schedule-lesson"><span class="lesson-num">5</span><span class="lesson-time">13:10–13:55</span><span class="lesson-name">Физика</span><span class="lesson-room">2.258</span></div>
+                        <div class="schedule-lesson"><span class="lesson-num">6</span><span class="lesson-time">14:05–14:50</span><span class="lesson-name">Информатика</span><span class="lesson-room">2.382 / 2.387</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ДНИ РОЖДЕНИЯ -->
+    <div id="birthdays" class="page">
+        <div class="container">
+            <h1 class="page-title">Дни рождения</h1>
+            <div class="birthdays-container">
+                <div class="birthday-month-card"><h3 class="birthday-month-title">Январь</h3><div class="birthday-item"><span>Мясоедова Кира</span><span class="birthday-date">1 января</span></div><div class="birthday-item"><span>Соснин Артемий</span><span class="birthday-date">29 января</span></div></div>
+                <div class="birthday-month-card"><h3 class="birthday-month-title">Февраль</h3><div class="birthday-item"><span>Худяков Артем</span><span class="birthday-date">9 февраля</span></div><div class="birthday-item"><span>Чувичко Алиса</span><span class="birthday-date">16 февраля</span></div><div class="birthday-item"><span>Селиванова Софья</span><span class="birthday-date">21 февраля</span></div></div>
+                <div class="birthday-month-card"><h3 class="birthday-month-title">Март</h3><div class="birthday-item"><span>Игнашина Мария</span><span class="birthday-date">9 марта</span></div><div class="birthday-item"><span>Орунова Екатерина</span><span class="birthday-date">27 марта</span></div></div>
+                <div class="birthday-month-card"><h3 class="birthday-month-title">Апрель</h3><div class="birthday-item"><span>Цыбиков Тамир</span><span class="birthday-date">2 апреля</span></div></div>
+                <div class="birthday-month-card"><h3 class="birthday-month-title">Май</h3><div class="birthday-item"><span>Таранов Артем</span><span class="birthday-date">22 мая</span></div></div>
+                <div class="birthday-month-card"><h3 class="birthday-month-title">Июнь</h3><div class="birthday-item"><span>Довженок Максим</span><span class="birthday-date">14 июня</span></div><div class="birthday-item"><span>Яшина Марина</span><span class="birthday-date">19 июня</span></div><div class="birthday-item"><span>Попенков Степан</span><span class="birthday-date">26 июня</span></div><div class="birthday-item"><span>Котова Соня</span><span class="birthday-date">30 июня</span></div><div class="birthday-item"><span>Ганичев Ваня</span><span class="birthday-date">30 июня</span></div></div>
+                <div class="birthday-month-card"><h3 class="birthday-month-title">Август</h3><div class="birthday-item"><span>Джафарова Арина</span><span class="birthday-date">5 августа</span></div><div class="birthday-item"><span>Соловьев Дмитрий</span><span class="birthday-date">8 августа</span></div><div class="birthday-item"><span>Власов Родион</span><span class="birthday-date">17 августа</span></div></div>
+                <div class="birthday-month-card"><h3 class="birthday-month-title">Сентябрь</h3><div class="birthday-item"><span>Козлов Глеб</span><span class="birthday-date">6 сентября</span></div><div class="birthday-item"><span>Кельбас Алёна</span><span class="birthday-date">20 сентября</span></div><div class="birthday-item"><span>Пасина Зоя</span><span class="birthday-date">27 сентября</span></div></div>
+                <div class="birthday-month-card"><h3 class="birthday-month-title">Ноябрь</h3><div class="birthday-item"><span>Созыкина Кристина</span><span class="birthday-date">20 ноября</span></div><div class="birthday-item"><span>Школьников Марк</span><span class="birthday-date">21 ноября</span></div></div>
+                <div class="birthday-month-card"><h3 class="birthday-month-title">Декабрь</h3><div class="birthday-item"><span>Петрова Дарья</span><span class="birthday-date">14 декабря</span></div><div class="birthday-item"><span>Крутова Алена</span><span class="birthday-date">27 декабря</span></div><div class="birthday-item"><span>Бабий Мария</span><span class="birthday-date">29 декабря</span></div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- СРЕДНИЙ БАЛЛ -->
+    <div id="grades" class="page">
+        <div class="container">
+            <h1 class="page-title">Средний балл</h1>
+            <div class="grade-box">
+                <button class="add-subject" onclick="addSubjectPrompt()">
+                    <i class="fas fa-plus"></i> Добавить предмет
+                </button>
+                <div id="subjects-list"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- НАСТРОЙКИ -->
+    <div id="settings" class="page">
+        <div class="container">
+            <h1 class="page-title">Настройки</h1>
+            <div class="settings-container">
+                <div class="settings-section">
+                    <h3>Тема оформления</h3>
+                    <div class="theme-selector">
+                        <label class="theme-btn" data-theme="classic" onclick="setTheme('classic')">
+                            <span class="theme-preview" style="background:linear-gradient(135deg,#7D1C46,#F2653C,#F8D57E)"></span>
+                            Классическая
+                        </label>
+                        <label class="theme-btn" data-theme="light" onclick="setTheme('light')">
+                            <span class="theme-preview" style="background:linear-gradient(135deg,#eef2f7,#cdd9e6,#9ec7d9)"></span>
+                            Светлая
+                        </label>
+                        <label class="theme-btn" data-theme="dark" onclick="setTheme('dark')">
+                            <span class="theme-preview" style="background:linear-gradient(135deg,#0d0d18,#0f3460,#4a6fa5)"></span>
+                            Тёмная
+                        </label>
+                    </div>
+                </div>
+                <div class="settings-section">
+                    <h3>Пользовательское соглашение</h3>
+                    <div class="agreement-content">
+                        <p class="agreement-text">Администрация сайта стремится предоставлять актуальную информацию о домашних заданиях, но не гарантирует абсолютной точности и полноты размещённых материалов.</p>
+                        <p class="agreement-text">Ответственность за проверку актуальности домашнего задания лежит на самом пользователе.</p>
+                        <p class="agreement-text">Администратор не несёт ответственности за возможные неточности, ошибки или упущения в информации.</p>
+                        <div class="agreement-date">Добавлено на сайт 29.08.2026</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ЛИЧНЫЙ КАБИНЕТ -->
+    <div id="profile" class="page">
+        <div class="container">
+            <h1 class="page-title">Личный кабинет</h1>
+
+            <div class="profile-card">
+                <div class="profile-label">Пользователь</div>
+                <div class="profile-avatar"><i class="fas fa-user"></i></div>
+                <div class="profile-id" id="profile-id">ID: —</div>
+                <input type="text" id="user-name" placeholder="Ваше имя (можно любое)" maxlength="30">
+                <input type="text" id="user-class" placeholder="Класс (например 8А)" maxlength="10">
+                <button class="profile-save" onclick="registerAccount()">
+                    <i class="fas fa-user-plus"></i> Зарегистрировать аккаунт
+                </button>
+            </div>
+
+            <div class="profile-note">
+                <i class="fas fa-info-circle"></i>
+                Это локальная регистрация: данные <b>нигде не отправляются</b> и не публикуются — они сохраняются только в вашем браузере (в localStorage) и видны только вам. Вы можете написать любое имя и любой класс, проверка не требуется. ID — случайное двузначное число, закреплённое за аккаунтом после регистрации.
+            </div>
+
+            <div class="profile-roles">
+                <div class="role-card">
+                    <div class="role-icon"><i class="fas fa-dove"></i></div>
+                    <h2>Администратор</h2>
+                    <p>Полный доступ ко всем настройкам</p>
+                    <button class="btn role-btn">Войти как Admin</button>
+                </div>
+                <div class="role-card">
+                    <div class="role-icon"><i class="fas fa-shield-halved"></i></div>
+                    <h2>Модератор</h2>
+                    <p>Доступ к управлению контентом</p>
+                    <button class="btn role-btn" onclick="navigateTo('mod-login')">Войти как Moder</button>
+                </div>
+                <div class="role-card">
+                    <div class="role-icon"><i class="fas fa-user"></i></div>
+                    <h2>Гость</h2>
+                    <p>Базовый доступ к сайту</p>
+                    <button class="btn role-btn" onclick="navigateTo('main')">Войти как Гость</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ВХОД МОДЕРАТОРА -->
+    <div id="mod-login" class="page">
+        <div class="container">
+            <h1 class="page-title">Вход для модератора</h1>
+            <div class="mod-login-form">
+                <input type="password" id="mod-password" placeholder="Введите пароль">
+                <button class="btn" onclick="checkModPassword()">Войти</button>
+            </div>
+        </div>
+    </div>
+
+</div><!-- /.site-wrapper -->
+
+<!-- ФОТО НА ВЕСЬ ЭКРАН -->
+<div class="photo-viewer" id="photo-viewer" onclick="closePhoto()">
+    <img id="photo-viewer-img" src="" alt="Просмотр">
+</div>
+
+<!-- НИЖНЯЯ НАВИГАЦИЯ -->
+<nav class="bottom-nav">
+    <div class="nav-item" onclick="navigateTo('main')">
+        <div class="nav-icon-wrapper"><i class="fas fa-home"></i></div>
+        <span>Главная</span>
+    </div>
+    <div class="nav-item" onclick="navigateTo('homework')">
+        <div class="nav-icon-wrapper book-wrapper"><i class="fas fa-book"></i></div>
+        <span>ДЗ</span>
+    </div>
+    <div class="nav-item" onclick="navigateTo('profile')">
+        <div class="nav-icon-wrapper"><i class="fas fa-user"></i></div>
+        <span>Профиль</span>
+    </div>
+</nav>
+
+<script>
+/* ============ ДАННЫЕ ДОМАШКИ ============ */
+const subjectsData = [
+    { subject:'География', icon:'fa-map-marker-alt', content:'нет дз', teacher:'Екатерина Сергеевна Джанджгава', days:['wednesday','friday'], photo:'' },
+    { subject:'Алгебра', icon:'fa-calculator', content:'№1208 - 1211', teacher:'Анна Константиновна', days:['tuesday','wednesday','thursday','friday'], photo:'' },
+    { subject:'Химия', icon:'fa-flask', content:'§9 №6', teacher:'Наталья Казимировна', days:['monday','thursday'], photo:'' },
+    { subject:'Геометрия', icon:'fa-shapes', content:'№506, 519', teacher:'Анна Константиновна', days:['monday','wednesday'], photo:'' },
+    { subject:'Физика', icon:'fa-atom', content:'доделать классную работу №12,13', teacher:'Наталья Валерьевна', days:['wednesday','friday'], photo:'' },
+    { subject:'Русский язык', icon:'fa-language', content:'нет дз', teacher:'Екатерина Сергеевна', days:['tuesday','thursday'], photo:'' },
+    { subject:'Вероятность и статистика', icon:'fa-chart-bar', content:'№312, 313,314, 316', teacher:'Анна Константиновна', days:['tuesday'], photo:'' },
+    { subject:'Биология', icon:'fa-dna', content:'нет дз', teacher:'Степанова Светлана Александровна', days:['monday','thursday'], photo:'' },
+    { subject:'Музыка', icon:'fa-music', content:'нет дз', teacher:'', days:['monday'], photo:'' },
+    { subject:'Английский Язык', icon:'fa-globe', content:'группа Марины Бахытовны страница 30 №2', teacher:'', days:['monday','wednesday','thursday'], photo:'' },
+    { subject:'Литература', icon:'fa-book', content:'нет дз', teacher:'Екатерина Сергеевна', days:['wednesday','friday'], photo:'' },
+    { subject:'История', icon:'fa-landmark', content:'нет дз', teacher:'', days:['monday','tuesday','friday'], photo:'' },
+    { subject:'Труд (И.А)', icon:'fa-tools', content:'Нет дз', teacher:'Кирюхин Александр', days:['tuesday'], photo:'' },
+    { subject:'Труд (А.Б)', icon:'fa-sewing-needle', content:'скинул в чат', teacher:'', days:['tuesday'], photo:'' },
+    { subject:'Разговоры о важном', icon:'fa-comments', content:'Нет дз', teacher:'', days:['monday'], photo:'' },
+    { subject:'Физическая культура', icon:'fa-dumbbell', content:'Нет дз', teacher:'', days:['tuesday','thursday'], photo:'' },
+    { subject:'Информатика', icon:'fa-laptop-code', content:'Нет дз', teacher:'', days:['tuesday','friday'], photo:'' },
+    { subject:'ОБЗР', icon:'fa-shield-halved', content:'зарегестрироваться на сайте движения первых', teacher:'', days:['wednesday'], photo:'' }
+];
+
+const scheduleOrder = {
+    monday:    ['Разговоры о важном','История','Геометрия','Английский Язык','Химия','Биология','Музыка'],
+    tuesday:   ['Вероятность и статистика','Русский язык','Труд (М)','История','Алгебра','Физическая культура','Информатика'],
+    wednesday: ['ОБЗР','Физика','Алгебра','Геометрия','География','Литература','Английский Язык'],
+    thursday:  ['Химия','Алгебра','Русский язык','Физическая культура','Биология','Русский язык','Английский Язык'],
+    friday:    ['Литература','История','География','Алгебра','Физика','Информатика']
+};
+
+const scheduleTimes = {
+    monday:    { 'Разговоры о важном':{n:1,t:'09:00–09:45',r:'—'}, 'История':{n:2,t:'10:05–10:50',r:'2.374'}, 'Геометрия':{n:3,t:'11:10–11:55',r:'4.575'}, 'Английский Язык':{n:4,t:'12:10–12:55',r:'1.209'}, 'Химия':{n:5,t:'13:10–13:55',r:'1.070'}, 'Биология':{n:6,t:'14:05–14:50',r:'4.510'}, 'Музыка':{n:7,t:'15:00–15:45',r:'3.495'} },
+    tuesday:   { 'Вероятность и статистика':{n:1,t:'09:00–09:45',r:'4.575'}, 'Русский язык':{n:2,t:'10:05–10:50',r:'3.488'}, 'Труд (М)':{n:3,t:'11:10–11:55',r:'2.382'}, 'История':{n:4,t:'12:10–12:55',r:'2.374'}, 'Алгебра':{n:5,t:'13:10–13:55',r:'4.575'}, 'Физическая культура':{n:6,t:'14:05–14:50',r:'Спортзал'}, 'Информатика':{n:7,t:'15:00–15:45',r:'2.382'} },
+    wednesday: { 'ОБЗР':{n:1,t:'09:00–09:45',r:'4.576'}, 'Физика':{n:2,t:'10:05–10:50',r:'2.258'}, 'Алгебра':{n:3,t:'11:10–11:55',r:'4.575'}, 'Геометрия':{n:4,t:'12:10–12:55',r:'4.575'}, 'География':{n:5,t:'13:10–13:55',r:'2.371'}, 'Литература':{n:6,t:'14:05–14:50',r:'3.488'}, 'Английский Язык':{n:7,t:'15:00–15:45',r:'1.209'} },
+    thursday:  { 'Химия':{n:1,t:'09:00–09:45',r:'1.070'}, 'Алгебра':{n:2,t:'10:05–10:50',r:'4.575'}, 'Русский язык':{n:3,t:'11:10–11:55',r:'3.488'}, 'Физическая культура':{n:4,t:'12:10–12:55',r:'Спортзал'}, 'Биология':{n:5,t:'13:10–13:55',r:'4.510'}, 'Английский Язык':{n:7,t:'15:00–15:45',r:'1.209'} },
+    friday:    { 'Литература':{n:1,t:'09:00–09:45',r:'3.488'}, 'История':{n:2,t:'10:05–10:50',r:'2.374'}, 'География':{n:3,t:'11:10–11:55',r:'2.371'}, 'Алгебра':{n:4,t:'12:10–12:55',r:'4.575'}, 'Физика':{n:5,t:'13:10–13:55',r:'2.258'}, 'Информатика':{n:6,t:'14:05–14:50',r:'2.382'} }
+};
+
+let currentDay = 'monday';
+
+function navigateTo(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+}
+function selectDay(day, btn) {
+    currentDay = day;
+    document.querySelectorAll('.day-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderHomework();
+}
+const findSubject = name => subjectsData.find(s => s.subject === name);
+
+function renderHomework() {
+    const container = document.getElementById('homework-container');
+    if (!container) return;
+    container.innerHTML = '';
+    const order = scheduleOrder[currentDay] || [];
+
+    order.forEach(name => {
+        const item = findSubject(name);
+        if (!item) return;
+        const key = currentDay + '-' + item.subject;
+        const done = localStorage.getItem('hw-done-' + key) === '1';
+        const meta = scheduleTimes[currentDay]?.[item.subject];
+        const metaHtml = meta
+            ? `<div class="hw-meta"><span><i class="fas fa-list-ol"></i> ${meta.n} урок</span><span><i class="fas fa-clock"></i> ${meta.t}</span><span><i class="fas fa-door-open"></i> каб. ${meta.r}</span></div>`
+            : '';
+        const photoHtml = item.photo ? `<img class="hw-photo" src="${item.photo}" onclick="openPhoto('${item.photo}')">` : '';
+
+        const card = document.createElement('div');
+        card.className = 'homework-card' + (done ? ' done' : '');
+        card.innerHTML = `
+            <div class="hw-check ${done ? 'done' : ''}" onclick="toggleDone('${key}', this)">${done ? '<i class="fas fa-check"></i>' : ''}</div>
+            <div class="subject-title">${item.icon ? `<i class="fas ${item.icon}"></i> ` : ''}${item.subject}</div>
+            <div class="homework-content">${item.content}</div>
+            ${metaHtml}
+            ${item.teacher ? `<div class="teacher-info">${item.teacher}</div>` : ''}
+            ${photoHtml}
+        `;
+        container.appendChild(card);
+    });
+}
+
+function toggleDone(key, el) {
+    const card = el.closest('.homework-card');
+    const done = localStorage.getItem('hw-done-' + key) === '1';
+    if (done) {
+        localStorage.removeItem('hw-done-' + key);
+        el.classList.remove('done'); el.innerHTML = ''; card.classList.remove('done');
+    } else {
+        localStorage.setItem('hw-done-' + key, '1');
+        el.classList.add('done'); el.innerHTML = '<i class="fas fa-check"></i>'; card.classList.add('done');
+    }
+}
+
+function openPhoto(src) {
+    document.getElementById('photo-viewer-img').src = src;
+    document.getElementById('photo-viewer').classList.add('show');
+}
+function closePhoto() {
+    document.getElementById('photo-viewer').classList.remove('show');
+}
+
+function loadGradesData() { return JSON.parse(localStorage.getItem('grades-data') || '[]'); }
+function saveGradesData(arr) { localStorage.setItem('grades-data', JSON.stringify(arr)); }
+
+function addSubjectPrompt() {
+    const name = prompt('Название предмета:');
+    if (!name || !name.trim()) return;
+    const arr = loadGradesData();
+    arr.push({ name: name.trim(), grades: [] });
+    saveGradesData(arr);
+    renderSubjects();
+}
+
+function renderSubjects() {
+    const list = document.getElementById('subjects-list');
+    if (!list) return;
+    list.innerHTML = '';
+    const arr = loadGradesData();
+    if (arr.length === 0) {
+        list.innerHTML = '<div style="text-align:center;opacity:.7;padding:10px;">Пока нет предметов</div>';
+        return;
+    }
+    arr.forEach((item, index) => {
+        const card = document.createElement('div');
+        card.className = 'subject-card';
+        card.dataset.index = index;
+        const avg = item.grades.length
+            ? (item.grades.reduce((a, b) => a + b, 0) / item.grades.length).toFixed(2)
+            : '—';
+        card.innerHTML = `
+            <div class="sc-head">
+                <div>
+                    <div class="sc-name">${item.name}</div>
+                    <div class="sc-grades">Оценки: ${item.grades.length ? item.grades.join(', ') : 'пока нет'}</div>
+                </div>
+                <div class="sc-avg">${avg}</div>
+            </div>
+            <div class="sc-menu">
+                <button class="m-edit" onclick="editSubject(event, ${index})"><i class="fas fa-pen"></i> Редактировать</button>
+                <button class="m-del" onclick="deleteSubject(event, ${index})"><i class="fas fa-trash"></i> Удалить</button>
+                <button class="m-cancel" onclick="closeMenu(event)"><i class="fas fa-times"></i> Отмена</button>
+            </div>
+        `;
+        card.addEventListener('click', (e) => {
+            if (e.target.closest('.sc-menu') || e.target.closest('.subject-edit')) return;
+            document.querySelectorAll('.subject-card').forEach(c => c.classList.remove('menu-open'));
+            card.classList.add('menu-open');
+        });
+        list.appendChild(card);
+    });
+}
+
+function closeMenu(e) {
+    e.stopPropagation();
+    document.querySelectorAll('.subject-card').forEach(c => c.classList.remove('menu-open'));
+}
+function deleteSubject(e, index) {
+    e.stopPropagation();
+    if (!confirm('Удалить предмет?')) return;
+    const arr = loadGradesData();
+    arr.splice(index, 1);
+    saveGradesData(arr);
+    renderSubjects();
+}
+function editSubject(e, index) {
+    e.stopPropagation();
+    const card = document.querySelector(`.subject-card[data-index="${index}"]`);
+    if (!card) return;
+    const arr = loadGradesData();
+    const item = arr[index];
+    card.innerHTML = `
+        <div class="subject-edit" onclick="event.stopPropagation()">
+            <input type="text" class="e-name" value="${item.name}" placeholder="Предмет">
+            <input type="text" class="e-grades" value="${item.grades.join(' ')}" placeholder="Оценки: 5 4 5 3">
+            <button onclick="saveEdit(event, ${index})"><i class="fas fa-check"></i> Сохранить</button>
+            <button style="background:rgba(255,255,255,.25);color:#fff;" onclick="renderSubjects()"><i class="fas fa-times"></i></button>
+        </div>
+    `;
+    card.classList.add('menu-open');
+}
+function saveEdit(e, index) {
+    e.stopPropagation();
+    const card = document.querySelector(`.subject-card[data-index="${index}"]`);
+    const name = card.querySelector('.e-name').value.trim() || 'Без названия';
+    const raw = card.querySelector('.e-grades').value;
+    const grades = raw.split(/[\s,;]+/).map(Number).filter(v => v >= 2 && v <= 5);
+    const arr = loadGradesData();
+    arr[index] = { name, grades };
+    saveGradesData(arr);
+    renderSubjects();
+}
+
+function loadProfile() {
+    const name = localStorage.getItem('user-name') || '';
+    const cls = localStorage.getItem('user-class') || '';
+    const id = localStorage.getItem('user-id') || '';
+    document.getElementById('user-name').value = name;
+    document.getElementById('user-class').value = cls;
+    document.getElementById('profile-id').textContent = id ? `ID: ${id}` : 'ID: —';
+}
+
+function registerAccount() {
+    const name = document.getElementById('user-name').value.trim();
+    const cls = document.getElementById('user-class').value.trim();
+    if (!name) { alert('Введите любое имя'); return; }
+
+    let id = localStorage.getItem('user-id');
+    if (!id) {
+        id = String(Math.floor(Math.random() * 90) + 10);
+        localStorage.setItem('user-id', id);
+    }
+    localStorage.setItem('user-name', name);
+    localStorage.setItem('user-class', cls);
+    localStorage.setItem('registered', '1');
+    document.getElementById('profile-id').textContent = `ID: ${id}`;
+
+    const btn = event.currentTarget;
+    const old = btn.innerHTML;
+    btn.innerHTML = '<i class="fas fa-check"></i> Аккаунт зарегистрирован';
+    setTimeout(() => { btn.innerHTML = old; }, 1400);
+}
+
+function checkModPassword() {
+    alert(document.getElementById('mod-password').value === '564255' ? 'Вход выполнен!' : 'Неверный пароль!');
+}
+
+function applyTheme(theme) {
+    document.documentElement.classList.remove('theme-classic', 'theme-light', 'theme-dark');
+    document.documentElement.classList.add('theme-' + theme);
+    
+    document.body.classList.remove('theme-classic', 'theme-light', 'theme-dark');
+    document.body.classList.add('theme-' + theme);
+
+    document.querySelectorAll('.theme-btn').forEach(btn => {
+        btn.classList.toggle('active-theme', btn.dataset.theme === theme);
+    });
+    localStorage.setItem('theme', theme);
+}
+function setTheme(theme) { applyTheme(theme); }
+
+document.addEventListener('DOMContentLoaded', () => {
+    applyTheme(localStorage.getItem('theme') || 'classic');
+    renderHomework();
+    renderSubjects();
+    loadProfile();
+});
+</script>
+</body>
+</html>
