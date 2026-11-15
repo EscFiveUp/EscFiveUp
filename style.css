@@ -3,7 +3,7 @@
    ============================================================ */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* Запрещаем браузеру принудительно перекрашивать сайт */
+/* Запрещаем браузеру принудительно перекрашивать сайт в темную тему */
 :root {
     color-scheme: only light;
 }
@@ -93,7 +93,7 @@ h1, .page-title { color: inherit; font-weight: 800; text-shadow: 2px 2px 10px rg
 h1 { font-size: 3rem; margin-bottom: 50px; letter-spacing: 2px; }
 .page-title { font-size: 2.5rem; margin-bottom: 30px; }
 
-/* Анимация */
+/* Анимация падения */
 @keyframes dropItem {
     0% { opacity: 0; transform: translateY(-40px); }
     100% { opacity: 1; transform: translateY(0); }
@@ -118,7 +118,7 @@ h1 { font-size: 3rem; margin-bottom: 50px; letter-spacing: 2px; }
 .theme-light .up { color: #2a2f3a; }
 
 /* ============================================================
-   КНОПКИ
+   КНОПКИ ГЛАВНОГО МЕНЮ
    ============================================================ */
 .buttons { display: flex; flex-direction: column; align-items: center; gap: 20px; }
 .btn {
@@ -131,6 +131,14 @@ h1 { font-size: 3rem; margin-bottom: 50px; letter-spacing: 2px; }
 }
 .btn:hover { transform: translateY(-5px); background: rgba(255, 255, 255, .4); border-color: rgba(255, 255, 255, .8); box-shadow: 0 15px 40px rgba(0, 0, 0, .3); }
 .btn:active { transform: translateY(0); box-shadow: 0 5px 15px rgba(0, 0, 0, .2); }
+
+.btn-safety { position: relative; overflow: visible; }
+.safety-plus {
+    position: absolute; top: -8px; right: -8px; width: 22px; height: 22px;
+    display: block; font-size: 20px; font-weight: 700; line-height: 20px;
+    text-align: center; color: #fff; background: #23d5ab; border-radius: 50%;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, .3); padding-top: 1px; box-sizing: border-box; z-index: 10;
+}
 
 /* ============================================================
    ДНИ НЕДЕЛИ
@@ -162,16 +170,21 @@ h1 { font-size: 3rem; margin-bottom: 50px; letter-spacing: 2px; }
 
 /* Переключатель групп */
 .group-switcher {
-    display: flex; gap: 5px; background: rgba(0, 0, 0, 0.2); padding: 4px; border-radius: 10px;
+    display: flex; gap: 5px; 
+    background: rgba(255, 255, 255, 0.2); /* Светлый прозрачный фон */
+    border: 1px solid rgba(255, 255, 255, 0.1); 
+    padding: 4px; border-radius: 10px;
     margin-bottom: 12px; width: fit-content;
 }
 .group-tab {
     padding: 6px 14px; border-radius: 8px; font-size: 0.85rem; font-weight: bold; cursor: pointer;
-    transition: 0.2s; border: 1px solid transparent; opacity: 0.7;
+    transition: 0.2s; border: 1px solid transparent; opacity: 0.7; color: #fff;
 }
 .group-tab:hover { opacity: 1; }
 .group-tab.active {
-    background: rgba(255, 255, 255, 0.25); border-color: rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.85); /* Яркий белый фон */
+    color: #000000; /* ЧИСТО ЧЕРНЫЙ ТЕКСТ */
+    border-color: rgba(255, 255, 255, 1);
     opacity: 1; box-shadow: 0 2px 8px rgba(0,0,0,0.2);
 }
 
@@ -182,7 +195,7 @@ h1 { font-size: 3rem; margin-bottom: 50px; letter-spacing: 2px; }
 .hw-check {
     width: 26px; height: 26px; border-radius: 7px; display: flex; align-items: center; justify-content: center;
     font-size: .85rem; border: 2px solid rgba(255, 255, 255, .6); background: rgba(255, 255, 255, .15);
-    cursor: pointer; transition: all .25s;
+    cursor: pointer; transition: all .25s; flex-shrink: 0;
 }
 .hw-check.done { background: #23d5ab; border-color: #23d5ab; color: #0a3f33; box-shadow: 0 0 15px rgba(35, 213, 171, .8); }
 .homework-card.done { opacity: .55; filter: grayscale(.35); }
@@ -333,22 +346,32 @@ body.theme-light .safety-danger, body.theme-light .safety-warn, body.theme-light
 .book-wrapper { background: linear-gradient(135deg, #23d5ab, #23a6d5) !important; animation: bookPulse 2s infinite !important; }
 
 /* ============================================================
-   СВЕТЛАЯ ТЕМА И АДАПТИВ
+   СВЕТЛАЯ ТЕМА
    ============================================================ */
 body.theme-light { color: #2a2f3a; }
 body.theme-light h1, body.theme-light .page-title { color: #2a2f3a; text-shadow: none; }
 body.theme-light .btn, body.theme-light .day-btn, body.theme-light .homework-card, body.theme-light .schedule-day-card, body.theme-light .birthday-month-card, body.theme-light .settings-section, body.theme-light .grade-box, body.theme-light .subject-card, body.theme-light .profile-card, body.theme-light .profile-note, body.theme-light .mod-login-form, body.theme-light .role-card { background: rgba(255, 255, 255, .9) !important; border: 1px solid rgba(0, 0, 0, .06) !important; color: #2a2f3a !important; box-shadow: 0 6px 20px rgba(60, 80, 120, .08) !important; }
+
 body.theme-light .day-btn.active { background: linear-gradient(135deg, #9ec7d9, #7fa9c9) !important; color: #fff !important; border-color: transparent !important; }
+
 body.theme-light .hw-check { border-color: rgba(0, 0, 0, .15); background: rgba(0, 0, 0, .03); }
 body.theme-light .hw-check.done { background: #7fb9a5; border-color: #7fb9a5; color: #fff; }
-body.theme-light .subject-title, body.theme-light .homework-content, body.theme-light .teacher-info, body.theme-light .hw-meta, body.theme-light .lesson-name, body.theme-light .lesson-time, body.theme-light .birthday-item, body.theme-light .agreement-text, body.theme-light .group-tab { color: #2a2f3a; }
-body.theme-light .group-tab.active { background: rgba(0, 0, 0, 0.1); border-color: rgba(0, 0, 0, 0.2); }
+
+body.theme-light .subject-title, body.theme-light .homework-content, body.theme-light .teacher-info, body.theme-light .hw-meta, body.theme-light .lesson-name, body.theme-light .lesson-time, body.theme-light .birthday-item, body.theme-light .agreement-text { color: #2a2f3a; }
+
+body.theme-light .group-switcher { background: rgba(0, 0, 0, 0.05); border: 1px solid rgba(0, 0, 0, 0.1); }
+body.theme-light .group-tab { color: #2a2f3a; }
+body.theme-light .group-tab.active { background: #7D1C46; color: #ffffff; border-color: #7D1C46; }
+
 body.theme-light .bottom-nav { background: rgba(255, 255, 255, .95); border-top-color: rgba(0, 0, 0, .08); }
 body.theme-light .nav-item { color: #556; }
 body.theme-light .nav-item svg { color: #556; }
 body.theme-light .profile-card input { border-color: rgba(0, 0, 0, .15); background: #fff; color: #2a2f3a; }
 body.theme-light .profile-id { background: rgba(0, 0, 0, .05); border-color: rgba(0, 0, 0, .1); color: #2a2f3a; }
 
+/* ============================================================
+   АДАПТИВНОСТЬ (МОБИЛЬНЫЕ)
+   ============================================================ */
 @media (max-width: 600px) {
     h1 { font-size: 2rem; }
     .page-title { font-size: 1.8rem; }
